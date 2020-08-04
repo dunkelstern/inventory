@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+
+{% block title %}{{ box.container.display_name }} - {{ box.name }}{% endblock %}
+
+{% block content %}
+    <h2>{{ box.container.display_name }} - {{ box.name }}</h2>
+    
+    {% if box.box_related.exists %}
+    <h3>Boxes</h3>
+    <ul>
+        {% for b in box.box_related.all %}
+            <li><a href="{% url 'box-detail' b.id %}" title="{{ b.description }}">{{ b.name }} ({{ b.layout.name }})</a></li>
+        {% endfor %}
+    </ul>
+    {% endif %}
+
+    {% if box.item_related.exists %}
+    <h3>Items</h3>
+    <ul>
+        {% for item in box.item_related.all %}
+            <li><a href="{% url 'item-detail' item.id %}" title="{{ item.description }}">{{ item.name }}</a></li>
+        {% endfor %}
+    </ul>
+    {% endif %}
+{% endblock %}

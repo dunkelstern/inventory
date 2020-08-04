@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+{% load formatstring %}
+
+{% block title %}{{ item.name }}{% endblock %}
+
+{% block content %}
+    <h2>{{ item.name }}</h2>
+    <p>{{ item.description }}</p>
+
+    <ul>
+        {% if item.manufacturer %}
+        <li>Manufacturer: <a href="{% url 'manufacturer-detail' item.manufacturer.id %}">{% if item.manufacturer.icon %}<img src="{{ item.manufacturer.icon.url }}" class="icon">{% endif %}{{ item.manufacturer.name }}</a></li>
+        {% endif %}
+        {% if item.distributor %}
+        <li>Distributor: <a href="{% url 'distributor-detail' item.distributor.id %}">{% if item.distributor.icon %}<img src="{{ item.distributor.icon.url }}" class="icon">{% endif %}{{ item.distributor.name }}</a></li>
+        {% endif %}
+        {% if item.price %}
+        <li>Price: {{ item.price }} Euro</li>
+        {% endif %}
+        {% if item.last_ordered_on %}
+        <li>Last ordered: {{ item.last_ordered_on }}</li>
+        {% endif %}
+        {% if item.distributor_item_no %}
+        <li>Link: <a href="{% formatstring item.distributor.search_link item.distributor_item_no %}">{% formatstring item.distributor.search_link item.distributor_item_no %}</a></li>
+        {% endif %}
+        <li>Created at: {{ item.created_at }}</li>
+        <li>Last change: {{ item.changed_at }}</li>
+    </ul>
+
+    {% if item.documentation.exists %}
+    <h3>Datasheets</h3>
+    <ul>
+        {% for doc in item.documentation.all %}
+            <li><a href="{{ doc.file.url }}">{{ doc.file.name }}</a></li>
+        {% endfor %}
+    </ul>
+    {% endif %}
+{% endblock %}

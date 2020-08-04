@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+
+{% block title %}Workshop {{ workshop.name }}{% endblock %}
+
+{% block content %}
+    <h2>{{ workshop.name }}</h2>
+    
+    {% if workshop.area_related.exists %}
+    <h3>Areas</h3>
+    <ul>
+        {% for area in workshop.area_related.all %}
+            <li><a href="{% url 'area-detail' area.id %}" title="{{ area.description }}">{{ area.name }}</a></li>
+        {% endfor %}
+    </ul>
+    {% endif %}
+    
+    {% if workshop.box_related.exists %}
+    <h3>Boxes</h3>
+    <ul>
+        {% for box in workshop.box_related.all %}
+            <li><a href="{% url 'box-detail' box.id %}" title="{{ box.description }}">{{ box.name }} ({{ box.layout.name }})</a></li>
+        {% endfor %}
+    </ul>
+    {% endif %}
+{% endblock %}

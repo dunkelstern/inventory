@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+
+{% block title %}Workshops{% endblock %}
+
+{% block content %}
+    <h2>Workshops</h2>
+    <ul>
+        {% for workshop in object_list %}
+            <li><a href="{% url 'workshop-detail' workshop.id %}" title="{{ workshop.description }}">{{ workshop.name }}</a></li>
+        {% endfor %}
+    </ul>
+{% endblock %}

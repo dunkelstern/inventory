@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+
+{% block title %}{{ area.container.display_name }} - {{ area.name }}{% endblock %}
+
+{% block content %}
+    <h2>{{ area.container.display_name }} - {{ area.name }}</h2>
+    
+    {% if area.area_related.exists %}
+    <h3>Areas</h3>
+    <ul>
+        {% for a in area.area_related.all %}
+            <li><a href="{% url 'area-detail' a.id %}" title="{{ a.description }}">{{ a.name }}</a></li>
+        {% endfor %}
+    </ul>
+    {% endif %}
+    
+    {% if area.box_related.exists %}
+    <h3>Boxes</h3>
+    <ul>
+        {% for box in area.box_related.all %}
+            <li><a href="{% url 'box-detail' box.id %}" title="{{ box.description }}">{{ box.name }} ({{ box.layout.name }})</a></li>
+        {% endfor %}
+    </ul>
+    {% endif %}
+{% endblock %}

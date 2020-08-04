@@ -1,0 +1,24 @@
+[tool.poetry]
+name = "inventory"
+version = "0.1.0"
+description = ""
+authors = ["Johannes Schriewer <hallo@dunkelstern.de>"]
+
+[tool.poetry.dependencies]
+python = "^3.8"
+django = "^3.0.4"
+gunicorn = "^20.0.4"
+whitenoise = "^5.0.1"
+commentjson = "^0.8.3"
+psycopg2 = "^2.8.4"
+django-nested-admin = "^3.3.2"
+pillow = "^7.2.0"
+
+[tool.poetry.dev-dependencies]
+mypy = "^0.770"
+flake8 = "^3.7.9"
+pylint = "^2.4.4"
+
+[build-system]
+requires = ["poetry>=0.12"]
+build-backend = "poetry.masonry.api"

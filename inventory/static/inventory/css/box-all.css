@@ -1,0 +1,43 @@
+tr {
+    height: 75px;
+}
+
+.cell .title {
+    display: inline;
+}
+
+.cell .package {
+    position: absolute;
+    display: inline;
+    top: 5px;
+    right: 5px;
+    font-size: xx-small;
+    color: #808080;
+}
+
+.cell .price {
+    position: absolute;
+    display: inline;
+    bottom: 5px;
+    left: 5px;
+    font-size: xx-small;
+    color: #808080;
+}
+
+.cell .shop {
+    position: absolute;
+    bottom: 5px;
+    right: 5px;
+    width: 12px;
+    height: 12px;
+    opacity: 0.5;
+}
+
+.cell a {
+    color: #000000;
+    text-decoration: none;
+}
+
+.missing-link {
+    color: #c00000;
+}

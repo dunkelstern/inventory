@@ -1,0 +1,78 @@
+body {
+    font-family: sans-serif;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    table-layout: fixed;
+}
+
+
+td {
+    text-align: center;
+
+    border-color: #d0d0d0;
+    border-width: 1px;
+    border-style: solid;
+    position: relative;
+}
+
+th {
+    text-align: center;
+    font-weight: 800;
+    padding: 20px;
+
+    border-color: #808080;
+    border-width: 1px;
+    border-style: solid;
+}
+
+h1 {
+    margin-top: 20px;
+}
+
+main {
+    margin: auto;
+}
+
+@media (min-width: 1025px) {
+    h1 {
+        width: 80%;
+    }
+
+    main {
+        width: 80%;
+    }
+}
+
+@media (max-width: 1024px) {
+    h1 {
+        width: 95%;
+    }
+
+    main {
+        width: 95%;
+    }
+
+    body {
+        font-size: 12px;
+    }
+}
+
+
+.missing {
+    visibility: hidden;
+}
+
+td:hover .missing {
+    visibility: visible;
+}
+
+.edit {
+    display: none;
+}
+
+td:hover .edit {
+    display: inline;
+}

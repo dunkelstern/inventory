@@ -6,4 +6,6 @@ class Documentation(models.Model):
     changed_at = models.DateTimeField(auto_now=True)
 
     file = models.FileField()
-    item = models.ForeignKey('inventory.Item', on_delete=models.CASCADE, related_name='documentation')
+
+    def __str__(self):
+        return self.file.name

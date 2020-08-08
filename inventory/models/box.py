@@ -1,3 +1,5 @@
+from django.utils.text import slugify
+from django.template.loader import get_template, TemplateDoesNotExist
 from django.db import models
 from .container import CanBeContained, Container
 
@@ -10,3 +12,12 @@ class Box(CanBeContained, Container):
 
     class Meta:
         verbose_name_plural = 'Boxes'
+
+    @property
+    def template_name(self):
+        template = 'inventory/box-' + slugify(self.layout.name) + '.html'
+        try:
+            get_template(template)
+            return template
+        except TemplateDoesNotExist:
+            return 'inventory/box-generic.html'

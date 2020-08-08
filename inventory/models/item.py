@@ -5,7 +5,7 @@ from .container import CanBeContained
 
 
 class Item(CanBeContained):
-    name = models.CharField(max_length=255, unique=True)
+    name = models.TextField(max_length=255)
     description = models.CharField(max_length=4096)
     created_at = models.DateTimeField(auto_now_add=True)
     changed_at = models.DateTimeField(auto_now=True)
@@ -17,6 +17,7 @@ class Item(CanBeContained):
     distributor_item_no = models.CharField(max_length=255, null=True, blank=True)
     price = models.DecimalField(decimal_places=3, max_digits=7, null=True, blank=True)
     last_ordered_on = models.DateField(null=True, blank=True)
+    documentation = models.ManyToManyField('inventory.Documentation')
 
     def __str__(self):
         return self.name

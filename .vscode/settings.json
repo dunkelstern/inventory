@@ -1,4 +1,5 @@
 {
+    "restructuredtext.confPath": "",
     "files.exclude": {
         "**/.git": true,
         "**/.svn": true,

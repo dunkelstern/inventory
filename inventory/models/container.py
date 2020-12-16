@@ -10,7 +10,7 @@ class Container(models.Model):
             if model == Container:
                 continue
             if issubclass(model, Container):
-                q = model.objects.filter(container_ptr_id=self.id)
+                q = model.objects.filter(container_ptr_id=self.pk)
                 if q.exists():
                     return model, q.first()
         return Container, None
@@ -28,7 +28,12 @@ class Container(models.Model):
 
 
 class CanBeContained(models.Model):
-    container = models.ForeignKey('inventory.Container', related_name="%(class)s_related", null=True, on_delete=models.CASCADE)
+    container = models.ForeignKey(
+        'inventory.Container',
+        related_name="%(class)s_related",
+        null=True,
+        on_delete=models.CASCADE
+    )
     index = models.PositiveIntegerField('Index of compartment in layout')
 
     class Meta:

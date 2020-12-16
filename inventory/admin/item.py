@@ -1,4 +1,4 @@
-from django.shortcuts import reverse
+from django.urls import reverse
 from django.contrib import admin
 from django.conf import settings
 
@@ -20,6 +20,7 @@ class ItemAdmin(admin.ModelAdmin):
     def view_on_site(self, obj):
         url = reverse('item-detail', kwargs={'pk': obj.id})
         return settings.SERVER_URL + url
+
 
 admin.site.register(Item, ItemAdmin)
 admin.site.register(Documentation, DocumentationAdmin)

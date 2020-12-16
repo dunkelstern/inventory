@@ -1,12 +1,13 @@
 import json
-from django.shortcuts import reverse
 from django.contrib import admin
-from django.conf import settings
-
-from django.contrib.postgres.fields import JSONField
+from django.db.models import JSONField
 from django.forms import widgets
 
 from inventory.models import Layout
+
+from logging import getLogger
+
+logger = getLogger(__name__)
 
 
 class PrettyJSONWidget(widgets.Textarea):
@@ -30,9 +31,11 @@ class LayoutAdmin(admin.ModelAdmin):
     formfield_overrides = {
         JSONField: {'widget': PrettyJSONWidget}
     }
+    list_display = ['name', 'description']
 
     # def view_on_site(self, obj):
     #     url = reverse('layout-detail', kwargs={'id': obj.id})
     #     return settings.SERVER_URL + url
+
 
 admin.site.register(Layout, LayoutAdmin)

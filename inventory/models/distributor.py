@@ -12,6 +12,6 @@ class Distributor(models.Model):
     phone = models.CharField(max_length=128, null=True, blank=True)
     email = models.EmailField(null=True, blank=True, default=None)
     icon = models.ImageField(null=True, blank=True)
-    
+
     def __str__(self):
         return self.name

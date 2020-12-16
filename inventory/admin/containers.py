@@ -1,6 +1,6 @@
-import nested_admin
+from nested_admin.nested import NestedTabularInline, NestedModelAdmin, NestedStackedInline
 
-from django.shortcuts import reverse
+from django.urls import reverse
 from django.contrib import admin
 from django.conf import settings
 
@@ -24,14 +24,15 @@ class WorkshopAdmin(admin.ModelAdmin):
         url = reverse('workshop-detail', kwargs={'pk': obj.id})
         return settings.SERVER_URL + url
 
-class BoxInlineAdmin(nested_admin.NestedTabularInline):
+
+class BoxInlineAdmin(NestedTabularInline):
     model = Box
     fk_name = 'container'
     extra = 1
     fields = ['name', 'description', 'index', 'layout']
 
 
-class AreaAdmin(nested_admin.NestedModelAdmin):
+class AreaAdmin(NestedModelAdmin):
     list_display = ['name', 'description', 'container']
     readonly_fields = ['created_at', 'changed_at']
     list_filter = ['container']
@@ -43,16 +44,18 @@ class AreaAdmin(nested_admin.NestedModelAdmin):
         return settings.SERVER_URL + url
 
 
-class DocumentationInlineAdmin(nested_admin.NestedTabularInline):
+class DocumentationInlineAdmin(NestedTabularInline):
     model = Documentation
     extra = 1
 
-class ItemInlineAdmin(nested_admin.NestedStackedInline):
+
+class ItemInlineAdmin(NestedStackedInline):
     model = Item
     extra = 1
-    inlines = [DocumentationInlineAdmin]
+    #inlines = [DocumentationInlineAdmin]
 
-class BoxAdmin(nested_admin.NestedModelAdmin):
+
+class BoxAdmin(NestedModelAdmin):
     list_display = ['name', 'description', 'container']
     readonly_fields = ['created_at', 'changed_at']
     list_filter = ['container']

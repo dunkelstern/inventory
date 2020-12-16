@@ -1,5 +1,4 @@
 from django.db import models
-from django.contrib.postgres.fields import JSONField
 
 
 class Layout(models.Model):
@@ -7,7 +6,7 @@ class Layout(models.Model):
     description = models.CharField(max_length=4096)
     created_at = models.DateTimeField(auto_now_add=True)
     changed_at = models.DateTimeField(auto_now=True)
-    data = JSONField()
+    data = models.JSONField()
 
     def __str__(self):
         return self.name

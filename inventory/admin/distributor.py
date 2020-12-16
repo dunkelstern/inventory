@@ -1,4 +1,4 @@
-from django.shortcuts import reverse
+from django.urls import reverse
 from django.contrib import admin
 from django.conf import settings
 
@@ -12,5 +12,6 @@ class DistributorAdmin(admin.ModelAdmin):
     def view_on_site(self, obj):
         url = reverse('distributor-detail', kwargs={'pk': obj.id})
         return settings.SERVER_URL + url
+
 
 admin.site.register(Distributor, DistributorAdmin)

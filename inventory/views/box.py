@@ -1,6 +1,8 @@
+from typing import cast, Union
 from django.contrib.auth.decorators import login_required
 from django.utils.decorators import method_decorator
 from django.views.generic import ListView, DetailView
+from django.db.models import QuerySet
 
 from inventory.models import Box
 
@@ -9,9 +11,17 @@ from inventory.models import Box
 class BoxView(DetailView):
     context_object_name = 'box'
     template_name_field = 'template_name'
-    queryset = Box.objects.all().select_related('container', 'layout').prefetch_related('box_related').order_by('index', 'id')
+    queryset = Box.objects.all().select_related(
+        'container',
+        'layout'
+    ).prefetch_related(
+        'box_related'
+    ).order_by(
+        'index',
+        'id'
+    )
 
-    def layout(self, obj, layout, idx=0):
+    def layout(self, obj: QuerySet, layout: list[Union[list, int]], idx=0):
         result = []
         for sublayout in layout:
             if isinstance(sublayout, list):
@@ -28,13 +38,13 @@ class BoxView(DetailView):
                 else:
                     result.append({
                         "index": idx,
-                        "container_id": self.object.item_related.first().container_id
+                        "container_id": self.object.pk
                     })
                 idx += 1
         return result, idx
 
     def get(self, request, *args, **kwargs):
-        self.object = self.get_object()
+        self.object = cast(Box, self.get_object())
         context = self.get_context_data(object=self.object)
         context['layouted'], _ = self.layout(self.object.item_related.all(), self.object.layout.data)
         return self.render_to_response(context)

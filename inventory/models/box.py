@@ -15,7 +15,10 @@ class Box(CanBeContained, Container):
 
     @property
     def template_name(self):
-        template = 'inventory/box-' + slugify(self.layout.name) + '.html'
+        if self.layout.template_name:
+            template = 'inventory/box-' + self.layout.template_name + '.html'
+        else:
+            template = 'inventory/box-' + slugify(self.layout.name) + '.html'
         try:
             get_template(template)
             return template

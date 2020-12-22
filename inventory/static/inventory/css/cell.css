@@ -10,12 +10,15 @@ tr {
     right: 0;
     top: 0;
     bottom: 0;
+    min-width: 100px;
+    min-height: 75px;
 }
 
 .cell {
     flex-grow: 1;
     display: inline-block;
     position: relative;
+
 }
 
 .cell:nth-child(2n) {

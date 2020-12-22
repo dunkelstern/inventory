@@ -13,6 +13,15 @@
         {% block header_bar %}
         {% endblock %}
         </h2>
+
+        <div class="spacer">
+        </div>
+
+        <ul>
+            {% block header_icons %}
+            {% endblock %}
+        </ul>
+
         {% if user.is_authenticated %}
         <form method="POST" action="{% url "logout" %}">
             {% csrf_token %}

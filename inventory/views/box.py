@@ -6,9 +6,11 @@ from django.db.models import QuerySet
 
 from inventory.models import Box
 
+from .utils import CanBeIndexMixin
+
 
 @method_decorator(login_required, name='dispatch')
-class BoxView(DetailView):
+class BoxView(CanBeIndexMixin, DetailView):
     context_object_name = 'box'
     template_name_field = 'template_name'
     queryset = Box.objects.all().select_related(

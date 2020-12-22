@@ -1,4 +1,3 @@
-from django.urls import reverse
 from django.db import models
 from django.apps import apps
 
@@ -30,6 +29,9 @@ class Container(models.Model):
 
     @property
     def url(self):
+        _, obj = self.subclass
+        if obj is not None:
+            return obj.url
         return None
 
 

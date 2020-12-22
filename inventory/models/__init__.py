@@ -9,3 +9,4 @@ from .manufacturer import Manufacturer
 from .tag import Tag
 from .workshop import Workshop
 from .container import Container, CanBeContained
+from .settings import Settings

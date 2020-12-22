@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block head %}
+    <link rel="stylesheet" type="text/css" href="{% static "inventory/css/cell.css" %}">
+{% endblock %}
+
+{% block title %}{{ object.name }}{% endblock %}
+
+{% block header_bar %}
+    <a href="{{ object.container_url }}"><img class="icon" src="{% static "inventory/img/back.svg" %}"></a>
+    {{ object.name }}
+    <span class="small">{{ object.description}}</span></h2>
+{% endblock %}
+
+{% block header_icons %}
+    {% include 'inventory/set_index.html' with item=object is_index=is_index %}
+{% endblock %}

@@ -1,0 +1,15 @@
+{% load static %}
+
+<li>
+    <form method="POST" action="{% url "index" %}">
+        {% csrf_token %}
+        <input type="hidden" name="index_id" value='{{ item.id }}'>
+        <button class="icon-only-button">
+            {% if is_index %}
+                <img class="icon" src="{% static "inventory/img/star-filled.svg" %}">
+            {% else %}
+                <img class="icon" src="{% static "inventory/img/star-outline.svg" %}">
+            {% endif %}
+        </button>
+    </form>
+</li>

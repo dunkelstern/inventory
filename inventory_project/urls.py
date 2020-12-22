@@ -21,7 +21,6 @@ from django.views.generic import RedirectView
 
 urlpatterns = [
     path('', include('inventory.urls')),
-    path('', RedirectView.as_view(pattern_name='workshop-list', permanent=False)),
     path('accounts/', include('django.contrib.auth.urls')),
     path('admin/', admin.site.urls),
 ]

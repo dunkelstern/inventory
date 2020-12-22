@@ -54,11 +54,11 @@ table.box th {
 
 nav {
     display: flex;
+    align-items: baseline;
     justify-content: space-between;
     background-color: #292981;
     color: #ffffff;
     padding: 20px;
-    margin-bottom: 20px;
 }
 
 nav form {
@@ -71,6 +71,12 @@ nav button {
     background-color: #333381;
     color: #ffffff;
     padding: 8px 10px 8px 10px;
+}
+
+nav .icon-only-button {
+    border: none;
+    background-color: transparent;
+
 }
 
 h1 {
@@ -103,29 +109,29 @@ nav .icon {
     filter: invert();
 }
 
-main {
-    margin: auto;
+nav ul {
+    margin: 0;
+    padding: 0;
+    display: inline-block;
 }
 
-@media (min-width: 1025px) {
-    h1, h2 {
-        width: 80%;
-    }
+nav ul li {
+    display: inline-block;
+    text-indent: 0;
+    margin: 0;
+    padding: 0 10px 0 0;
+}
 
-    main {
-        width: 80%;
-    }
+nav .spacer {
+    flex-grow: 2;
+}
+
+main {
+    margin: auto;
+    padding: 20px;
 }
 
 @media (max-width: 1024px) {
-    h1, h2 {
-        width: 95%;
-    }
-
-    main {
-        width: 95%;
-    }
-
     body {
         font-size: 12px;
     }
@@ -144,4 +150,24 @@ h2 .icon {
     width: 25px;
     height: 25px;
     top: 3px;
+}
+
+ul.nav-list {
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    height: 100%;
+    width: 30%;
+    margin: 0;
+    padding: 0;
+}
+
+ul.nav-list li {
+    display: flex;
+    justify-content: space-between;
+    border: 1px solid black;
+    margin-bottom: -1px;
+    padding: 10px;
+    text-indent: 0;
+    list-style-type: none;
 }

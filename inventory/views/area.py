@@ -4,9 +4,11 @@ from django.views.generic import ListView, DetailView
 
 from inventory.models import Area
 
+from .utils import CanBeIndexMixin
+
 
 @method_decorator(login_required, name='dispatch')
-class AreaView(DetailView):
+class AreaView(CanBeIndexMixin, DetailView):
     context_object_name = 'area'
     queryset = Area.objects.all().select_related(
         'container',

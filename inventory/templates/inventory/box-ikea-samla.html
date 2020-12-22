@@ -1,18 +1,6 @@
-{% extends "base.html" %}
+{% extends "inventory/box-detail.html" %}
 {% load static %}
 {% load admin_urls %}
-
-{% block head %}
-    <link rel="stylesheet" type="text/css" href="{% static "inventory/css/cell.css" %}">
-{% endblock %}
-
-{% block title %}{{ object.name }}{% endblock %}
-
-{% block header_bar %}
-    <a href="{{ object.container_url }}"><img class="icon" src="{% static "inventory/img/back.svg" %}"></a>
-    {{ object.name }}
-    <span class="small">{{ object.description}}</span>{% endblock %}
-{% endblock %}
 
 {% block content %}
     <table class="box">

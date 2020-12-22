@@ -5,3 +5,4 @@ from .item import ItemAdmin
 from .manufacturer import ManufacturerAdmin
 from .form_factor import FormFactorAdmin
 from .tag import TagAdmin
+from .settings import SettingsAdmin

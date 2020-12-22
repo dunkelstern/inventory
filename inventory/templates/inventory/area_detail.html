@@ -9,28 +9,34 @@
     <span class="small">{{ area.description}}</span>
 {% endblock %}
 
+{% block header_icons %}
+    {% include 'inventory/set_index.html' with item=area is_index=is_index %}
+{% endblock %}
+
 {% block content %}
 
-    <h3>Areas</h3>
-    <ul>
-        {% for a in area.area_related.all %}
-            <li>
-                <a href="{% url 'area-detail' a.id %}" title="{{ a.description }}">{{ a.name }}</a>
-                {% if user.is_staff %}
-                    <a class="edit" href="{% url "admin:inventory_area_change" object_id=area.pk %}"><img class="icon" src="{% static "inventory/img/edit.svg" %}"></a>
-                {% endif %}
-            </li>
-        {% empty %}
-            <li>No areas defined</li>
-        {% endfor %}
-    </ul>
+    {% if area.show_sub_area %}
+        <h3>Areas</h3>
+        <ul class="nav-list">
+            {% for a in area.area_related.all %}
+                <li>
+                    <a href="{% url 'area-detail' a.id %}" title="{{ a.description }}">{{ a.name }}</a>
+                    {% if user.is_staff %}
+                        <a class="edit" href="{% url "admin:inventory_area_change" object_id=area.pk %}"><img class="icon" src="{% static "inventory/img/edit.svg" %}"></a>
+                    {% endif %}
+                </li>
+            {% empty %}
+                <li>No areas defined</li>
+            {% endfor %}
+        </ul>
 
-    {% if user.is_staff %}
-        <p><a href="{% url "admin:inventory_area_add" %}?container={{ area.id }}&index=0">Create new area...</a></p>
+        {% if user.is_staff %}
+            <p><a href="{% url "admin:inventory_area_add" %}?container={{ area.id }}&index=0">Create new area...</a></p>
+        {% endif %}
     {% endif %}
 
-    <h3>Boxes</h3>
-    <ul>
+    <h3>Containers</h3>
+    <ul class="nav-list">
         {% for box in area.box_related.all %}
             <li>
                 <a href="{% url 'box-detail' box.id %}" title="{{ box.description }}">{{ box.name }} ({{ box.layout.name }})</a>
@@ -39,7 +45,7 @@
                 {% endif %}
             </li>
         {% empty %}
-            <li>No boxes defined</li>
+            <li>No containers defined</li>
         {% endfor %}
     </ul>
 

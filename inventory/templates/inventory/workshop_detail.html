@@ -9,9 +9,13 @@
     <span class="small">{{ workshop.description}}</span>
 {% endblock %}
 
+{% block header_icons %}
+    {% include 'inventory/set_index.html' with item=workshop is_index=is_index %}
+{% endblock %}
+
 {% block content %}
     <h3>Areas</h3>
-    <ul>
+    <ul class="nav-list">
         {% for area in workshop.area_related.all %}
             <li>
                 <a href="{% url 'area-detail' area.id %}" title="{{ area.description }}">{{ area.name }}</a>
@@ -29,22 +33,24 @@
         <p><a href="{% url "admin:inventory_area_add" %}?container={{ workshop.id }}&index=0">Create new area...</a></p>
     {% endif %}
 
-    <h3>Boxes</h3>
-    <ul>
-        {% for box in workshop.box_related.all %}
-            <li>
-                <a href="{% url 'box-detail' box.id %}" title="{{ box.description }}">{{ box.name }} ({{ box.layout.name }})</a>
-                ({{ box.description }})
-                {% if user.is_staff %}
-                    <a class="edit" href="{% url "admin:inventory_box_change" object_id=box.pk %}"><img class="icon" src="{% static "inventory/img/edit.svg" %}"></a>
-                {% endif %}
-            </li>
-        {% empty %}
-            <li>No boxes defined</li>
-        {% endfor %}
-    </ul>
+    {% if workshop.show_boxes %}
+        <h3>Containers</h3>
+        <ul class="nav-list">
+            {% for box in workshop.box_related.all %}
+                <li>
+                    <a href="{% url 'box-detail' box.id %}" title="{{ box.description }}">{{ box.name }} ({{ box.layout.name }})</a>
+                    ({{ box.description }})
+                    {% if user.is_staff %}
+                        <a class="edit" href="{% url "admin:inventory_box_change" object_id=box.pk %}"><img class="icon" src="{% static "inventory/img/edit.svg" %}"></a>
+                    {% endif %}
+                </li>
+            {% empty %}
+                <li>No containers defined</li>
+            {% endfor %}
+        </ul>
 
-    {% if user.is_staff %}
-        <p><a href="{% url "admin:inventory_box_add" %}?container={{ workshop.id }}&index=0">Create new box...</a></p>
+        {% if user.is_staff %}
+            <p><a href="{% url "admin:inventory_box_add" %}?container={{ workshop.id }}&index=0">Create new container...</a></p>
+        {% endif %}
     {% endif %}
 {% endblock %}

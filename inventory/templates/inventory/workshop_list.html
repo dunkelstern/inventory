@@ -8,7 +8,7 @@
 {% endblock %}
 
 {% block content %}
-    <ul>
+    <ul class="nav-list">
         {% for workshop in object_list %}
             <li>
                 <a href="{% url 'workshop-detail' workshop.id %}" title="{{ workshop.description }}">{{ workshop.name }}</a>
@@ -22,5 +22,6 @@
     {% if user.is_staff %}
         <p><a href="{% url "admin:inventory_workshop_add" %}?layout=1">Create new workshop...</a></p>
     {% endif %}
+
 
 {% endblock %}

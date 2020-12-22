@@ -2,7 +2,27 @@ tr {
     height: 75px;
 }
 
-.cell .title {
+.compartments {
+    display: flex;
+    flex-direction: row;
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+}
+
+.cell {
+    flex-grow: 1;
+    display: inline-block;
+    position: relative;
+}
+
+.cell:nth-child(2n) {
+    background-color: #f8f8f8;
+}
+
+.title {
     display: inline;
 }
 
@@ -40,4 +60,12 @@ tr {
 
 .missing-link {
     color: #c00000;
+}
+
+.cell-buttons {
+    visibility: hidden;
+}
+
+.cell:hover .cell-buttons {
+    visibility: visible;
 }

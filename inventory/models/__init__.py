@@ -10,3 +10,8 @@ from .tag import Tag
 from .workshop import Workshop
 from .container import Container, CanBeContained
 from .settings import Settings
+
+__all__ = [
+    Area, Box, Distributor, Documentation, FormFactor, Item, Layout,
+    Manufacturer, Tag, Workshop, Container, CanBeContained, Settings
+]

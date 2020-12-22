@@ -1,9 +1,8 @@
-from typing import Any, Dict
 from django.contrib.auth.decorators import login_required
 from django.utils.decorators import method_decorator
 from django.views.generic import ListView, DetailView
 
-from inventory.models import Workshop, Settings
+from inventory.models import Workshop
 from .utils import CanBeIndexMixin
 
 

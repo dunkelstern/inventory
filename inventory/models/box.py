@@ -1,3 +1,4 @@
+from django.urls import reverse
 from django.utils.text import slugify
 from django.template.loader import get_template, TemplateDoesNotExist
 from django.db import models
@@ -24,3 +25,7 @@ class Box(CanBeContained, Container):
             return template
         except TemplateDoesNotExist:
             return 'inventory/box-generic.html'
+
+    @property
+    def url(self):
+        return reverse("box-detail", args=[self.pk])

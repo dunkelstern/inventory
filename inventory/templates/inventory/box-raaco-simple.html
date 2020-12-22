@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+{% load static %}
+{% load admin_urls %}
+
+{% block head %}
+    <link rel="stylesheet" type="text/css" href="{% static "inventory/css/cell.css" %}">
+{% endblock %}
+
+{% block title %}{{ object.name }}{% endblock %}
+
+{% block content %}
+    <h2><a href="{{ object.container_url }}"><img class="icon" src="{% static "inventory/img/back.svg" %}"></a>{{ object.name }} <span class="small">{{ object.description}}</span></h2>
+
+    <table class="box">
+        <tbody>
+            {% for item in layouted.0 %}
+            <tr>
+                <td>
+                    <div class="compartments">
+                    {% for compartment in item %}
+                        {% include "inventory/cell.html" with item=compartment %}
+                    {% endfor %}
+                    </div>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+{% endblock %}

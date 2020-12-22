@@ -3,16 +3,16 @@
 {% load admin_urls %}
 
 {% block head %}
-    <link rel="stylesheet" type="text/css" href="{% static "inventory/css/box-all.css" %}">
+    <link rel="stylesheet" type="text/css" href="{% static "inventory/css/cell.css" %}">
 {% endblock %}
 
-{% block title %}{{ context.title }}{% endblock %}
+{% block title %}{{ object.name }}{% endblock %}
 
 {% block content %}
-    <h1>{{ object.name }}</h1>
-    
+    <h2><a href="{{ object.container_url}}"><img class="icon" src="{% static "inventory/img/back.svg" %}"></a>{{ object.name }} <span class="small">{{ object.description}}</span></h2>
+
     {% for part in layouted %}
-    <table>
+    <table class="box">
         <thead>
             <tr>
                 <th></th>
@@ -25,33 +25,12 @@
             {% for line in part %}
             <tr>
                 <th>{{ forloop.counter }}</th>
-                {% for column in line %}
+                {% for item in line %}
                     <td>
-                        <div class="cell">
-                            {% if column.name %}
-                                {% if column.metadata.package %}
-                                <div class="package">{{ column.metadata.package }}</div>
-                                {% endif %}
-                                {% if column.documentation.all %}
-                                    <a class="title" href="{{ column.documentation.all.0.file.url }}" {% if column.description %}title="{{ column.description }}"{% endif %}>
-                                        {{ column.name | linebreaksbr }}
-                                    </a>
-                                {% else %}
-                                    <div class="title missing-link" title="{{ column.description }}">
-                                        {{ column.name | linebreaksbr }}
-                                    </div>
-                                {% endif %}
-                                <a class="edit" href="{% url "admin:inventory_item_change" object_id=column.pk %}"><img src="{% static "inventory/img/edit.png" %}"></a>
-
-                                {% if column.price %}
-                                <div class="price">{{ column.price | floatformat:2 }} &euro;</div>
-                                {% endif %}
-                                {% if column.distributor %}
-                                <img class="shop" src="{{ column.distributor.icon.url }}" title="{{ column.distributor.name }}">
-                                {% endif %}
-                            {% else %}
-                                <a class="title missing" href="{% url "admin:inventory_item_add" %}?index={{ column.index }}&container={{ column.container_id }}"><img src="{% static "inventory/img/add.png" %}"></a>
-                            {% endif %}
+                        <div class="compartments">
+                            {% for compartment in item %}
+                                {% include "inventory/cell.html" with item=compartment %}
+                            {% endfor %}
                         </div>
                     </td>
                 {% endfor %}

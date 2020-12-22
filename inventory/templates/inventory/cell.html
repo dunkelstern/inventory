@@ -1,0 +1,34 @@
+{% load static %}
+{% load admin_urls %}
+
+<div class="cell">
+    {% if item.name %}
+        {% if item.metadata.package %}
+        <div class="package">{{ item.metadata.package }}</div>
+        {% endif %}
+        {% if item.documentation.all %}
+            <a class="title" href="{{ item.documentation.all.0.file.url }}" {% if item.description %}title="{{ item.description }}"{% endif %}>
+                {{ item.name | linebreaksbr }}
+            </a>
+        {% else %}
+            <div class="title missing-link" title="{{ item.description }}">
+                {{ item.name | linebreaksbr }}
+            </div>
+        {% endif %}
+        <div class="cell-buttons">
+            <a class="edit" href="{% url "admin:inventory_item_change" object_id=item.pk %}"><img class="icon" src="{% static "inventory/img/edit.svg" %}"></a>
+            <a class="details" href="{% url "item-detail" pk=item.pk %}"><img class="icon" src="{% static "inventory/img/detail.svg" %}"></a>
+        </div>
+
+        {% if item.price %}
+        <div class="price">{{ item.price | floatformat:2 }} &euro;</div>
+        {% endif %}
+        {% if item.distributor %}
+        <img class="shop" src="{{ item.distributor.icon.url }}" title="{{ item.distributor.name }}">
+        {% endif %}
+    {% else %}
+        <div class="cell-buttons">
+            <a class="title missing" href="{% url "admin:inventory_item_add" %}?index={{ item.index }}&container={{ item.container_id }}"><br><img class="icon" src="{% static "inventory/img/add.svg" %}"></a>
+        </div>
+    {% endif %}
+</div>

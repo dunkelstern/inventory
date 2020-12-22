@@ -1,38 +1,103 @@
 {% extends "base.html" %}
+{% load static %}
 {% load formatstring %}
 
 {% block title %}{{ item.name }}{% endblock %}
 
 {% block content %}
-    <h2>{{ item.name }}</h2>
-    <p>{{ item.description }}</p>
+    <h2><a href="{{ item.container_url }}"><img class="icon" src="{% static "inventory/img/back.svg" %}"></a>{{ item.name }}</h2>
 
-    <ul>
+    <table class="attribute-list">
+        <tbody>
+            <tr>
+                <th>Description</th>
+                <td>{{ item.description }}</td>
+            </tr>
+
         {% if item.manufacturer %}
-        <li>Manufacturer: <a href="{% url 'manufacturer-detail' item.manufacturer.id %}">{% if item.manufacturer.icon %}<img src="{{ item.manufacturer.icon.url }}" class="icon">{% endif %}{{ item.manufacturer.name }}</a></li>
+            <tr>
+                <th>Manufacturer</th>
+                <td>
+                    <a href="{% url 'manufacturer-detail' item.manufacturer.id %}">
+                        {% if item.manufacturer.icon %}<img src="{{ item.manufacturer.icon.url }}" class="icon">{% endif %}
+                        {{ item.manufacturer.name }}
+                    </a>
+                </td>
+            </tr>
         {% endif %}
-        {% if item.distributor %}
-        <li>Distributor: <a href="{% url 'distributor-detail' item.distributor.id %}">{% if item.distributor.icon %}<img src="{{ item.distributor.icon.url }}" class="icon">{% endif %}{{ item.distributor.name }}</a></li>
-        {% endif %}
-        {% if item.price %}
-        <li>Price: {{ item.price }} Euro</li>
-        {% endif %}
-        {% if item.last_ordered_on %}
-        <li>Last ordered: {{ item.last_ordered_on }}</li>
-        {% endif %}
-        {% if item.distributor_item_no %}
-        <li>Link: <a href="{% formatstring item.distributor.search_link item.distributor_item_no %}">{% formatstring item.distributor.search_link item.distributor_item_no %}</a></li>
-        {% endif %}
-        <li>Created at: {{ item.created_at }}</li>
-        <li>Last change: {{ item.changed_at }}</li>
-    </ul>
 
-    {% if item.documentation.exists %}
-    <h3>Datasheets</h3>
-    <ul>
-        {% for doc in item.documentation.all %}
-            <li><a href="{{ doc.file.url }}">{{ doc.file.name }}</a></li>
-        {% endfor %}
-    </ul>
-    {% endif %}
+        {% if item.distributor %}
+            <tr>
+                <th>Distributor</th>
+                <td>
+                    <a href="{% url 'distributor-detail' item.distributor.id %}">
+                        {% if item.distributor.icon %}<img src="{{ item.distributor.icon.url }}" class="icon">{% endif %}
+                        {{ item.distributor.name }}
+                    </a>
+                </td>
+            </tr>
+        {% endif %}
+
+        {% if item.form_factor %}
+            <tr>
+                <th>Form factor</th>
+                <td>
+                    {% if item.form_factor.datasheet %}
+                        <a href="{% url 'distributor-detail' item.distributor.id %}">
+                            {% if item.form_factor.icon %}<img src="{{ item.form_factor.icon.url }}" class="icon">{% endif %}
+                            {{ item.form_factor.name }}
+                        </a>
+                    {% else %}
+                        {% if item.form_factor.icon %}<img src="{{ item.form_factor.icon.url }}" class="icon">{% endif %}
+                        {{ item.form_factor.name }}
+                    {% endif %}
+                    ({{ item.form_factor.description }})
+                </td>
+            </tr>
+        {% endif %}
+
+        {% if item.price %}
+            <tr>
+                <th>Price</th>
+                <td>{{ item.price }} Euro</td>
+            </tr>
+        {% endif %}
+
+        {% if item.last_ordered_on %}
+            <tr>
+                <th>Last ordered</th>
+                <td>{{ item.last_ordered_on }}</td>
+            </tr>
+        {% endif %}
+
+        {% if item.distributor_item_no %}
+            <tr>
+                <th>Link</th>
+                <td>
+                    <a href="{% formatstring item.distributor.search_link item.distributor_item_no %}">{% formatstring item.distributor.search_link item.distributor_item_no %}</a>
+                </td>
+            </tr>
+        {% endif %}
+
+            <tr><th>Created at</th><td>{{ item.created_at }}</td></tr>
+        {% if item.created_at != item.changed_at %}
+            <tr><th>Last change</th><td>{{ item.changed_at }}</td></tr>
+        {% endif %}
+
+        {% if item.documentation.exists %}
+            <tr>
+                <th>Datasheets</th>
+                <td>
+                    <ul>
+                    {% for doc in item.documentation.all %}
+                        <li><a href="{{ doc.file.url }}">{{ doc.file.name }}</a></li>
+                    {% endfor %}
+                    </ul>
+                </td>
+            </tr>
+        {% endif %}
+        </tbody>
+    </table>
+
+
 {% endblock %}

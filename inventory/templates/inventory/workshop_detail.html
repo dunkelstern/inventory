@@ -1,25 +1,39 @@
 {% extends "base.html" %}
+{% load static %}
 
 {% block title %}Workshop {{ workshop.name }}{% endblock %}
 
 {% block content %}
-    <h2>{{ workshop.name }}</h2>
-    
-    {% if workshop.area_related.exists %}
+    <h2><a href="{% url "workshop-list" %}"><img class="icon" src="{% static "inventory/img/back.svg" %}"></a>{{ workshop.name }} <span class="small">{{ workshop.description}}</span></h2>
+
     <h3>Areas</h3>
     <ul>
         {% for area in workshop.area_related.all %}
-            <li><a href="{% url 'area-detail' area.id %}" title="{{ area.description }}">{{ area.name }}</a></li>
+            <li>
+                <a href="{% url 'area-detail' area.id %}" title="{{ area.description }}">{{ area.name }}</a>
+                ({{ area.description }})
+                <a class="edit" href="{% url "admin:inventory_area_change" object_id=area.pk %}"><img class="icon" src="{% static "inventory/img/edit.svg" %}"></a>
+            </li>
+        {% empty %}
+            <li>No areas defined</li>
         {% endfor %}
     </ul>
-    {% endif %}
-    
-    {% if workshop.box_related.exists %}
+
+    <p><a href="{% url "admin:inventory_area_add" %}?container={{ workshop.id }}&index=0">Create new area...</a></p>
+
     <h3>Boxes</h3>
     <ul>
         {% for box in workshop.box_related.all %}
-            <li><a href="{% url 'box-detail' box.id %}" title="{{ box.description }}">{{ box.name }} ({{ box.layout.name }})</a></li>
+            <li>
+                <a href="{% url 'box-detail' box.id %}" title="{{ box.description }}">{{ box.name }} ({{ box.layout.name }})</a>
+                ({{ box.description }})
+                <a class="edit" href="{% url "admin:inventory_box_change" object_id=box.pk %}"><img class="icon" src="{% static "inventory/img/edit.svg" %}"></a>
+            </li>
+        {% empty %}
+            <li>No boxes defined</li>
         {% endfor %}
     </ul>
-    {% endif %}
+
+    <p><a href="{% url "admin:inventory_box_add" %}?container={{ workshop.id }}&index=0">Create new box...</a></p>
+
 {% endblock %}

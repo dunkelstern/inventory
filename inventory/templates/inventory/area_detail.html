@@ -1,25 +1,37 @@
 {% extends "base.html" %}
+{% load static %}
 
 {% block title %}{{ area.container.display_name }} - {{ area.name }}{% endblock %}
 
 {% block content %}
-    <h2>{{ area.container.display_name }} - {{ area.name }}</h2>
-    
-    {% if area.area_related.exists %}
+    <h2><a href="{{ area.container_url }}"><img class="icon" src="{% static "inventory/img/back.svg" %}"></a>{{ area.container.display_name }} - {{ area.name }} <span class="small">{{ area.description}}</span></h2>
+
     <h3>Areas</h3>
     <ul>
         {% for a in area.area_related.all %}
-            <li><a href="{% url 'area-detail' a.id %}" title="{{ a.description }}">{{ a.name }}</a></li>
+            <li>
+                <a href="{% url 'area-detail' a.id %}" title="{{ a.description }}">{{ a.name }}</a>
+                <a class="edit" href="{% url "admin:inventory_area_change" object_id=area.pk %}"><img class="icon" src="{% static "inventory/img/edit.svg" %}"></a>
+
+            </li>
+        {% empty %}
+            <li>No areas defined</li>
         {% endfor %}
     </ul>
-    {% endif %}
-    
-    {% if area.box_related.exists %}
+
+    <p><a href="{% url "admin:inventory_area_add" %}?container={{ area.id }}&index=0">Create new area...</a></p>
+
     <h3>Boxes</h3>
     <ul>
         {% for box in area.box_related.all %}
-            <li><a href="{% url 'box-detail' box.id %}" title="{{ box.description }}">{{ box.name }} ({{ box.layout.name }})</a></li>
+            <li>
+                <a href="{% url 'box-detail' box.id %}" title="{{ box.description }}">{{ box.name }} ({{ box.layout.name }})</a>
+                <a class="edit" href="{% url "admin:inventory_box_change" object_id=box.pk %}"><img class="icon" src="{% static "inventory/img/edit.svg" %}"></a>
+            </li>
+        {% empty %}
+            <li>No boxes defined</li>
         {% endfor %}
     </ul>
-    {% endif %}
+
+    <p><a href="{% url "admin:inventory_box_add" %}?container={{ area.id }}&index=0">Create new container...</a></p>
 {% endblock %}

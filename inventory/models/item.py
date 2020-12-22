@@ -21,7 +21,10 @@ class Item(CanBeContained):
     changed_at = models.DateTimeField(auto_now=True)
 
     def __str__(self):
-        return self.name + ", " + str(self.form_factor)
+        items = [self.name, self.description]
+        items.extend([tag.description for tag in self.tags.all()])
+        items.append(str(self.form_factor))
+        return ", ".join(items)
 
     @property
     def all_tags(self):

@@ -7,6 +7,7 @@ class FormFactorAdmin(admin.ModelAdmin):
     readonly_fields = ['created_at', 'changed_at']
     search_fields = ['name', 'description']
     list_display = ['name', 'description']
+    filter_horizontal = ('tags',)
 
 
 admin.site.register(FormFactor, FormFactorAdmin)

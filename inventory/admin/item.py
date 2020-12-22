@@ -16,6 +16,7 @@ class ItemAdmin(admin.ModelAdmin):
     list_filter = ['container']
     search_fields = ['name', 'description']
     readonly_fields = ['created_at', 'changed_at']
+    filter_horizontal = ('tags', 'documentation')
 
     def view_on_site(self, obj):
         url = reverse('item-detail', kwargs={'pk': obj.id})

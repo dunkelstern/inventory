@@ -56,6 +56,15 @@ tr {
     opacity: 0.75;
 }
 
+.cell .form_factor {
+    position: absolute;
+    display: inline;
+    top: 5px;
+    right: 5px;
+    font-size: xx-small;
+    color: #808080;
+}
+
 .cell a {
     color: #000000;
     text-decoration: none;

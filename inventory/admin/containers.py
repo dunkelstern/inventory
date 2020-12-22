@@ -52,6 +52,7 @@ class DocumentationInlineAdmin(NestedTabularInline):
 class ItemInlineAdmin(NestedStackedInline):
     model = Item
     extra = 1
+    filter_horizontal = ('tags', 'documentation')
     #inlines = [DocumentationInlineAdmin]
 
 
@@ -61,6 +62,7 @@ class BoxAdmin(NestedModelAdmin):
     list_filter = ['container']
     search_fields = ['name', 'description']
     inlines = [BoxInlineAdmin, ItemInlineAdmin]
+    filter_horizontal = ('tags',)
 
     def view_on_site(self, obj):
         url = reverse('box-detail', kwargs={'pk': obj.id})

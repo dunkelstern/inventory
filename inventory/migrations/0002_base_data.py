@@ -11,6 +11,58 @@ def default_data(apps, schema_editor):
     Layout = apps.get_model('inventory', 'Layout')
     FormFactor = apps.get_model('inventory', 'FormFactor')
     Distributor = apps.get_model('inventory', 'Distributor')
+    Settings = apps.get_model('inventory', 'Settings')
+    Tag = apps.get_model('inventory', 'Tag')
+
+    Settings.objects.create(default_container=None)
+
+    tag_smd = Tag.objects.create(name='SMD', description='SMD')
+    tag_tht = Tag.objects.create(name='THT', description='Through hole')
+    tag_imperial = Tag.objects.create(name='Imperial', description='Imperial measurements')
+    tag_metric = Tag.objects.create(name='Metric', description='Metric measurements')
+    tag_passive = Tag.objects.create(name='Passive', description='Passive part')
+    tag_capacitor = Tag.objects.create(name='Capacitor', description='Capacitor')
+    tag_electrolytic = Tag.objects.create(name='Electrolytic', description='Electrolytic capacitor')
+    tag_tantalum = Tag.objects.create(name='Tantalum', description='Tantalum capacitor')
+    tag_diode = Tag.objects.create(name='Diode', description='Diode')
+    tag_resistor = Tag.objects.create(name='Resistor', description='Resistor')
+    tag_chip = Tag.objects.create(name='Chip', description='Chip')
+    tag_polarized = Tag.objects.create(name='Polarized', description='Polarized part')
+    tag_terminals = {}
+    for i in range(2, 65):
+        if i > 10 and i % 2 != 0:
+            continue
+        tag_terminals[i] = Tag.objects.create(
+            name="Terminals:{}".format(i),
+            description='{} terminals'.format(i)
+        )
+    tag_terminals[128] = Tag.objects.create(name='Terminals:128', description='128 terminals')
+
+    pin_spacing = [
+        '0.4', '0.5', '0.635', '0.65', '0.8', '1.27', '1.0',
+        '1.78', '2.0',
+        '2.5', '2.29', '2.54', '3.5',
+        '5.0', '5.08', '7.5'
+    ]
+    tag_pin_spacing = {}
+    for i in pin_spacing:
+        tag_pin_spacing[i] = Tag.objects.create(
+            name='PinSpacing:{}'.format(i),
+            description='Pin spacing {}mm'.format(i)
+        )
+
+    tag_row_spacing_7_62 = Tag.objects.create(name='RowSpacing:7.62', description='Row spacing 7.62mm')
+    tag_row_spacing_15_24 = Tag.objects.create(name='RowSpacing:15.24', description='Row spacing 15.24mm')
+
+    tag_metal_can = Tag.objects.create(name='MetalCan', description='Metal can')
+    tag_plastic_package = Tag.objects.create(name='PlasticPackage', description='Plastic package')
+    tag_panel_mount = Tag.objects.create(name='PanelMount', description='Panel mount')
+    tag_power_package = Tag.objects.create(name='PowerPackage', description='Power package')
+
+    tag_germany = Tag.objects.create(name='Germany', description='Germany specific')
+    tag_uk = Tag.objects.create(name='UK', description='United Kingdom specific')
+    tag_usa = Tag.objects.create(name='US', description='United States of America specific')
+
 
     single_item_layout = Layout.objects.create(
         name='Single item',
@@ -32,481 +84,357 @@ def default_data(apps, schema_editor):
         index=0
     )
 
-    FormFactor.objects.bulk_create([
-        # Passive SMD
-        FormFactor(name="2920", description="SMD, passives, imperial, 7.4×5.1mm"),
-        FormFactor(name="2725", description="SMD, passives, imperial, 6.9×6.3mm"),
-        FormFactor(name="2512", description="SMD, passives, imperial, 6.3×3.2mm"),
-        FormFactor(name="2010", description="SMD, passives, imperial, 5.0×2.5mm"),
-        FormFactor(name="1812", description="SMD, passives, imperial, 4.5×6.4mm"),
-        FormFactor(name="1806", description="SMD, passives, imperial, 4.5×2.6mm"),
-        FormFactor(name="1210", description="SMD, passives, imperial, 3.2×2.5mm"),
-        FormFactor(name="1206", description="SMD, passives, imperial, 3.2×1.6mm"),
-        FormFactor(name="1008", description="SMD, passives, imperial, 2.5×2.0mm"),
-        FormFactor(name="0805", description="SMD, passives, imperial, 2.0×1.25mm"),
-        FormFactor(name="0603", description="SMD, passives, imperial, 1.6×0.8mm"),
-        FormFactor(name="0402", description="SMD, passives, imperial, 1.0×0.5mm"),
-        FormFactor(name="0201", description="SMD, passives, imperial, 0.6×0.3mm"),
+    tags_passive = [tag_smd, tag_passive, tag_imperial, tag_terminals[2]]
+    tags_tantalum = [tag_smd, tag_capacitor, tag_tantalum, tag_metric, tag_terminals[2]]
+    tags_electrolytic = [tag_smd, tag_capacitor, tag_electrolytic, tag_polarized, tag_metric, tag_terminals[2]]
+    tags_diode = [tag_smd, tag_polarized, tag_terminals[2]]
+    smd_2_terminal = [tag_smd, tag_terminals[2]]
 
-        # Tantalum SMD
-        FormFactor(name="EIA 2012-12", description="SMD, Tantalum, Kemet R, AVX R, 2.0×1.3×1.2mm"),
-        FormFactor(name="EIA 3216-10", description="SMD, Tantalum, Kemet I, AVX K, 3.2×1.6×1.0mm"),
-        FormFactor(name="EIA 3216-12", description="SMD, Tantalum, Kemet S, AVX S, 3.2×1.6×1.0mm"),
-        FormFactor(name="EIA 3216-18", description="SMD, Tantalum, Kemet A, AVX A, 3.2×1.8×1.8mm"),
-        FormFactor(name="EIA 3528-12", description="SMD, Tantalum, Kemet T, AVX T, 3.5×1.2×1.2mm"),
-        FormFactor(name="EIA 3528-21", description="SMD, Tantalum, Kemet B, AVX B, 3.5×2.1×2.1mm"),
-        FormFactor(name="EIA 6032-15", description="SMD, Tantalum, Kemet U, AVX W, 6.0×1.5×1.5mm"),
-        FormFactor(name="EIA 6032-28", description="SMD, Tantalum, Kemet C, AVX C, 6.0×2.8×2.8mm"),
-        FormFactor(name="EIA 7260-38", description="SMD, Tantalum, Kemet E, AVX V, 7.2×3.8×3.8mm"),
-        FormFactor(name="EIA 7343-20", description="SMD, Tantalum, Kemet V, AVX Y, 7.3×4.3×2.0mm"),
-        FormFactor(name="EIA 7343-31", description="SMD, Tantalum, Kemet D, AVX D, 7.3×4.3×3.1mm"),
-        FormFactor(name="EIA 7343-43", description="SMD, Tantalum, Kemet X, AVX E, 7.3×4.3×4.3mm"),
+    def create_ff(name, description, tags):
+        ff = FormFactor.objects.create(
+            name=name,
+            description=description
+        )
+        ff.tags.set(tags)
 
-        # Electrolyte SMD
-        FormFactor(name="Cornell A", description="SMD, Electrolyte, 3.3×3.3×5.5mm"),
-        FormFactor(name="Panasonic B", description="SMD, Electrolyte, 4.3×4.3×6.1mm"),
-        FormFactor(name="Chemi-Con D", description="SMD, Electrolyte, 4.3×4.3×5.7mm"),
-        FormFactor(name="Panasonic C", description="SMD, Electrolyte, 5.3×5.3×6.1mm"),
-        FormFactor(name="Chemi-Con E", description="SMD, Electrolyte, 5.3×5.3×5.7mm"),
-        FormFactor(name="Panasonic D", description="SMD, Electrolyte, 6.6×6.6×6.1mm"),
-        FormFactor(name="Chemi-Con F", description="SMD, Electrolyte, 6.6×6.6×5.7mm"),
-        FormFactor(name="Panasonic E/F", description="SMD, Electrolyte, 8.3×8.3×6.5mm"),
-        FormFactor(name="Chemi-Con H", description="SMD, Electrolyte, 8.3×8.3×6.5mm"),
-        FormFactor(name="Panasonic G", description="SMD, Electrolyte, 10.3×10.3×10.5mm"),
-        FormFactor(name="Chemi-Con J", description="SMD, Electrolyte, 10.3×10.3×10.5mm"),
-        FormFactor(name="Chemi-Con K", description="SMD, Electrolyte, 13.0×13.0×14.0mm"),
-        FormFactor(name="Panasonic H", description="SMD, Electrolyte, 13.5×13.5×14.0mm"),
-        FormFactor(name="Panasonic J", description="SMD, Electrolyte, 17×17×17mm"),
-        FormFactor(name="Chemi-Con L", description="SMD, Electrolyte, 17×17×17mm"),
-        FormFactor(name="Panasonic K", description="SMD, Electrolyte, 19×19×17mm"),
-        FormFactor(name="Chemi-Con M", description="SMD, Electrolyte, 19×19×17mm"),
+    def create_chip(name, min_pin, max_pin, sides=2, tags=None, aka=None):
+        FormFactor = apps.get_model('inventory', 'FormFactor')
+        if tags is None:
+            tags = [tag_chip]
+        else:
+            tags.append(tag_chip)
 
-        # Diodes
-        FormFactor(name="SOD-80C", description="SMD, Diode, 3.5×⌀1.5mm"),
-        FormFactor(name="SOD-123", description="SMD, Diode, 2.65×1.6×1.35mm"),
-        FormFactor(name="SOD-128", description="SMD, Diode, 3.8×2.5×1.1mm"),
-        FormFactor(name="SOD-323", description="SMD, Diode, 1.7×1.25×1.1mm"),
-        FormFactor(name="SOD-523", description="SMD, Diode, 1.2×0.8×0.65mm"),
-        FormFactor(name="SOD-723", description="SMD, Diode, 1.4×0.6×0.65mm"),
-        FormFactor(name="SOD-923", description="SMD, Diode, 0.8×0.6×0.4mm"),
+        for pins in range(min_pin, max_pin + 1, sides):
+            if pins > 20 and pins % 4 != 0:
+                continue
+            ff = FormFactor.objects.create(
+                name=name.format(pins),
+                description="aka. {}".format(aka.format(pins)) if aka is not None else ""
+            )
+            t = list(tags)
+            t.append(tag_terminals[pins])
+            ff.tags.set(t)
 
-        FormFactor(name="MicroMELF", description="SMD, Diode or Resistor, 2.2x⌀1.1mm"),
-        FormFactor(name="MiniMELF", description="SMD, aka. SOD-80 or DO-213AA, Diode or Resistor, 3.6x⌀1.4mm"),
-        FormFactor(name="MELF", description="SMD, aka. SOD-106 or DO-213AB, Diode or Resistor, 5.8x⌀2.2mm"),
+    # Passive SMD
+    create_ff("2920", "7.4×5.1mm", tags_passive)
+    create_ff("2725", "6.9×6.3mm", tags_passive)
+    create_ff("2512", "6.3×3.2mm", tags_passive)
+    create_ff("2010", "5.0×2.5mm", tags_passive)
+    create_ff("1812", "4.5×6.4mm", tags_passive)
+    create_ff("1806", "4.5×2.6mm", tags_passive)
+    create_ff("1210", "3.2×2.5mm", tags_passive)
+    create_ff("1206", "3.2×1.6mm", tags_passive)
+    create_ff("1008", "2.5×2.0mm", tags_passive)
+    create_ff("0805", "2.0×1.25mm",tags_passive)
+    create_ff("0603", "1.6×0.8mm", tags_passive)
+    create_ff("0402", "1.0×0.5mm", tags_passive)
+    create_ff("0201", "0.6×0.3mm", tags_passive)
 
-        FormFactor(name="DO-214AA", description="SMD, Diode, 5.4×3.6×2.65mm"),
-        FormFactor(name="DO-214AB", description="SMD, Diode, 7.95×5.9×2.25mm"),
-        FormFactor(name="DO-214AC", description="SMD, Diode, 5.2×2.6×2.15mm"),
+    # Tantalum SMD
+    create_ff("EIA 2012-12", "Kemet R, AVX R, 2.0×1.3×1.2mm", tags_tantalum)
+    create_ff("EIA 3216-10", "Kemet I, AVX K, 3.2×1.6×1.0mm", tags_tantalum)
+    create_ff("EIA 3216-12", "Kemet S, AVX S, 3.2×1.6×1.0mm", tags_tantalum)
+    create_ff("EIA 3216-18", "Kemet A, AVX A, 3.2×1.8×1.8mm", tags_tantalum)
+    create_ff("EIA 3528-12", "Kemet T, AVX T, 3.5×1.2×1.2mm", tags_tantalum)
+    create_ff("EIA 3528-21", "Kemet B, AVX B, 3.5×2.1×2.1mm", tags_tantalum)
+    create_ff("EIA 6032-15", "Kemet U, AVX W, 6.0×1.5×1.5mm", tags_tantalum)
+    create_ff("EIA 6032-28", "Kemet C, AVX C, 6.0×2.8×2.8mm", tags_tantalum)
+    create_ff("EIA 7260-38", "Kemet E, AVX V, 7.2×3.8×3.8mm", tags_tantalum)
+    create_ff("EIA 7343-20", "Kemet V, AVX Y, 7.3×4.3×2.0mm", tags_tantalum)
+    create_ff("EIA 7343-31", "Kemet D, AVX D, 7.3×4.3×3.1mm", tags_tantalum)
+    create_ff("EIA 7343-43", "Kemet X, AVX E, 7.3×4.3×4.3mm", tags_tantalum)
 
-        # SOT 3 terminals
-        FormFactor(name="SOT-23-3", description="SMD, 3 terminals, 2.92×1.3×1.12mm"),
-        FormFactor(name="SOT-223-3", description="SMD, 3 terminals"),
-        FormFactor(name="SOT-323", description="SMD, 3 terminals, 2.0×1.25×1.1mm"),
-        FormFactor(name="SOT-416", description="SMD, 3 terminals, 1.6×0.8×0.9mm"),
-        FormFactor(name="SOT-663", description="SMD, 3 terminals, 2.6×1.2×0.6mm"),
-        FormFactor(name="SOT-723", description="SMD, 3 terminals, 1.2×0.8×0.55mm"),
-        FormFactor(name="SOT-883", description="SMD, 3 terminals, 1.0×0.6×0.5mm"),
+    # Electrolyte SMD
+    create_ff("Cornell A", "3.3×3.3×5.5mm", tags_electrolytic)
+    create_ff("Panasonic B", "4.3×4.3×6.1mm", tags_electrolytic)
+    create_ff("Chemi-Con D", "4.3×4.3×5.7mm", tags_electrolytic)
+    create_ff("Panasonic C", "5.3×5.3×6.1mm", tags_electrolytic)
+    create_ff("Chemi-Con E", "5.3×5.3×5.7mm", tags_electrolytic)
+    create_ff("Panasonic D", "6.6×6.6×6.1mm", tags_electrolytic)
+    create_ff("Chemi-Con F", "6.6×6.6×5.7mm", tags_electrolytic)
+    create_ff("Panasonic E/F", "8.3×8.3×6.5mm", tags_electrolytic)
+    create_ff("Chemi-Con H", "8.3×8.3×6.5mm", tags_electrolytic)
+    create_ff("Panasonic G", "10.3×10.3×10.5mm", tags_electrolytic)
+    create_ff("Chemi-Con J", "10.3×10.3×10.5mm", tags_electrolytic)
+    create_ff("Chemi-Con K", "13.0×13.0×14.0mm", tags_electrolytic)
+    create_ff("Panasonic H", "13.5×13.5×14.0mm", tags_electrolytic)
+    create_ff("Panasonic J", "17×17×17mm", tags_electrolytic)
+    create_ff("Chemi-Con L", "17×17×17mm", tags_electrolytic)
+    create_ff("Panasonic K", "19×19×17mm", tags_electrolytic)
+    create_ff("Chemi-Con M", "19×19×17mm", tags_electrolytic)
 
-        # SOT 4 terminals
-        FormFactor(name="SOT-89", description="SMD, 4 terminals, 4.5×2.5×1.5mm"),
-        FormFactor(name="SOT-143", description="SMD, 4 terminals, 2.9×1.3×1.22mm"),
-        FormFactor(name="SOT-223", description="SMD, 4 terminals, 6.5×3.5×1.8mm"),
+    # Diodes
+    create_ff("SOD-80C", "3.5×⌀1.5mm", tags_diode)
+    create_ff("SOD-123", "2.65×1.6×1.35mm", tags_diode)
+    create_ff("SOD-128", "3.8×2.5×1.1mm", tags_diode)
+    create_ff("SOD-323", "1.7×1.25×1.1mm", tags_diode)
+    create_ff("SOD-523", "1.2×0.8×0.65mm", tags_diode)
+    create_ff("SOD-723", "1.4×0.6×0.65mm", tags_diode)
+    create_ff("SOD-923", "0.8×0.6×0.4mm", tags_diode)
 
-        # Power transistors/mosfets
-        FormFactor(name="TO-252", description="SMD, aka. DPAK, SOT-428, 3 or 5 terminals, 6.5×10.0×2.2mm"),
-        FormFactor(name="TO-263", description="SMD, aka. D2PAK, SOT-404, 3, 5, 6, 7, 8 or 9 terminals"),
-        FormFactor(name="TO-268", description="SMD, aka. D3PAK"),
+    create_ff("MicroMELF", "2.2x⌀1.1mm", smd_2_terminal)
+    create_ff("MiniMELF", "aka. SOD-80 or DO-213AA, 3.6x⌀1.4mm", smd_2_terminal)
+    create_ff("MELF", "aka. SOD-106 or DO-213AB, 5.8x⌀2.2mm", smd_2_terminal)
 
-        # SOT 5 terminals
-        FormFactor(name="SOT-23-5", description="SMD, 5 terminals, 2.92×1.3×1.12mm"),
-        FormFactor(name="SOT-353", description="SMD, 5 terminals, 2.0×1.25×0.95mm"),
-        FormFactor(name="SOT-665", description="SMD, 5 terminals, 1.6×1.6×0.55mm"),
-        FormFactor(name="SOT-891", description="SMD, 5 terminals, 1.0×1.0×0.5mm"),
-        FormFactor(name="SOT-953", description="SMD, 5 terminals, 1.0×0.8×0.5mm"),
+    create_ff("DO-214AA", "SMD, Diode, 5.4×3.6×2.65mm", tags_diode)
+    create_ff("DO-214AB", "SMD, Diode, 7.95×5.9×2.25mm", tags_diode)
+    create_ff("DO-214AC", "SMD, Diode, 5.2×2.6×2.15mm", tags_diode)
 
-        # 6 terminals
-        FormFactor(name="SOT-23-6", description="SMD, 6 terminals, 2.92×1.3×1.12mm"),
-        FormFactor(name="SOT-363", description="SMD, 6 terminals, 2.0×1.25×0.95mm"),
-        FormFactor(name="SOT-563", description="SMD, 6 terminals, 1.6×1.2×0.6mm"),
-        FormFactor(name="SOT-666", description="SMD, 6 terminals, 1.6×1.2×0.6mm"),
-        FormFactor(name="SOT-886", description="SMD, 6 terminals, 1.45×1.0×0.5mm"),
-        FormFactor(name="SOT-963", description="SMD, 6 terminals, 1.0×1.0×0.5mm"),
-        FormFactor(name="SOT-1115", description="SMD, 6 terminals, 1.0×0.9×0.35mm"),
-        FormFactor(name="SOT-1202", description="SMD, 6 terminals, 1.0×1.0×0.35mm"),
-        FormFactor(name="TSOP-6", description="SMD, 6 terminals"),
+    # SOT 3 terminals
+    create_ff("SOT-23-3", "2.92×1.3×1.12mm", [tag_smd, tag_chip, tag_terminals[3]])
+    create_ff("SOT-223-3", "", [tag_smd, tag_chip, tag_terminals[3]])
+    create_ff("SOT-323", "2.0×1.25×1.1mm", [tag_smd, tag_chip, tag_terminals[3]])
+    create_ff("SOT-416", "1.6×0.8×0.9mm", [tag_smd, tag_chip, tag_terminals[3]])
+    create_ff("SOT-663", "2.6×1.2×0.6mm", [tag_smd, tag_chip, tag_terminals[3]])
+    create_ff("SOT-723", "1.2×0.8×0.55mm", [tag_smd, tag_chip, tag_terminals[3]])
+    create_ff("SOT-883", "1.0×0.6×0.5mm", [tag_smd, tag_chip, tag_terminals[3]])
 
-        # More than 6 terminals
-        FormFactor(name="SOIC-8", description="SMD, aka. SO-8, 8 terminals, pin spacing 1.27mm"),
-        FormFactor(name="SOIC-10", description="SMD, aka. SO-10, 10 terminals, pin spacing 1.27mm"),
-        FormFactor(name="SOIC-12", description="SMD, aka. SO-12, 12 terminals, pin spacing 1.27mm"),
-        FormFactor(name="SOIC-14", description="SMD, aka. SO-14, 14 terminals, pin spacing 1.27mm"),
-        FormFactor(name="SOIC-16", description="SMD, aka. SO-16, 16 terminals, pin spacing 1.27mm"),
-        FormFactor(name="SOIC-18", description="SMD, aka. SO-18, 18 terminals, pin spacing 1.27mm"),
-        FormFactor(name="SOIC-20", description="SMD, aka. SO-20, 20 terminals, pin spacing 1.27mm"),
-        FormFactor(name="SOIC-24", description="SMD, aka. SO-24, 24 terminals, pin spacing 1.27mm"),
-        FormFactor(name="SOIC-32", description="SMD, aka. SO-32, 32 terminals, pin spacing 1.27mm"),
+    # SOT 4 terminals
+    create_ff("SOT-89", "4.5×2.5×1.5mm", [tag_smd, tag_chip, tag_terminals[4]])
+    create_ff("SOT-143", "2.9×1.3×1.22mm", [tag_smd, tag_chip, tag_terminals[4]])
+    create_ff("SOT-223", "6.5×3.5×1.8mm", [tag_smd, tag_chip, tag_terminals[4]])
 
-        FormFactor(name="TSOP-8", description="SMD, 8 terminals, pin spacing 0.5mm"),
-        FormFactor(name="TSOP-10", description="SMD, 10 terminals, pin spacing 0.5mm"),
-        FormFactor(name="TSOP-12", description="SMD, 12 terminals, pin spacing 0.5mm"),
-        FormFactor(name="TSOP-14", description="SMD, 14 terminals, pin spacing 0.5mm"),
-        FormFactor(name="TSOP-16", description="SMD, 16 terminals, pin spacing 0.5mm"),
-        FormFactor(name="TSOP-18", description="SMD, 18 terminals, pin spacing 0.5mm"),
-        FormFactor(name="TSOP-20", description="SMD, 20 terminals, pin spacing 0.5mm"),
-        FormFactor(name="TSOP-24", description="SMD, 24 terminals, pin spacing 0.5mm"),
-        FormFactor(name="TSOP-32", description="SMD, 32 terminals, pin spacing 0.5mm"),
+    # Power transistors/mosfets
+    create_ff("TO-252", "aka. DPAK, SOT-428, 6.5×10.0×2.2mm", [tag_smd, tag_chip, tag_power_package, tag_terminals[3], tag_terminals[5]])
+    create_ff("TO-263", "aka. D2PAK, SOT-404", [tag_smd, tag_chip, tag_power_package, tag_terminals[3], tag_terminals[5], tag_terminals[6], tag_terminals[7], tag_terminals[8], tag_terminals[9]])
+    create_ff("TO-268", "aka. D3PAK", [tag_smd, tag_chip, tag_power_package, tag_terminals[3]])
 
-        FormFactor(name="MSOP-8", description="SMD, 8 terminals, pin spacing 0.65mm, 3.0×3.0mm"),
-        FormFactor(name="MSOP-10", description="SMD, 10 terminals, pin spacing 0.5mm, 3.0×3.0mm"),
-        FormFactor(name="MSOP-12", description="SMD, 12 terminals, pin spacing 0.65mm, 3.0×4.0mm"),
-        FormFactor(name="MSOP-16", description="SMD, 16 terminals, pin spacing 0.5mm, 3.0×4.0mm"),
+    # SOT 5 terminals
+    create_ff("SOT-23-5", "2.92×1.3×1.12mm", [tag_smd, tag_chip, tag_terminals[5]])
+    create_ff("SOT-353", "2.0×1.25×0.95mm", [tag_smd, tag_chip, tag_terminals[5]])
+    create_ff("SOT-665", "1.6×1.6×0.55mm", [tag_smd, tag_chip, tag_terminals[5]])
+    create_ff("SOT-891", "1.0×1.0×0.5mm", [tag_smd, tag_chip, tag_terminals[5]])
+    create_ff("SOT-953", "1.0×0.8×0.5mm", [tag_smd, tag_chip, tag_terminals[5]])
 
-        FormFactor(name="SSOP-8-0.635", description="SMD, 8 terminals, pin spacing 0.635mm"),
-        FormFactor(name="SSOP-10-0.635", description="SMD, 10 terminals, pin spacing 0.635mm"),
-        FormFactor(name="SSOP-12-0.635", description="SMD, 12 terminals, pin spacing 0.635mm"),
-        FormFactor(name="SSOP-14-0.635", description="SMD, 14 terminals, pin spacing 0.635mm"),
-        FormFactor(name="SSOP-16-0.635", description="SMD, 16 terminals, pin spacing 0.635mm"),
-        FormFactor(name="SSOP-18-0.635", description="SMD, 18 terminals, pin spacing 0.635mm"),
-        FormFactor(name="SSOP-20-0.635", description="SMD, 20 terminals, pin spacing 0.635mm"),
-        FormFactor(name="SSOP-24-0.635", description="SMD, 24 terminals, pin spacing 0.635mm"),
-        FormFactor(name="SSOP-32-0.635", description="SMD, 32 terminals, pin spacing 0.635mm"),
+    # 6 terminals
+    create_ff("SOT-23-6", "2.92×1.3×1.12mm", [tag_smd, tag_chip, tag_terminals[6]])
+    create_ff("SOT-363", "2.0×1.25×0.95mm", [tag_smd, tag_chip, tag_terminals[6]])
+    create_ff("SOT-563", "1.6×1.2×0.6mm", [tag_smd, tag_chip, tag_terminals[6]])
+    create_ff("SOT-666", "1.6×1.2×0.6mm", [tag_smd, tag_chip, tag_terminals[6]])
+    create_ff("SOT-886", "1.45×1.0×0.5mm", [tag_smd, tag_chip, tag_terminals[6]])
+    create_ff("SOT-963", "1.0×1.0×0.5mm", [tag_smd, tag_chip, tag_terminals[6]])
+    create_ff("SOT-1115", "1.0×0.9×0.35mm", [tag_smd, tag_chip, tag_terminals[6]])
+    create_ff("SOT-1202", "1.0×1.0×0.35mm", [tag_smd, tag_chip, tag_terminals[6]])
+    create_ff("TSOP-6", "", [tag_smd, tag_chip, tag_terminals[6]])
 
-        FormFactor(name="SSOP-8-0.65", description="SMD, 8 terminals, pin spacing 0.65mm"),
-        FormFactor(name="SSOP-10-0.65", description="SMD, 10 terminals, pin spacing 0.65mm"),
-        FormFactor(name="SSOP-12-0.65", description="SMD, 12 terminals, pin spacing 0.65mm"),
-        FormFactor(name="SSOP-14-0.65", description="SMD, 14 terminals, pin spacing 0.65mm"),
-        FormFactor(name="SSOP-16-0.65", description="SMD, 16 terminals, pin spacing 0.65mm"),
-        FormFactor(name="SSOP-18-0.65", description="SMD, 18 terminals, pin spacing 0.65mm"),
-        FormFactor(name="SSOP-20-0.65", description="SMD, 20 terminals, pin spacing 0.65mm"),
-        FormFactor(name="SSOP-24-0.65", description="SMD, 24 terminals, pin spacing 0.65mm"),
-        FormFactor(name="SSOP-32-0.65", description="SMD, 32 terminals, pin spacing 0.65mm"),
+    # More than 6 terminals
+    create_ff("MSOP-8", "3.0×3.0mm", [tag_smd, tag_chip, tag_terminals[8], tag_pin_spacing['0.65']])
+    create_ff("MSOP-10", "3.0×3.0mm", [tag_smd, tag_chip, tag_terminals[10], tag_pin_spacing['0.5']])
+    create_ff("MSOP-12", "3.0×4.0mm", [tag_smd, tag_chip, tag_terminals[12], tag_pin_spacing['0.65']])
+    create_ff("MSOP-16", "3.0×4.0mm", [tag_smd, tag_chip, tag_terminals[16], tag_pin_spacing['0.5']])
 
-        FormFactor(name="SSOP-8-0.8", description="SMD, 8 terminals, pin spacing 0.8mm"),
-        FormFactor(name="SSOP-10-0.8", description="SMD, 10 terminals, pin spacing 0.8mm"),
-        FormFactor(name="SSOP-12-0.8", description="SMD, 12 terminals, pin spacing 0.8mm"),
-        FormFactor(name="SSOP-14-0.8", description="SMD, 14 terminals, pin spacing 0.8mm"),
-        FormFactor(name="SSOP-16-0.8", description="SMD, 16 terminals, pin spacing 0.8mm"),
-        FormFactor(name="SSOP-18-0.8", description="SMD, 18 terminals, pin spacing 0.8mm"),
-        FormFactor(name="SSOP-20-0.8", description="SMD, 20 terminals, pin spacing 0.8mm"),
-        FormFactor(name="SSOP-24-0.8", description="SMD, 24 terminals, pin spacing 0.8mm"),
-        FormFactor(name="SSOP-32-0.8", description="SMD, 32 terminals, pin spacing 0.8mm"),
+    create_ff("DFN-8", "", [tag_smd, tag_chip, tag_terminals[8], tag_pin_spacing['1.27']])
+    create_ff("LGA-24", "", [tag_smd, tag_chip, tag_terminals[24]])
 
-        FormFactor(name="TSSOP-8-0.5", description="SMD, 8 terminals, pin spacing 0.5mm"),
-        FormFactor(name="TSSOP-10-0.5", description="SMD, 10 terminals, pin spacing 0.5mm"),
-        FormFactor(name="TSSOP-12-0.5", description="SMD, 12 terminals, pin spacing 0.5mm"),
-        FormFactor(name="TSSOP-14-0.5", description="SMD, 14 terminals, pin spacing 0.5mm"),
-        FormFactor(name="TSSOP-16-0.5", description="SMD, 16 terminals, pin spacing 0.5mm"),
-        FormFactor(name="TSSOP-18-0.5", description="SMD, 18 terminals, pin spacing 0.5mm"),
-        FormFactor(name="TSSOP-20-0.5", description="SMD, 20 terminals, pin spacing 0.5mm"),
-        FormFactor(name="TSSOP-24-0.5", description="SMD, 24 terminals, pin spacing 0.5mm"),
-        FormFactor(name="TSSOP-32-0.5", description="SMD, 32 terminals, pin spacing 0.5mm"),
+    create_chip("SOIC-{}", 8, 40, aka="SO-{}", tags=[tag_smd, tag_pin_spacing['1.27']])
+    create_chip("TSOP-{}", 8, 40, tags=[tag_smd, tag_pin_spacing['0.5']])
+    create_chip("SSOP-{}-0.635", 8, 40, tags=[tag_smd, tag_pin_spacing['0.635']])
+    create_chip("SSOP-{}-0.65", 8, 40, tags=[tag_smd, tag_pin_spacing['0.65']])
+    create_chip("SSOP-{}-0.8", 8, 40, tags=[tag_smd, tag_pin_spacing['0.8']])
+    create_chip("TSSOP-{}-0.5", 8, 40, tags=[tag_smd, tag_pin_spacing['0.5']])
+    create_chip("TSSOP-{}-0.65", 8, 40, tags=[tag_smd, tag_pin_spacing['0.65']])
+    create_chip("QSOP-{}", 8, 40, tags=[tag_smd, tag_pin_spacing['0.635']])
+    create_chip("VSOP-{}-0.4", 8, 40, tags=[tag_smd, tag_pin_spacing['0.4']])
+    create_chip("VSOP-{}-0.5", 8, 40, tags=[tag_smd, tag_pin_spacing['0.5']])
+    create_chip("VSOP-{}-0.65", 8, 40, tags=[tag_smd, tag_pin_spacing['0.65']])
+    create_chip("QFP-{}", 32, 64, tags=[tag_smd], sides=4)
+    create_ff("QFP-128", "", [tag_smd, tag_chip, tag_terminals[128]])
+    create_chip("LQFP-{}", 32, 64, tags=[tag_smd], sides=4)
+    create_ff("LQFP-128", "", [tag_smd, tag_chip, tag_terminals[128]])
+    create_chip("TQFP-{}", 32, 64, tags=[tag_smd], sides=4)
+    create_ff("TQFP-128", "", [tag_smd, tag_chip, tag_terminals[128]])
+    create_chip("QFN-{}", 32, 64, tags=[tag_smd], sides=4)
+    create_ff("QFN-128", "", [tag_smd, tag_chip, tag_terminals[128]])
 
-        FormFactor(name="TSSOP-8-0.65", description="SMD, 8 terminals, pin spacing 0.65mm"),
-        FormFactor(name="TSSOP-10-0.65", description="SMD, 10 terminals, pin spacing 0.65mm"),
-        FormFactor(name="TSSOP-12-0.65", description="SMD, 12 terminals, pin spacing 0.65mm"),
-        FormFactor(name="TSSOP-14-0.65", description="SMD, 14 terminals, pin spacing 0.65mm"),
-        FormFactor(name="TSSOP-16-0.65", description="SMD, 16 terminals, pin spacing 0.65mm"),
-        FormFactor(name="TSSOP-18-0.65", description="SMD, 18 terminals, pin spacing 0.65mm"),
-        FormFactor(name="TSSOP-20-0.65", description="SMD, 20 terminals, pin spacing 0.65mm"),
-        FormFactor(name="TSSOP-24-0.65", description="SMD, 24 terminals, pin spacing 0.65mm"),
-        FormFactor(name="TSSOP-32-0.65", description="SMD, 32 terminals, pin spacing 0.65mm"),
+    # THT
+    create_chip("DIP-{}-0.3", 8, 40, tags=[tag_smd, tag_imperial, tag_pin_spacing['2.54'], tag_row_spacing_7_62])
+    create_chip("DIP-{}-0.6", 8, 40, tags=[tag_smd, tag_imperial, tag_pin_spacing['2.54'], tag_row_spacing_15_24])
+    create_chip("SDIP-{}-0.3", 8, 40, tags=[tag_smd, tag_imperial, tag_pin_spacing['1.78'], tag_row_spacing_7_62])
+    create_chip("SDIP-{}-0.6", 8, 40, tags=[tag_smd, tag_imperial, tag_pin_spacing['1.78'], tag_row_spacing_15_24])
 
-        FormFactor(name="QSOP-8", description="SMD, 8 terminals, pin spacing 0.635mm"),
-        FormFactor(name="QSOP-10", description="SMD, 10 terminals, pin spacing 0.635mm"),
-        FormFactor(name="QSOP-12", description="SMD, 12 terminals, pin spacing 0.635mm"),
-        FormFactor(name="QSOP-14", description="SMD, 14 terminals, pin spacing 0.635mm"),
-        FormFactor(name="QSOP-16", description="SMD, 16 terminals, pin spacing 0.635mm"),
-        FormFactor(name="QSOP-18", description="SMD, 18 terminals, pin spacing 0.635mm"),
-        FormFactor(name="QSOP-20", description="SMD, 20 terminals, pin spacing 0.635mm"),
-        FormFactor(name="QSOP-24", description="SMD, 24 terminals, pin spacing 0.635mm"),
-        FormFactor(name="QSOP-32", description="SMD, 32 terminals, pin spacing 0.635mm"),
+    # THT, Small pin counts
+    create_ff("TO-3", "mostly power transistors", [tag_tht, tag_terminals[3], tag_panel_mount, tag_metal_can])
+    create_ff("TO-5", "mostly transistors, 6.3×⌀8.9mm", [tag_tht, tag_terminals[3], tag_metal_can])
+    create_ff("TO-18", "small signal transistors, metal version of TO-92", [tag_tht, tag_terminals[3], tag_metal_can])
+    create_ff("TO-66", "mostly power transistors, smaller version of TO-3", [tag_tht, tag_terminals[3], tag_panel_mount, tag_metal_can])
+    create_ff("TO-92", "", [tag_tht, tag_terminals[3], tag_plastic_package, tag_pin_spacing['1.27']])
+    create_ff("SOD-70", "2 terminal version of TO-92, used in 5mm LED", [tag_tht, tag_polarized, tag_terminals[2], tag_plastic_package, tag_pin_spacing['2.54']])
+    create_ff("TO-126", "aka. SOT-32, with mounting hole for heatsink", [tag_tht, tag_terminals[3], tag_plastic_package, tag_power_package, tag_pin_spacing['2.54']])
+    create_ff("TO-220", "with metal backing, mounting hole in tab", [tag_tht, tag_terminals[3], tag_plastic_package, tag_power_package, tag_pin_spacing['2.54']])
+    create_ff("I-PAK", "mostly power mosfets", [tag_tht, tag_terminals[3], tag_plastic_package, tag_power_package, tag_pin_spacing['2.29']])
 
-        FormFactor(name="VSOP-8-0.4", description="SMD, 8 terminals, pin spacing 0.4mm"),
-        FormFactor(name="VSOP-10-0.4", description="SMD, 10 terminals, pin spacing 0.4mm"),
-        FormFactor(name="VSOP-12-0.4", description="SMD, 12 terminals, pin spacing 0.4mm"),
-        FormFactor(name="VSOP-14-0.4", description="SMD, 14 terminals, pin spacing 0.4mm"),
-        FormFactor(name="VSOP-16-0.4", description="SMD, 16 terminals, pin spacing 0.4mm"),
-        FormFactor(name="VSOP-18-0.4", description="SMD, 18 terminals, pin spacing 0.4mm"),
-        FormFactor(name="VSOP-20-0.4", description="SMD, 20 terminals, pin spacing 0.4mm"),
-        FormFactor(name="VSOP-24-0.4", description="SMD, 24 terminals, pin spacing 0.4mm"),
-        FormFactor(name="VSOP-32-0.4", description="SMD, 32 terminals, pin spacing 0.4mm"),
+    # THT, diodes
+    create_ff("DO-7", "mostly germanium", [tag_tht, tag_polarized, tag_terminals[2], tag_diode])
+    create_ff("DO-35", "aka. SOD-27, signal diode, 3.05 to 5.08 × ⌀1.53 to ⌀2.28 mm", [tag_tht, tag_terminals[2], tag_polarized, tag_diode])
+    create_ff("DO-41", "aka. SOD-66, rectifier diode, 4.07 to 5.20 × ⌀2.04 to ⌀2.71 mm", [tag_tht, tag_terminals[2], tag_polarized, tag_diode])
 
-        FormFactor(name="VSOP-8-0.5", description="SMD, 8 terminals, pin spacing 0.5mm"),
-        FormFactor(name="VSOP-10-0.5", description="SMD, 10 terminals, pin spacing 0.5mm"),
-        FormFactor(name="VSOP-12-0.5", description="SMD, 12 terminals, pin spacing 0.5mm"),
-        FormFactor(name="VSOP-14-0.5", description="SMD, 14 terminals, pin spacing 0.5mm"),
-        FormFactor(name="VSOP-16-0.5", description="SMD, 16 terminals, pin spacing 0.5mm"),
-        FormFactor(name="VSOP-18-0.5", description="SMD, 18 terminals, pin spacing 0.5mm"),
-        FormFactor(name="VSOP-20-0.5", description="SMD, 20 terminals, pin spacing 0.5mm"),
-        FormFactor(name="VSOP-24-0.5", description="SMD, 24 terminals, pin spacing 0.5mm"),
-        FormFactor(name="VSOP-32-0.5", description="SMD, 32 terminals, pin spacing 0.5mm"),
+    # THT, misc
+    create_ff("HC49", "HC49 quartz crystal package, comes in 2 heights", [tag_tht, tag_terminals[2]])
+    create_ff("PG-SSO-3-2", "Infineon hall effect sensors", [tag_tht, tag_terminals[3], tag_pin_spacing['1.27']])
+    create_ff("LED 5", "5mm LED", [tag_tht, tag_polarized, tag_terminals[2], tag_pin_spacing['2.54']])
+    create_ff("LED 3", "3mm LED", [tag_tht, tag_polarized, tag_terminals[2], tag_pin_spacing['1.27']])
 
-        FormFactor(name="VSOP-8-0.65", description="SMD, 8 terminals, pin spacing 0.65mm"),
-        FormFactor(name="VSOP-10-0.65", description="SMD, 12 terminals, pin spacing 0.65mm"),
-        FormFactor(name="VSOP-14-0.65", description="SMD, 14 terminals, pin spacing 0.65mm"),
-        FormFactor(name="VSOP-16-0.65", description="SMD, 16 terminals, pin spacing 0.65mm"),
-        FormFactor(name="VSOP-18-0.65", description="SMD, 18 terminals, pin spacing 0.65mm"),
-        FormFactor(name="VSOP-20-0.65", description="SMD, 20 terminals, pin spacing 0.65mm"),
-        FormFactor(name="VSOP-24-0.65", description="SMD, 24 terminals, pin spacing 0.65mm"),
-        FormFactor(name="VSOP-32-0.65", description="SMD, 32 terminals, pin spacing 0.65mm"),
-
-        FormFactor(name="DFN-8", description="SMD, 8 terminals, pin spacing 1.27mm"),
-
-        FormFactor(name="QFP-32", description="SMD, 32 terminals"),
-        FormFactor(name="QFP-44", description="SMD, 44 terminals"),
-        FormFactor(name="QFP-48", description="SMD, 48 terminals"),
-        FormFactor(name="QFP-64", description="SMD, 64 terminals"),
-        FormFactor(name="QFP-128", description="SMD, 128 terminals"),
-
-        FormFactor(name="LQFP-32", description="SMD, 32 terminals"),
-        FormFactor(name="LQFP-44", description="SMD, 44 terminals"),
-        FormFactor(name="LQFP-48", description="SMD, 48 terminals"),
-        FormFactor(name="LQFP-64", description="SMD, 64 terminals"),
-        FormFactor(name="LQFP-128", description="SMD, 128 terminals"),
-
-        FormFactor(name="TQFP-32", description="SMD, 32 terminals"),
-        FormFactor(name="TQFP-44", description="SMD, 44 terminals"),
-        FormFactor(name="TQFP-48", description="SMD, 48 terminals"),
-        FormFactor(name="TQFP-64", description="SMD, 64 terminals"),
-        FormFactor(name="TQFP-128", description="SMD, 128 terminals"),
-
-        FormFactor(name="QFN-16", description="SMD, 16 terminals"),
-        FormFactor(name="QFN-24", description="SMD, 24 terminals"),
-        FormFactor(name="QFN-32", description="SMD, 32 terminals"),
-        FormFactor(name="QFN-44", description="SMD, 44 terminals"),
-        FormFactor(name="QFN-48", description="SMD, 48 terminals"),
-        FormFactor(name="QFN-64", description="SMD, 64 terminals"),
-        FormFactor(name="QFN-128", description="SMD, 128 terminals"),
-
-        FormFactor(name="LGA-24", description=""),
-
-        # THT
-        FormFactor(name="DIP-8-0.3", description="THT, 8 terminals, pin spacing 2.54mm, row spacing 7.62mm"),
-        FormFactor(name="DIP-14-0.3", description="THT, 14 terminals, pin spacing 2.54mm, row spacing 7.62mm"),
-        FormFactor(name="DIP-16-0.3", description="THT, 16 terminals, pin spacing 2.54mm, row spacing 7.62mm"),
-        FormFactor(name="DIP-18-0.3", description="THT, 18 terminals, pin spacing 2.54mm, row spacing 7.62mm"),
-        FormFactor(name="DIP-20-0.3", description="THT, 20 terminals, pin spacing 2.54mm, row spacing 7.62mm"),
-        FormFactor(name="DIP-24-0.3", description="THT, 24 terminals, pin spacing 2.54mm, row spacing 7.62mm"),
-        FormFactor(name="DIP-28-0.3", description="THT, 28 terminals, pin spacing 2.54mm, row spacing 7.62mm"),
-        FormFactor(name="DIP-32-0.3", description="THT, 32 terminals, pin spacing 2.54mm, row spacing 7.62mm"),
-        FormFactor(name="DIP-40-0.3", description="THT, 40 terminals, pin spacing 2.54mm, row spacing 7.62mm"),
-
-        FormFactor(name="DIP-8-0.6", description="THT, 8 terminals, pin spacing 2.54mm, row spacing 15.24mm"),
-        FormFactor(name="DIP-14-0.6", description="THT, 14 terminals, pin spacing 2.54mm, row spacing 15.24mm"),
-        FormFactor(name="DIP-16-0.6", description="THT, 16 terminals, pin spacing 2.54mm, row spacing 15.24mm"),
-        FormFactor(name="DIP-18-0.6", description="THT, 18 terminals, pin spacing 2.54mm, row spacing 15.24mm"),
-        FormFactor(name="DIP-20-0.6", description="THT, 20 terminals, pin spacing 2.54mm, row spacing 15.24mm"),
-        FormFactor(name="DIP-24-0.6", description="THT, 24 terminals, pin spacing 2.54mm, row spacing 15.24mm"),
-        FormFactor(name="DIP-28-0.6", description="THT, 28 terminals, pin spacing 2.54mm, row spacing 15.24mm"),
-        FormFactor(name="DIP-32-0.6", description="THT, 32 terminals, pin spacing 2.54mm, row spacing 15.24mm"),
-        FormFactor(name="DIP-40-0.6", description="THT, 40 terminals, pin spacing 2.54mm, row spacing 15.24mm"),
-
-        FormFactor(name="SDIP-8-0.3", description="THT, 8 terminals, pin spacing 1.78mm, row spacing 7.62mm"),
-        FormFactor(name="SDIP-14-0.3", description="THT, 14 terminals, pin spacing 1.78mm, row spacing 7.62mm"),
-        FormFactor(name="SDIP-16-0.3", description="THT, 16 terminals, pin spacing 1.78mm, row spacing 7.62mm"),
-        FormFactor(name="SDIP-18-0.3", description="THT, 18 terminals, pin spacing 1.78mm, row spacing 7.62mm"),
-        FormFactor(name="SDIP-20-0.3", description="THT, 20 terminals, pin spacing 1.78mm, row spacing 7.62mm"),
-        FormFactor(name="SDIP-24-0.3", description="THT, 24 terminals, pin spacing 1.78mm, row spacing 7.62mm"),
-        FormFactor(name="SDIP-28-0.3", description="THT, 28 terminals, pin spacing 1.78mm, row spacing 7.62mm"),
-        FormFactor(name="SDIP-32-0.3", description="THT, 32 terminals, pin spacing 1.78mm, row spacing 7.62mm"),
-        FormFactor(name="SDIP-40-0.3", description="THT, 40 terminals, pin spacing 1.78mm, row spacing 7.62mm"),
-
-        FormFactor(name="SDIP-8-0.6", description="THT, 8 terminals, pin spacing 1.78mm, row spacing 15.24mm"),
-        FormFactor(name="SDIP-14-0.6", description="THT, 14 terminals, pin spacing 1.78mm, row spacing 15.24mm"),
-        FormFactor(name="SDIP-16-0.6", description="THT, 16 terminals, pin spacing 1.78mm, row spacing 15.24mm"),
-        FormFactor(name="SDIP-18-0.6", description="THT, 18 terminals, pin spacing 1.78mm, row spacing 15.24mm"),
-        FormFactor(name="SDIP-20-0.6", description="THT, 20 terminals, pin spacing 1.78mm, row spacing 15.24mm"),
-        FormFactor(name="SDIP-24-0.6", description="THT, 24 terminals, pin spacing 1.78mm, row spacing 15.24mm"),
-        FormFactor(name="SDIP-28-0.6", description="THT, 28 terminals, pin spacing 1.78mm, row spacing 15.24mm"),
-        FormFactor(name="SDIP-32-0.6", description="THT, 32 terminals, pin spacing 1.78mm, row spacing 15.24mm"),
-        FormFactor(name="SDIP-40-0.6", description="THT, 40 terminals, pin spacing 1.78mm, row spacing 15.24mm"),
-
-        # THT, Small pin counts
-        FormFactor(name="TO-3", description="THT, panel mount, metal can, mostly power transistors"),
-        FormFactor(name="TO-5", description="THT, metal can, mostly transistors, 6.3×⌀8.9mm"),
-        FormFactor(name="TO-18", description="THT, metal can, small signal transistors, metal version of TO-92"),
-        FormFactor(name="TO-66", description="THT, panel mount, metal can, mostly power transistors, smaller version of TO-3"),
-        FormFactor(name="TO-92", description="THT, plastic package, 3 terminals, pin spacing 1.27mm"),
-        FormFactor(name="SOD-70", description="THT, plastic package, 2 terminals, pin spacing 2.54mm, 2 terminal version of TO-92"),
-        FormFactor(name="TO-126", description="THT, aka. SOT-32, with mounting hole for heatsink, pin spacing 2.54mm"),
-        FormFactor(name="TO-220", description="THT, power package with metal backing, mounting hole in tab, pin spacing 2.54mm"),
-        FormFactor(name="I-PAK", description="THT, mostly power mosfets, 3 terminals, pin spacing 2.29mm"),
-        # THT, diodes
-
-        FormFactor(name="DO-7", description="THT, Diode, mostly germanium"),
-        FormFactor(name="DO-35", description="THT, aka. SOD-27, signal diode, 3.05 to 5.08 × ⌀1.53 to ⌀2.28 mm"),
-        FormFactor(name="DO-41", description="THT, aka. SOD-66, rectifier diode, 4.07 to 5.20 × ⌀2.04 to ⌀2.71 mm"),
-
-
-        FormFactor(name="HC49", description="THT, HC49 quartz crystal package, comes in 2 heights"),
-        FormFactor(name="PG-SSO-3-2", description="THT, Infineon hall effect sensors, 3 terminals, pin spacing 1.27mm"),
-        FormFactor(name="LED 5", description="THT, 5mm LED, pin spacing 1.27mm"),
-        FormFactor(name="LED 3", description="THT, 3mm LED, pin spacing 1.27mm"),
-
-        # THT Raster
-        FormFactor(name="RM 1.27", description="THT, 1.27mm Raster"),
-        FormFactor(name="RM 2", description="THT, 2mm Raster"),
-        FormFactor(name="RM 2.54", description="THT, 2.54mm Raster"),
-        FormFactor(name="RM 3.5", description="THT, 3.5mm Raster"),
-        FormFactor(name="RM 7.5", description="THT, 7.5mm Raster"),
-        FormFactor(name="RM 5", description="THT, 5mm Raster"),
-        FormFactor(name="RM 5.08", description="THT, 5.08mm Raster"),
-    ])
+    # THT Raster
+    create_ff("RM 1.27", "", [tag_tht, tag_pin_spacing['1.27']])
+    create_ff("RM 2", "", [tag_tht, tag_pin_spacing['2.0']])
+    create_ff("RM 2.54", "", [tag_tht, tag_pin_spacing['2.54']])
+    create_ff("RM 3.5", "", [tag_tht, tag_pin_spacing['3.5']])
+    create_ff("RM 7.5", "", [tag_tht, tag_pin_spacing['7.5']])
+    create_ff("RM 5", "", [tag_tht, tag_pin_spacing['5.0']])
+    create_ff("RM 5.08", "", [tag_tht, tag_pin_spacing['5.08']])
 
     # TODO:
     # - Arrow (broken webpage)
 
-    Distributor.objects.bulk_create([
-        Distributor(
-            name="Reichelt",
-            description="Reichelt Elektronik",
-            web_link="https://www.reichelt.de",
-            search_link="https://www.reichelt.de/index.html?ACTION=446&LA=0&nbc=1&q={}",
-            phone="+49 4422 955-333",
-            email="info@reichelt.de",
-            icon=ImageFile(open('inventory/static/inventory/img/reichelt.png', 'rb'))
-        ),
-        Distributor(
-            name="Amazon",
-            description="Amazon DE",
-            web_link="https://amazon.de",
-            search_link="https://www.amazon.de/s?k={}",
-            icon=ImageFile(open('inventory/static/inventory/img/amazon.png', 'rb'))
-        ),
-        Distributor(
-            name="AZ Delivery",
-            description="AZ Delivery Deutschland",
-            web_link="https://az-delivery.de",
-            search_link="https://az-delivery.de/de/search?type=product&q={}*",
-            phone="+49 991 99927827",
-            email="info@az-delivery.com",
-            icon=ImageFile(open('inventory/static/inventory/img/azdelivery.png', 'rb'))
-        ),
-        Distributor(
-            name="DevElektro",
-            description="DevElektro, consumer branch of Farnell",
-            web_link="https://www.develektro.com",
-            search_link="https://www.develektro.com/navi.php?qs={}&search=",
-            phone=" +49 35754 794780",
-            email="info@develektro.com",
-            icon=ImageFile(open('inventory/static/inventory/img/develektro.png', 'rb'))
-        ),
-        Distributor(
-            name="Watterott",
-            description="Watterott electronic",
-            web_link="https://shop.watterott.com",
-            search_link="https://shop.watterott.com/navi.php?qs={}&search=",
-            phone="+49 3605 578010",
-            email="info@watterott.com",
-            icon=ImageFile(open('inventory/static/inventory/img/watterott.png', 'rb'))
-        ),
-        Distributor(
-            name="Ebay",
-            description="Ebay DE",
-            web_link="https://www.ebay.de/",
-            search_link="https://www.ebay.de/sch/i.html?_nkw={}&_sacat=0",
-            icon=ImageFile(open('inventory/static/inventory/img/ebay.png', 'rb'))
-        ),
-        Distributor(
-            name="Farnell",
-            description="Farnell DE",
-            web_link="https://de.farnell.com/",
-            search_link="https://de.farnell.com/w/search/prl/ergebnisse?st={}",
-            phone="+49 89 61 39 39 79",
-            email="verkauf@farnell.com",
-            icon=ImageFile(open('inventory/static/inventory/img/farnell.png', 'rb'))
-        ),
-        Distributor(
-            name="Mouser",
-            description="Mouser DE",
-            web_link="https://www.mouser.de/",
-            search_link="https://www.mouser.de/Search/Refine?Keyword={}",
-            phone="+49 89 520 462 110 ",
-            email="muenchen@mouser.com",
-            icon=ImageFile(open('inventory/static/inventory/img/mouser.png', 'rb'))
-        ),
-        Distributor(
-            name="Digikey",
-            description="Digikey DE",
-            web_link="https://www.digikey.de/",
-            search_link="https://www.digikey.de/products/de?keywords={}",
-            phone="+49 30 915 884 91",
-            email="eu.support@digikey.com",
-            icon=ImageFile(open('inventory/static/inventory/img/digikey.png', 'rb'))
-        ),
-        Distributor(
-            name="Conrad",
-            description="Conrad DE",
-            web_link="https://www.conrad.de/",
-            search_link="https://www.conrad.de/de/search.html?search={}",
-            phone="+49 9604 40 87 87",
-            email="kundenservice@conrad.de",
-            icon=ImageFile(open('inventory/static/inventory/img/conrad.png', 'rb'))
-        ),
-        Distributor(
-            name="Adafruit",
-            description="Adafruit Industries",
-            web_link="https://www.adafruit.com/",
-            search_link="https://www.adafruit.com/?q={}&sort=BestMatch",
-            icon=ImageFile(open('inventory/static/inventory/img/adafruit.png', 'rb'))
-        ),
-        Distributor(
-            name="EBV Elektronik",
-            description="AVNet Germany",
-            web_link="https://www.avnet.com/wps/portal/ebv/",
-            search_link="https://www.avnet.com/shop/emea/search/{}",
-            phone="+49 8121 774 0",
-            icon=ImageFile(open('inventory/static/inventory/img/ebv.png', 'rb'))
-        ),
-        Distributor(
-            name="Pollin",
-            description="Pollin Elektronik",
-            web_link="https://www.pollin.de/",
-            search_link="https://www.pollin.de/search?query={}",
-            phone="+49 8403 920 920",
-            email="service@pollin.de",
-            icon=ImageFile(open('inventory/static/inventory/img/pollin.png', 'rb'))
-        ),
-        Distributor(
-            name="Maplin",
-            description="Maplin UK",
-            web_link="https://www.maplin.co.uk/",
-            search_link="https://www.maplin.co.uk/catalogsearch/result/?q={}",
-            icon=ImageFile(open('inventory/static/inventory/img/maplin.png', 'rb'))
-        ),
-        Distributor(
-            name="Pimoroni",
-            description="Pimoroni",
-            web_link="https://shop.pimoroni.com/",
-            search_link="https://shop.pimoroni.com/?q={}",
-            icon=ImageFile(open('inventory/static/inventory/img/pimoroni.png', 'rb'))
-        ),
-        Distributor(
-            name="Rapid",
-            description="Rapid Elektronics, Conrad outlet",
-            web_link="https://www.rapidonline.com/",
-            search_link="https://www.rapidonline.com/Catalogue/Search?Query={}",
-            email="sales@rapidonline.com",
-            icon=ImageFile(open('inventory/static/inventory/img/rapid.png', 'rb'))
-        ),
-        Distributor(
-            name="RS Components",
-            description="RS Components DE",
-            web_link="https://de.rs-online.com/web/",
-            search_link="https://de.rs-online.com/web/c/?sra=oss&r=t&searchTerm={}",
-            phone="+49 69 5800 14 234",
-            email="rs-gmbh@rsonline.de",
-            icon=ImageFile(open('inventory/static/inventory/img/rs.png', 'rb'))
-        ),
-        Distributor(
-            name="Sparkfun",
-            description="Sparkfun",
-            web_link="https://www.sparkfun.com/",
-            search_link="https://www.sparkfun.com/search/results?term={}",
-            email="support@sparkfun.com",
-            icon=ImageFile(open('inventory/static/inventory/img/sparkfun.png', 'rb'))
-        ),
-    ])
+    Distributor.objects.create(
+        name="Reichelt",
+        description="Reichelt Elektronik",
+        web_link="https://www.reichelt.de",
+        search_link="https://www.reichelt.de/index.html?ACTION=446&LA=0&nbc=1&q={}",
+        phone="+49 4422 955-333",
+        email="info@reichelt.de",
+        icon=ImageFile(open('inventory/static/inventory/img/reichelt.png', 'rb'))
+    ).tags.set([tag_germany])
+    Distributor.objects.create(
+        name="Amazon",
+        description="Amazon DE",
+        web_link="https://amazon.de",
+        search_link="https://www.amazon.de/s?k={}",
+        icon=ImageFile(open('inventory/static/inventory/img/amazon.png', 'rb'))
+    ).tags.set([tag_germany])
+    Distributor.objects.create(
+        name="AZ Delivery",
+        description="AZ Delivery Deutschland",
+        web_link="https://az-delivery.de",
+        search_link="https://az-delivery.de/de/search?type=product&q={}*",
+        phone="+49 991 99927827",
+        email="info@az-delivery.com",
+        icon=ImageFile(open('inventory/static/inventory/img/azdelivery.png', 'rb'))
+    ).tags.set([tag_germany])
+    Distributor.objects.create(
+        name="DevElektro",
+        description="DevElektro, consumer branch of Farnell",
+        web_link="https://www.develektro.com",
+        search_link="https://www.develektro.com/navi.php?qs={}&search=",
+        phone=" +49 35754 794780",
+        email="info@develektro.com",
+        icon=ImageFile(open('inventory/static/inventory/img/develektro.png', 'rb'))
+    ).tags.set([tag_germany])
+    Distributor.objects.create(
+        name="Watterott",
+        description="Watterott electronic",
+        web_link="https://shop.watterott.com",
+        search_link="https://shop.watterott.com/navi.php?qs={}&search=",
+        phone="+49 3605 578010",
+        email="info@watterott.com",
+        icon=ImageFile(open('inventory/static/inventory/img/watterott.png', 'rb'))
+    ).tags.set([tag_germany])
+    Distributor.objects.create(
+        name="Ebay",
+        description="Ebay DE",
+        web_link="https://www.ebay.de/",
+        search_link="https://www.ebay.de/sch/i.html?_nkw={}&_sacat=0",
+        icon=ImageFile(open('inventory/static/inventory/img/ebay.png', 'rb'))
+    ).tags.set([tag_germany])
+    Distributor.objects.create(
+        name="Farnell",
+        description="Farnell DE",
+        web_link="https://de.farnell.com/",
+        search_link="https://de.farnell.com/w/search/prl/ergebnisse?st={}",
+        phone="+49 89 61 39 39 79",
+        email="verkauf@farnell.com",
+        icon=ImageFile(open('inventory/static/inventory/img/farnell.png', 'rb'))
+    ).tags.set([tag_germany])
+    Distributor.objects.create(
+        name="Mouser",
+        description="Mouser DE",
+        web_link="https://www.mouser.de/",
+        search_link="https://www.mouser.de/Search/Refine?Keyword={}",
+        phone="+49 89 520 462 110 ",
+        email="muenchen@mouser.com",
+        icon=ImageFile(open('inventory/static/inventory/img/mouser.png', 'rb'))
+    ).tags.set([tag_germany])
+    Distributor.objects.create(
+        name="Digikey",
+        description="Digikey DE",
+        web_link="https://www.digikey.de/",
+        search_link="https://www.digikey.de/products/de?keywords={}",
+        phone="+49 30 915 884 91",
+        email="eu.support@digikey.com",
+        icon=ImageFile(open('inventory/static/inventory/img/digikey.png', 'rb'))
+    ).tags.set([tag_germany])
+    Distributor.objects.create(
+        name="Conrad",
+        description="Conrad DE",
+        web_link="https://www.conrad.de/",
+        search_link="https://www.conrad.de/de/search.html?search={}",
+        phone="+49 9604 40 87 87",
+        email="kundenservice@conrad.de",
+        icon=ImageFile(open('inventory/static/inventory/img/conrad.png', 'rb'))
+    ).tags.set([tag_germany])
+    Distributor.objects.create(
+        name="Adafruit",
+        description="Adafruit Industries",
+        web_link="https://www.adafruit.com/",
+        search_link="https://www.adafruit.com/?q={}&sort=BestMatch",
+        icon=ImageFile(open('inventory/static/inventory/img/adafruit.png', 'rb'))
+    ).tags.set([tag_usa])
+    Distributor.objects.create(
+        name="EBV Elektronik",
+        description="AVNet Germany",
+        web_link="https://www.avnet.com/wps/portal/ebv/",
+        search_link="https://www.avnet.com/shop/emea/search/{}",
+        phone="+49 8121 774 0",
+        icon=ImageFile(open('inventory/static/inventory/img/ebv.png', 'rb'))
+    ).tags.set([tag_germany])
+    Distributor.objects.create(
+        name="Pollin",
+        description="Pollin Elektronik",
+        web_link="https://www.pollin.de/",
+        search_link="https://www.pollin.de/search?query={}",
+        phone="+49 8403 920 920",
+        email="service@pollin.de",
+        icon=ImageFile(open('inventory/static/inventory/img/pollin.png', 'rb'))
+    ).tags.set([tag_germany])
+    Distributor.objects.create(
+        name="Maplin",
+        description="Maplin UK",
+        web_link="https://www.maplin.co.uk/",
+        search_link="https://www.maplin.co.uk/catalogsearch/result/?q={}",
+        icon=ImageFile(open('inventory/static/inventory/img/maplin.png', 'rb'))
+    ).tags.set([tag_uk])
+    Distributor.objects.create(
+        name="Pimoroni",
+        description="Pimoroni",
+        web_link="https://shop.pimoroni.com/",
+        search_link="https://shop.pimoroni.com/?q={}",
+        icon=ImageFile(open('inventory/static/inventory/img/pimoroni.png', 'rb'))
+    ).tags.set([tag_uk])
+    Distributor.objects.create(
+        name="Rapid",
+        description="Rapid Elektronics, Conrad outlet",
+        web_link="https://www.rapidonline.com/",
+        search_link="https://www.rapidonline.com/Catalogue/Search?Query={}",
+        email="sales@rapidonline.com",
+        icon=ImageFile(open('inventory/static/inventory/img/rapid.png', 'rb'))
+    ).tags.set([tag_uk])
+    Distributor.objects.create(
+        name="RS Components",
+        description="RS Components DE",
+        web_link="https://de.rs-online.com/web/",
+        search_link="https://de.rs-online.com/web/c/?sra=oss&r=t&searchTerm={}",
+        phone="+49 69 5800 14 234",
+        email="rs-gmbh@rsonline.de",
+        icon=ImageFile(open('inventory/static/inventory/img/rs.png', 'rb'))
+    ).tags.set([tag_germany])
+    Distributor.objects.create(
+        name="Sparkfun",
+        description="Sparkfun",
+        web_link="https://www.sparkfun.com/",
+        search_link="https://www.sparkfun.com/search/results?term={}",
+        email="support@sparkfun.com",
+        icon=ImageFile(open('inventory/static/inventory/img/sparkfun.png', 'rb'))
+    ).tags.set([tag_usa])
 
     Layout.objects.bulk_create([
         Layout(

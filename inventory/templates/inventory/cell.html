@@ -7,11 +7,11 @@
         <div class="package">{{ item.metadata.package }}</div>
         {% endif %}
         {% if item.documentation.all %}
-            <a class="title" href="{{ item.documentation.all.0.file.url }}" {% if item.description %}title="{{ item.description }}"{% endif %}>
+            <a class="title" href="{{ item.documentation.all.0.file.url }}" {% if item.description %}title="{{ item.description }}{% if item.form_factor %}, {{ item.form_factor }}{% endif %}"{% endif %}>
                 {{ item.name | linebreaksbr }}
             </a>
         {% else %}
-            <div class="title missing-link" title="{{ item.description }}">
+            <div class="title missing-link" title="{{ item.description }}{% if item.form_factor %}, {{ item.form_factor }}{% endif %}">
                 {{ item.name | linebreaksbr }}
             </div>
         {% endif %}
@@ -24,6 +24,9 @@
 
         {% if item.price %}
         <div class="price">{{ item.price | floatformat:2 }} &euro;</div>
+        {% endif %}
+        {% if item.form_factor %}
+        <div class="form_factor">{{ item.form_factor.name }}</div>
         {% endif %}
         {% if item.distributor %}
         <img class="shop" src="{{ item.distributor.icon.url }}" title="{{ item.distributor.name }}">

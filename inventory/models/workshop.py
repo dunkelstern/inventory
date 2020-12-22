@@ -7,6 +7,8 @@ class Workshop(Container):
     name = models.CharField(max_length=255, unique=True)
     description = models.CharField(max_length=4096)
     show_boxes = models.BooleanField(default=True, help_text="Allow boxes to be defined directly in this workshop")
+    tags = models.ManyToManyField('inventory.Tag', blank=True)
+
     created_at = models.DateTimeField(auto_now_add=True)
     changed_at = models.DateTimeField(auto_now=True)
 

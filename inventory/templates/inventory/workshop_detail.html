@@ -10,6 +10,9 @@
 {% endblock %}
 
 {% block header_icons %}
+    <li>
+        <a href="{% url "admin:inventory_workshop_change" object_id=workshop.pk %}"><img class="icon" src="{% static "inventory/img/edit.svg" %}"></a>
+    </li>
     {% include 'inventory/set_index.html' with item=workshop is_index=is_index %}
 {% endblock %}
 

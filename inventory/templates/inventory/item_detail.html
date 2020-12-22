@@ -2,12 +2,18 @@
 {% load static %}
 {% load formatstring %}
 
-{% block title %}{{ item.name }}{% endblock %}
+{% block title %}{{ item }}{% endblock %}
 
 {% block header_bar %}
     <a href="{{ item.container_url }}"><img class="icon" src="{% static "inventory/img/back.svg" %}"></a>
     {{ item.name }}
-    <span class="small">{{ item.description}}</span></h2>
+    <span class="small">{{ item.description }} {{ item.form_factor }}</span></h2>
+{% endblock %}
+
+{% block header_icons %}
+    <li>
+        <a href="{% url "admin:inventory_item_change" object_id=item.pk %}"><img class="icon" src="{% static "inventory/img/edit.svg" %}"></a>
+    </li>
 {% endblock %}
 
 {% block content %}
@@ -15,7 +21,7 @@
         <tbody>
             <tr>
                 <th>Description</th>
-                <td>{{ item.description }}</td>
+                <td>{{ item }}</td>
             </tr>
 
         {% if item.manufacturer %}
@@ -23,8 +29,7 @@
                 <th>Manufacturer</th>
                 <td>
                     <a href="{% url 'manufacturer-detail' item.manufacturer.id %}">
-                        {% if item.manufacturer.icon %}<img src="{{ item.manufacturer.icon.url }}" class="icon">{% endif %}
-                        {{ item.manufacturer.name }}
+                        {% if item.manufacturer.icon %}<img src="{{ item.manufacturer.icon.url }}" class="icon">{% endif %}{{ item.manufacturer.name }}
                     </a>
                 </td>
             </tr>
@@ -35,8 +40,7 @@
                 <th>Distributor</th>
                 <td>
                     <a href="{% url 'distributor-detail' item.distributor.id %}">
-                        {% if item.distributor.icon %}<img src="{{ item.distributor.icon.url }}" class="icon">{% endif %}
-                        {{ item.distributor.name }}
+                        {% if item.distributor.icon %}<img src="{{ item.distributor.icon.url }}" class="icon">{% endif %}{{ item.distributor.name }}
                     </a>
                 </td>
             </tr>
@@ -55,7 +59,6 @@
                         {% if item.form_factor.icon %}<img src="{{ item.form_factor.icon.url }}" class="icon">{% endif %}
                         {{ item.form_factor.name }}
                     {% endif %}
-                    ({{ item.form_factor.description }})
                 </td>
             </tr>
         {% endif %}

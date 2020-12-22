@@ -8,6 +8,7 @@ from inventory.models import Distributor
 class DistributorAdmin(admin.ModelAdmin):
     readonly_fields = ['created_at', 'changed_at']
     search_fields = ['name', 'description']
+    filter_horizontal = ('tags',)
 
     def view_on_site(self, obj):
         url = reverse('distributor-detail', kwargs={'pk': obj.id})

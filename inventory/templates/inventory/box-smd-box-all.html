@@ -8,9 +8,13 @@
 
 {% block title %}{{ object.name }}{% endblock %}
 
-{% block content %}
-    <h2><a href="{{ object.container_url}}"><img class="icon" src="{% static "inventory/img/back.svg" %}"></a>{{ object.name }} <span class="small">{{ object.description}}</span></h2>
+{% block header_bar %}
+    <a href="{{ object.container_url }}"><img class="icon" src="{% static "inventory/img/back.svg" %}"></a>
+    {{ object.name }}
+    <span class="small">{{ object.description}}</span></h2>
+{% endblock %}
 
+{% block content %}
     {% for part in layouted %}
     <table class="box">
         <thead>
@@ -39,6 +43,5 @@
         </tbody>
     </table>
     <br><br>
-{% endfor %}
-
+    {% endfor %}
 {% endblock %}

@@ -2,9 +2,14 @@
 
 {% block title %}{{ box.container.display_name }} - {{ box.name }}{% endblock %}
 
+{% block header_bar %}
+    <a href="{{ box.container_url }}"><img class="icon" src="{% static "inventory/img/back.svg" %}"></a>
+    {{ box.container.display_name }} - {{ box.name }}
+    <span class="small">{{ box.description}}</span>
+{% endblock %}
+
 {% block content %}
-    <h2>{{ box.container.display_name }} - {{ box.name }}</h2>
-    
+
     {% if box.box_related.exists %}
     <h3>Boxes</h3>
     <ul>

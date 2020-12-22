@@ -3,9 +3,13 @@
 
 {% block title %}Workshop {{ workshop.name }}{% endblock %}
 
-{% block content %}
-    <h2><a href="{% url "workshop-list" %}"><img class="icon" src="{% static "inventory/img/back.svg" %}"></a>{{ workshop.name }} <span class="small">{{ workshop.description}}</span></h2>
+{% block header_bar %}
+    <a href="{% url "workshop-list" %}"><img class="icon" src="{% static "inventory/img/back.svg" %}"></a>
+    {{ workshop.name }}
+    <span class="small">{{ workshop.description}}</span>
+{% endblock %}
 
+{% block content %}
     <h3>Areas</h3>
     <ul>
         {% for area in workshop.area_related.all %}

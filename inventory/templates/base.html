@@ -8,6 +8,19 @@
     {% block head %}{% endblock %}
 </head>
 <body>
+    <nav>
+        <h2>
+        {% block header_bar %}
+        {% endblock %}
+        </h2>
+        {% if user.is_authenticated %}
+        <form method="POST" action="{% url "logout" %}">
+            {% csrf_token %}
+            <button><img class="icon" src="{% static "inventory/img/logout.svg" %}"> Logout</button>
+        </form>
+        {% endif %}
+    </nav>
+
     <main>
         {% block content %}
         {% endblock %}

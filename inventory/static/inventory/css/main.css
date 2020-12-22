@@ -1,5 +1,7 @@
-body {
+body, html {
     font-family: sans-serif;
+    margin: 0;
+    padding: 0;
 }
 
 table.attribute-list {
@@ -50,6 +52,27 @@ table.box th {
     border-style: solid;
 }
 
+nav {
+    display: flex;
+    justify-content: space-between;
+    background-color: #292981;
+    color: #ffffff;
+    padding: 20px;
+    margin-bottom: 20px;
+}
+
+nav form {
+    display: inline-block;
+    margin: 0;
+}
+
+nav button {
+    border: 1px solid #e0e0e0;
+    background-color: #333381;
+    color: #ffffff;
+    padding: 8px 10px 8px 10px;
+}
+
 h1 {
     margin-top: 20px;
 }
@@ -63,7 +86,21 @@ h1 .small {
 h2 .small {
     font-size: 12pt;
     font-weight: normal;
-    color: #808080;
+}
+
+nav h2 {
+    margin-top: 0;
+    margin-bottom: 0;
+    display: inline-block;
+    width: auto;
+}
+
+nav h2 .small {
+    color: #c0c0c0;
+}
+
+nav .icon {
+    filter: invert();
 }
 
 main {
@@ -71,7 +108,7 @@ main {
 }
 
 @media (min-width: 1025px) {
-    h1 {
+    h1, h2 {
         width: 80%;
     }
 
@@ -81,7 +118,7 @@ main {
 }
 
 @media (max-width: 1024px) {
-    h1 {
+    h1, h2 {
         width: 95%;
     }
 

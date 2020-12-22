@@ -3,8 +3,11 @@
 
 {% block title %}Workshops{% endblock %}
 
+{% block header_bar %}
+    Inventory management - Workshops
+{% endblock %}
+
 {% block content %}
-    <h2>Workshops</h2>
     <ul>
         {% for workshop in object_list %}
             <li>

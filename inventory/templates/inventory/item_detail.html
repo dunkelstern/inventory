@@ -4,9 +4,13 @@
 
 {% block title %}{{ item.name }}{% endblock %}
 
-{% block content %}
-    <h2><a href="{{ item.container_url }}"><img class="icon" src="{% static "inventory/img/back.svg" %}"></a>{{ item.name }}</h2>
+{% block header_bar %}
+    <a href="{{ item.container_url }}"><img class="icon" src="{% static "inventory/img/back.svg" %}"></a>
+    {{ item.name }}
+    <span class="small">{{ item.description}}</span></h2>
+{% endblock %}
 
+{% block content %}
     <table class="attribute-list">
         <tbody>
             <tr>
@@ -98,6 +102,4 @@
         {% endif %}
         </tbody>
     </table>
-
-
 {% endblock %}

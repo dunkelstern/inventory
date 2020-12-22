@@ -7,6 +7,7 @@ from .container import CanBeContained
 class Item(CanBeContained):
     name = models.TextField(max_length=255)
     description = models.CharField(max_length=4096)
+    size = models.PositiveIntegerField(default=1, help_text="Number of sub-compartments this item takes up")
     created_at = models.DateTimeField(auto_now_add=True)
     changed_at = models.DateTimeField(auto_now=True)
 

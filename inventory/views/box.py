@@ -1,4 +1,4 @@
-from typing import cast, Union
+from typing import cast, Union, List, Any
 from django.contrib.auth.decorators import login_required
 from django.utils.decorators import method_decorator
 from django.views.generic import ListView, DetailView
@@ -30,16 +30,22 @@ class BoxView(DetailView):
                 idx = new_idx
             else:
                 instances = obj.filter(index=idx)
-                if instances.count() == 1:
-                    result.append(instances.first())
-                elif instances.count() > 1:
-                    sub = list(instances)
-                    result.append(sub)
-                else:
-                    result.append({
+                items: List[dict[str, Any]] = []
+
+                # Add all items to the layout container
+                if instances.count() > 0:
+                    items.extend(list(instances))
+
+                # Append "Add one more entry" if we do not exceed the maximum number
+                # of items yet
+                size = sum([item.size for item in items])
+                if size < sublayout:
+                    items.append({
                         "index": idx,
                         "container_id": self.object.pk
                     })
+
+                result.append(items)
                 idx += 1
         return result, idx
 

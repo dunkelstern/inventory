@@ -9,11 +9,15 @@
         {% for workshop in object_list %}
             <li>
                 <a href="{% url 'workshop-detail' workshop.id %}" title="{{ workshop.description }}">{{ workshop.name }}</a>
-                <a class="edit" href="{% url "admin:inventory_workshop_change" object_id=workshop.pk %}"><img class="icon" src="{% static "inventory/img/edit.svg" %}"></a>
+                {% if user.is_staff %}
+                    <a class="edit" href="{% url "admin:inventory_workshop_change" object_id=workshop.pk %}"><img class="icon" src="{% static "inventory/img/edit.svg" %}"></a>
+                {% endif %}
             </li>
         {% endfor %}
     </ul>
 
-    <p><a href="{% url "admin:inventory_workshop_add" %}?layout=1">Create new workshop</a></p>
+    {% if user.is_staff %}
+        <p><a href="{% url "admin:inventory_workshop_add" %}?layout=1">Create new workshop...</a></p>
+    {% endif %}
 
 {% endblock %}

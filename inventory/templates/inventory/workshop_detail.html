@@ -12,14 +12,18 @@
             <li>
                 <a href="{% url 'area-detail' area.id %}" title="{{ area.description }}">{{ area.name }}</a>
                 ({{ area.description }})
-                <a class="edit" href="{% url "admin:inventory_area_change" object_id=area.pk %}"><img class="icon" src="{% static "inventory/img/edit.svg" %}"></a>
+                {% if user.is_staff %}
+                    <a class="edit" href="{% url "admin:inventory_area_change" object_id=area.pk %}"><img class="icon" src="{% static "inventory/img/edit.svg" %}"></a>
+                {% endif %}
             </li>
         {% empty %}
             <li>No areas defined</li>
         {% endfor %}
     </ul>
 
-    <p><a href="{% url "admin:inventory_area_add" %}?container={{ workshop.id }}&index=0">Create new area...</a></p>
+    {% if user.is_staff %}
+        <p><a href="{% url "admin:inventory_area_add" %}?container={{ workshop.id }}&index=0">Create new area...</a></p>
+    {% endif %}
 
     <h3>Boxes</h3>
     <ul>
@@ -27,13 +31,16 @@
             <li>
                 <a href="{% url 'box-detail' box.id %}" title="{{ box.description }}">{{ box.name }} ({{ box.layout.name }})</a>
                 ({{ box.description }})
-                <a class="edit" href="{% url "admin:inventory_box_change" object_id=box.pk %}"><img class="icon" src="{% static "inventory/img/edit.svg" %}"></a>
+                {% if user.is_staff %}
+                    <a class="edit" href="{% url "admin:inventory_box_change" object_id=box.pk %}"><img class="icon" src="{% static "inventory/img/edit.svg" %}"></a>
+                {% endif %}
             </li>
         {% empty %}
             <li>No boxes defined</li>
         {% endfor %}
     </ul>
 
-    <p><a href="{% url "admin:inventory_box_add" %}?container={{ workshop.id }}&index=0">Create new box...</a></p>
-
+    {% if user.is_staff %}
+        <p><a href="{% url "admin:inventory_box_add" %}?container={{ workshop.id }}&index=0">Create new box...</a></p>
+    {% endif %}
 {% endblock %}

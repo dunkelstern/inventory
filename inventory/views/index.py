@@ -13,7 +13,6 @@ class IndexView(View):
     def get(self, request):
         settings = Settings.objects.first()
         if settings.default_container is not None:
-            print(settings.default_container.url)
             return redirect(settings.default_container.url)
         else:
             return redirect(reverse('workshop-list'))

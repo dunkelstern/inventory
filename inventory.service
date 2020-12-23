@@ -7,6 +7,11 @@ ExecStart = gunicorn inventory_project.wsgi -b 127.0.0.1:8130 -w 4 -t 15 -p /run
 ExecReload = kill -HUP $MAINPID
 PIDFile = /run/inventory.pid
 Restart = always
+User = inventory
+Group = inventory
+WorkingDirectory = /home/inventory/inventory
+Environment = "PATH=/home/inventory/.virtualenvs/default/bin"
+Environment = "VIRTUAL_ENV=/home/inventory/.virtualenvs/default"
 
 [Install]
 WantedBy = multi-user.target

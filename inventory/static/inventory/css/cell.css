@@ -2,9 +2,33 @@ tr {
     height: 75px;
 }
 
+td.double-height {
+    height: 150px;
+}
+
+td.triple-height {
+    height: 225px;
+}
+
+td.disabled {
+    background-image: url('/static/inventory/img/hatched.svg');
+}
+
 .compartments {
     display: flex;
     flex-direction: row;
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    min-width: 100px;
+    min-height: 75px;
+}
+
+.compartments-vertical {
+    display: flex;
+    flex-direction: column;
     position: absolute;
     left: 0;
     right: 0;
@@ -80,4 +104,8 @@ tr {
 
 .cell:hover .cell-buttons {
     visibility: visible;
+}
+
+.dock-top {
+    margin-top: -1px;
 }

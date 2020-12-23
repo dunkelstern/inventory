@@ -1,0 +1,38 @@
+{% extends "inventory/box-detail.html" %}
+{% load static %}
+{% load admin_urls %}
+
+{% block content %}
+    <table class="box">
+        <tbody>
+            <tr>
+                <td rowspan="2">
+                    <div class="compartments-vertical">
+                    {% for compartment in layouted.0.0 %}
+                        {% include "inventory/cell.html" with item=compartment %}
+                    {% endfor %}
+                    </div>
+                </td>
+
+                <td class="triple-height" colspan="3">
+                    <div class="compartments">
+                    {% for compartment in layouted.0.1 %}
+                        {% include "inventory/cell.html" with item=compartment %}
+                    {% endfor %}
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                {% for item in layouted.1 %}
+                    <td class="triple-height">
+                        <div class="compartments">
+                        {% for compartment in item %}
+                            {% include "inventory/cell.html" with item=compartment %}
+                        {% endfor %}
+                        </div>
+                    </td>
+                {% endfor %}
+            </tr>
+        </tbody>
+    </table>
+{% endblock %}

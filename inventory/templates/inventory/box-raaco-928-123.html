@@ -1,0 +1,53 @@
+{% extends "inventory/box-detail.html" %}
+{% load static %}
+{% load admin_urls %}
+
+{% block content %}
+    <table class="box">
+        <tbody>
+            {% for line in layouted|slice:"0:6" %}
+            <tr>
+                {% for item in line %}
+                    <td>
+                        <div class="compartments">
+                        {% for compartment in item %}
+                            {% include "inventory/cell.html" with item=compartment %}
+                        {% endfor %}
+                        </div>
+                    </td>
+                {% endfor %}
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    <table class="box dock-top">
+        <tbody>
+            <tr>
+                {% for item in layouted.6 %}
+                    <td>
+                        <div class="compartments">
+                        {% for compartment in item %}
+                            {% include "inventory/cell.html" with item=compartment %}
+                        {% endfor %}
+                        </div>
+                    </td>
+                {% endfor %}
+            </tr>
+        </tbody>
+    </table>
+    <table class="box dock-top">
+        <tbody>
+            <tr>
+                {% for item in layouted.7 %}
+                    <td>
+                        <div class="compartments">
+                        {% for compartment in item %}
+                            {% include "inventory/cell.html" with item=compartment %}
+                        {% endfor %}
+                        </div>
+                    </td>
+                {% endfor %}
+            </tr>
+        </tbody>
+    </table>
+{% endblock %}

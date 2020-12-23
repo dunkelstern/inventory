@@ -1,0 +1,56 @@
+{% extends "inventory/box-detail.html" %}
+{% load static %}
+{% load admin_urls %}
+
+{% block content %}
+    <table class="box">
+        <tbody>
+            <tr>
+                {% for item in layouted.0 %}
+                    <td class="double-height">
+                        <div class="compartments">
+                        {% for compartment in item %}
+                            {% include "inventory/cell.html" with item=compartment %}
+                        {% endfor %}
+                        </div>
+                    </td>
+                {% endfor %}
+            </tr>
+            <tr>
+                {% for item in layouted.1 %}
+                    <td class="double-height">
+                        <div class="compartments">
+                        {% for compartment in item %}
+                            {% include "inventory/cell.html" with item=compartment %}
+                        {% endfor %}
+                        </div>
+                    </td>
+                {% endfor %}
+            </tr>
+            <tr>
+                {% for item in layouted.2|slice:"0:2" %}
+                    <td class="double-height">
+                        <div class="compartments">
+                        {% for compartment in item %}
+                            {% include "inventory/cell.html" with item=compartment %}
+                        {% endfor %}
+                        </div>
+                    </td>
+                {% endfor %}
+
+                <td colspan="2" class="disabled">
+                </td>
+
+                {% for item in layouted.2|slice:"2:5" %}
+                    <td class="double-height">
+                        <div class="compartments">
+                        {% for compartment in item %}
+                            {% include "inventory/cell.html" with item=compartment %}
+                        {% endfor %}
+                        </div>
+                    </td>
+                {% endfor %}
+            </tr>
+        </tbody>
+    </table>
+{% endblock %}

@@ -1,0 +1,12 @@
+[Unit]
+Description = "Small parts inventory management system"
+
+[Service]
+Type = simple
+ExecStart = gunicorn inventory_project.wsgi -b 127.0.0.1:8130 -w 4 -t 15 -p /run/inventory.pid --log-level warning -n inventory
+ExecReload = kill -HUP $MAINPID
+PIDFile = /run/inventory.pid
+Restart = always
+
+[Install]
+WantedBy = multi-user.target

@@ -18,9 +18,6 @@ class BoxView(CanBeIndexMixin, DetailView):
         'layout'
     ).prefetch_related(
         'box_related'
-    ).order_by(
-        'index',
-        'id'
     )
 
     def layout(self, obj: QuerySet, layout: list[Union[list, int]], idx=0):
@@ -31,7 +28,7 @@ class BoxView(CanBeIndexMixin, DetailView):
                 result.append(resulting_sublayout)
                 idx = new_idx
             else:
-                instances = obj.filter(index=idx)
+                instances = obj.filter(index=idx).order_by('id')
                 items: List[dict[str, Any]] = []
 
                 # Add all items to the layout container
@@ -54,7 +51,7 @@ class BoxView(CanBeIndexMixin, DetailView):
     def get(self, request, *args, **kwargs):
         self.object = cast(Box, self.get_object())
         context = self.get_context_data(object=self.object)
-        context['layouted'], _ = self.layout(self.object.item_related.all(), self.object.layout.data)
+        context['layouted'], _ = self.layout(self.object.item_related.all().order_by('index'), self.object.layout.data)
         return self.render_to_response(context)
 
 

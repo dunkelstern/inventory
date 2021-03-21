@@ -6,16 +6,13 @@
         {% if item.metadata.package %}
         <div class="package">{{ item.metadata.package }}</div>
         {% endif %}
-        {% if item.documentation.all %}
-            <a class="title" href="{{ item.documentation.all.0.file.url }}" {% if item.description %}title="{{ item.description }}{% if item.form_factor %}, {{ item.form_factor }}{% endif %}"{% endif %}>
-                {{ item.name | linebreaksbr }}
-            </a>
-        {% else %}
-            <div class="title missing-link" title="{{ item.description }}{% if item.form_factor %}, {{ item.form_factor }}{% endif %}">
-                {{ item.name | linebreaksbr }}
-            </div>
-        {% endif %}
+        <a href="#" class="title {% if not item.documentation.all %}missing-link{% endif %}" title="{{ item.description }}{% if item.form_factor %}, {{ item.form_factor }}{% endif %}">
+            {{ item.name | linebreaksbr }}
+        </a>
         <div class="cell-buttons">
+            {% if item.documentation.all %}
+                <a class="datasheet" href="{{ item.documentation.all.0.file.url }}"><img class="icon" src="{% static "inventory/img/datasheet.svg" %}"></a>
+            {% endif %}
             {% if user.is_staff %}
                 <a class="edit" href="{% url "admin:inventory_item_change" object_id=item.pk %}"><img class="icon" src="{% static "inventory/img/edit.svg" %}"></a>
             {% endif %}
@@ -34,7 +31,7 @@
     {% else %}
         <div class="cell-buttons">
             {% if user.is_staff %}
-                <a class="title missing" href="{% url "admin:inventory_item_add" %}?index={{ item.index }}&container={{ item.container_id }}"><br><img class="icon" src="{% static "inventory/img/add.svg" %}"></a>
+                <a class="edit" href="{% url "admin:inventory_item_add" %}?index={{ item.index }}&container={{ item.container_id }}"><img class="icon" src="{% static "inventory/img/add.svg" %}"></a>
             {% endif %}
         </div>
     {% endif %}

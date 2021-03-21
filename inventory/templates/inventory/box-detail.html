@@ -21,3 +21,50 @@
         {% include 'inventory/set_index.html' with item=object is_index=is_index %}
     {% endif %}
 {% endblock %}
+
+{% block site_scripts %}
+    // old Javascript so it runs on ipad 3 / iOS 9
+    function hidePopovers() {
+        var cells = document.getElementsByClassName('cell');
+        for (var i = 0; i < cells.length; i++) {
+            var cell = cells[i];
+            cell.classList.remove('hilight');
+            cell.parentNode.classList.remove('hilight');
+            var buttons = cell.getElementsByClassName('cell-buttons')[0];
+            buttons.style.visibility = 'hidden';
+        }
+    }
+
+    function toggleButtons(event) {
+        var cell = event.currentTarget;
+        var buttons = cell.getElementsByClassName('cell-buttons')[0];
+        if (buttons === undefined){
+            buttons = cell.parentNode.getElementsByClassName('cell-buttons')[0];
+            event.preventDefault();
+            event.stopPropagation();
+        } else {
+            event.stopPropagation();    
+        }
+        if (buttons.style.visibility === 'visible') {
+            hidePopovers();
+            cell.parentNode.classList.remove('hilight');
+        } else {
+            hidePopovers();
+            buttons.style.visibility = 'visible';
+            cell.parentNode.classList.add('hilight');
+        }
+    }
+
+    (function() {
+        var cells = document.getElementsByClassName('cell');
+        for (var i = 0; i < cells.length; i++) {
+            var cell = cells[i];
+            var link = cell.getElementsByClassName('title')[0];
+            if (link !== undefined) {
+                link.addEventListener('click', toggleButtons);
+            } else {
+                cell.addEventListener('click', toggleButtons);
+            }
+        }
+    })();
+{% endblock %}

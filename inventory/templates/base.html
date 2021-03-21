@@ -3,6 +3,7 @@
 <html>
 <head>
     <meta charset="utf-8">
+    <meta name="viewport" content="initial-scale=1, maximum-scale=1">
     <title>{% block title %}{% endblock %}</title>
     <link rel="stylesheet" content="text/css" href="{% static 'inventory/css/main.css' %}">
     {% block head %}{% endblock %}
@@ -34,5 +35,9 @@
         {% block content %}
         {% endblock %}
     </main>
+    <script>
+    {% block site_scripts %}
+    {% endblock %}
+    </script>
 </body>
 </html>

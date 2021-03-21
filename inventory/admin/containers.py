@@ -61,7 +61,7 @@ class BoxAdmin(NestedModelAdmin):
     readonly_fields = ['created_at', 'changed_at']
     list_filter = ['container']
     search_fields = ['name', 'description']
-    inlines = [BoxInlineAdmin, ItemInlineAdmin]
+    inlines = [BoxInlineAdmin]
     filter_horizontal = ('tags',)
 
     def view_on_site(self, obj):

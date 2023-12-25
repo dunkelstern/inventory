@@ -15,7 +15,7 @@ django-nested-admin = "^3.3.2"
 pillow = "^8.0"
 
 [tool.poetry.dev-dependencies]
-mypy = "^0.770"
+mypy = "*"
 flake8 = "^3.7"
 pylint = "^2.4"
 

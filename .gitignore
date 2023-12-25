@@ -2,3 +2,8 @@
 __pycache__
 .python_version
 *.egg-info
+
+media/
+static/
+media.tar.gz
+*.pg

@@ -43,3 +43,43 @@ go to `http://localhost:8000` to enter the inventory management system directly
 2. For editing parts the Django admin interface is used, so edit-links will only
   appear if the currently logged in user is a `staff` user (set the checkbox
   in the admin area).
+
+### Screenshots
+
+#### Overview Page
+
+here we have a layer of containers, you may nest multiple containers into each
+other, for example to define a cupboard which contains multiple boxes of parts,
+or multiple rooms in your workshop that contain cupboards, etc.
+
+![Overview](docs/example_overview.png)
+
+#### Box View
+
+This is a container that contains parts. You may define your layouts (number of
+compartments, number of items per compartment and layout of compartments
+themselves) all by yourself in the admin backend, by default the database comes
+with an assortment of Ikea and Raaco sorter boxes.
+
+![Box view 1](docs/example_box.png)
+
+![Box view 2](docs/example_box2.png)
+
+The Overview and Box views are designed to be used on a touch-screen and the HTML,
+CSS and Javascript are designed to work on older Hardware (Apple iOS 9 has been
+tested at lowest, so this works from iPad 2 up to the newest pro).
+
+#### Part detail view
+
+This is the detail view of a part, this is useful to find all parts by manufacturer
+or distributor, or when a part has multiple datasheets.
+
+![Detail view](docs/example_detail.png)
+
+#### Part edit view
+
+Editing is done on the standard Django admin interface, so all users that have no
+*staff* privileges only can view all parts, all with *staff* privileges have access
+to the django admin backend and can edit parts too.
+
+![Edit view](docs/example_edit.png)

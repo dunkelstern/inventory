@@ -15,19 +15,23 @@ class Migration(migrations.Migration):
         migrations.CreateModel(
             name='Container',
             fields=[
-                ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
+                ('id', models.AutoField(auto_created=True,
+                 primary_key=True, serialize=False, verbose_name='ID')),
             ],
         ),
         migrations.CreateModel(
             name='Distributor',
             fields=[
-                ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
+                ('id', models.AutoField(auto_created=True,
+                 primary_key=True, serialize=False, verbose_name='ID')),
                 ('name', models.CharField(max_length=255, unique=True)),
                 ('description', models.CharField(max_length=4096)),
                 ('web_link', models.URLField(blank=True, null=True)),
-                ('search_link', models.URLField(blank=True, help_text='Use {} for search placeholder', null=True)),
+                ('search_link', models.URLField(blank=True,
+                 help_text='Use {} for search placeholder', null=True)),
                 ('phone', models.CharField(blank=True, max_length=128, null=True)),
-                ('email', models.EmailField(blank=True, default=None, max_length=254, null=True)),
+                ('email', models.EmailField(blank=True,
+                 default=None, max_length=254, null=True)),
                 ('icon', models.ImageField(blank=True, null=True, upload_to='')),
                 ('created_at', models.DateTimeField(auto_now_add=True)),
                 ('changed_at', models.DateTimeField(auto_now=True)),
@@ -36,7 +40,8 @@ class Migration(migrations.Migration):
         migrations.CreateModel(
             name='Documentation',
             fields=[
-                ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
+                ('id', models.AutoField(auto_created=True,
+                 primary_key=True, serialize=False, verbose_name='ID')),
                 ('name', models.CharField(max_length=255, unique=True)),
                 ('created_at', models.DateTimeField(auto_now_add=True)),
                 ('changed_at', models.DateTimeField(auto_now=True)),
@@ -46,7 +51,8 @@ class Migration(migrations.Migration):
         migrations.CreateModel(
             name='FormFactor',
             fields=[
-                ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
+                ('id', models.AutoField(auto_created=True,
+                 primary_key=True, serialize=False, verbose_name='ID')),
                 ('name', models.CharField(max_length=255, unique=True)),
                 ('description', models.CharField(max_length=4096)),
                 ('icon', models.ImageField(blank=True, null=True, upload_to='')),
@@ -58,19 +64,22 @@ class Migration(migrations.Migration):
         migrations.CreateModel(
             name='Layout',
             fields=[
-                ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
+                ('id', models.AutoField(auto_created=True,
+                 primary_key=True, serialize=False, verbose_name='ID')),
                 ('name', models.CharField(max_length=255, unique=True)),
                 ('description', models.CharField(max_length=4096)),
                 ('created_at', models.DateTimeField(auto_now_add=True)),
                 ('changed_at', models.DateTimeField(auto_now=True)),
                 ('data', models.JSONField()),
-                ('template_name', models.CharField(blank=True, max_length=255, null=True)),
+                ('template_name', models.CharField(
+                    blank=True, max_length=255, null=True)),
             ],
         ),
         migrations.CreateModel(
             name='Tag',
             fields=[
-                ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
+                ('id', models.AutoField(auto_created=True,
+                 primary_key=True, serialize=False, verbose_name='ID')),
                 ('name', models.CharField(max_length=255, unique=True)),
                 ('description', models.CharField(max_length=4096)),
                 ('created_at', models.DateTimeField(auto_now_add=True)),
@@ -80,8 +89,11 @@ class Migration(migrations.Migration):
         migrations.CreateModel(
             name='Settings',
             fields=[
-                ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('default_container', models.ForeignKey(blank=True, default=None, help_text='Default container to display when calling the index page', null=True, on_delete=django.db.models.deletion.SET_NULL, to='inventory.container')),
+                ('id', models.AutoField(auto_created=True,
+                 primary_key=True, serialize=False, verbose_name='ID')),
+                ('default_container', models.ForeignKey(blank=True, default=None,
+                 help_text='Default container to display when calling the index page',
+                 null=True, on_delete=django.db.models.deletion.SET_NULL, to='inventory.container')),
             ],
             options={
                 'verbose_name_plural': 'Settings',
@@ -90,7 +102,8 @@ class Migration(migrations.Migration):
         migrations.CreateModel(
             name='Manufacturer',
             fields=[
-                ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
+                ('id', models.AutoField(auto_created=True,
+                 primary_key=True, serialize=False, verbose_name='ID')),
                 ('name', models.CharField(max_length=255, unique=True)),
                 ('description', models.CharField(blank=True, max_length=4096)),
                 ('web_link', models.URLField(blank=True, null=True)),
@@ -103,22 +116,33 @@ class Migration(migrations.Migration):
         migrations.CreateModel(
             name='Item',
             fields=[
-                ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('index', models.PositiveIntegerField(verbose_name='Index of compartment in layout')),
+                ('id', models.AutoField(auto_created=True,
+                 primary_key=True, serialize=False, verbose_name='ID')),
+                ('index', models.PositiveIntegerField(
+                    verbose_name='Index of compartment in layout')),
                 ('name', models.TextField(max_length=255)),
                 ('description', models.CharField(max_length=4096)),
-                ('size', models.PositiveIntegerField(default=1, help_text='Number of sub-compartments this item takes up')),
-                ('distributor_item_no', models.CharField(blank=True, max_length=255, null=True)),
-                ('price', models.DecimalField(blank=True, decimal_places=3, max_digits=7, null=True)),
+                ('size', models.PositiveIntegerField(default=1,
+                 help_text='Number of sub-compartments this item takes up')),
+                ('distributor_item_no', models.CharField(
+                    blank=True, max_length=255, null=True)),
+                ('price', models.DecimalField(blank=True,
+                 decimal_places=3, max_digits=7, null=True)),
                 ('last_ordered_on', models.DateField(blank=True, null=True)),
-                ('metadata', models.JSONField(blank=True, null=True, verbose_name='Custom metadata, used by templates')),
+                ('metadata', models.JSONField(blank=True, null=True,
+                 verbose_name='Custom metadata, used by templates')),
                 ('created_at', models.DateTimeField(auto_now_add=True)),
                 ('changed_at', models.DateTimeField(auto_now=True)),
-                ('container', models.ForeignKey(null=True, on_delete=django.db.models.deletion.CASCADE, related_name='item_related', to='inventory.container')),
-                ('distributor', models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.PROTECT, to='inventory.distributor')),
-                ('documentation', models.ManyToManyField(blank=True, related_name='items', to='inventory.Documentation')),
-                ('form_factor', models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.PROTECT, to='inventory.formfactor')),
-                ('manufacturer', models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.PROTECT, to='inventory.manufacturer')),
+                ('container', models.ForeignKey(null=True, on_delete=django.db.models.deletion.CASCADE,
+                 related_name='item_related', to='inventory.container')),
+                ('distributor', models.ForeignKey(blank=True, null=True,
+                 on_delete=django.db.models.deletion.PROTECT, to='inventory.distributor')),
+                ('documentation', models.ManyToManyField(blank=True,
+                 related_name='items', to='inventory.Documentation')),
+                ('form_factor', models.ForeignKey(blank=True, null=True,
+                 on_delete=django.db.models.deletion.PROTECT, to='inventory.formfactor')),
+                ('manufacturer', models.ForeignKey(blank=True, null=True,
+                 on_delete=django.db.models.deletion.PROTECT, to='inventory.manufacturer')),
                 ('tags', models.ManyToManyField(blank=True, to='inventory.Tag')),
             ],
             options={
@@ -138,15 +162,18 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name='container',
             name='layout',
-            field=models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.PROTECT, to='inventory.layout'),
+            field=models.ForeignKey(
+                blank=True, null=True, on_delete=django.db.models.deletion.PROTECT, to='inventory.layout'),
         ),
         migrations.CreateModel(
             name='Workshop',
             fields=[
-                ('container_ptr', models.OneToOneField(auto_created=True, on_delete=django.db.models.deletion.CASCADE, parent_link=True, primary_key=True, serialize=False, to='inventory.container')),
+                ('container_ptr', models.OneToOneField(auto_created=True, on_delete=django.db.models.deletion.CASCADE,
+                 parent_link=True, primary_key=True, serialize=False, to='inventory.container')),
                 ('name', models.CharField(max_length=255, unique=True)),
                 ('description', models.CharField(max_length=4096)),
-                ('show_boxes', models.BooleanField(default=True, help_text='Allow boxes to be defined directly in this workshop')),
+                ('show_boxes', models.BooleanField(
+                    default=True, help_text='Allow boxes to be defined directly in this workshop')),
                 ('created_at', models.DateTimeField(auto_now_add=True)),
                 ('changed_at', models.DateTimeField(auto_now=True)),
                 ('tags', models.ManyToManyField(blank=True, to='inventory.Tag')),
@@ -156,13 +183,16 @@ class Migration(migrations.Migration):
         migrations.CreateModel(
             name='Box',
             fields=[
-                ('container_ptr', models.OneToOneField(auto_created=True, on_delete=django.db.models.deletion.CASCADE, parent_link=True, primary_key=True, serialize=False, to='inventory.container')),
-                ('index', models.PositiveIntegerField(verbose_name='Index of compartment in layout')),
+                ('container_ptr', models.OneToOneField(auto_created=True, on_delete=django.db.models.deletion.CASCADE,
+                 parent_link=True, primary_key=True, serialize=False, to='inventory.container')),
+                ('index', models.PositiveIntegerField(
+                    verbose_name='Index of compartment in layout')),
                 ('name', models.CharField(max_length=255, unique=True)),
                 ('description', models.CharField(max_length=4096)),
                 ('created_at', models.DateTimeField(auto_now_add=True)),
                 ('changed_at', models.DateTimeField(auto_now=True)),
-                ('container', models.ForeignKey(null=True, on_delete=django.db.models.deletion.CASCADE, related_name='box_related', to='inventory.container')),
+                ('container', models.ForeignKey(null=True, on_delete=django.db.models.deletion.CASCADE,
+                 related_name='box_related', to='inventory.container')),
                 ('tags', models.ManyToManyField(blank=True, to='inventory.Tag')),
             ],
             options={
@@ -173,14 +203,18 @@ class Migration(migrations.Migration):
         migrations.CreateModel(
             name='Area',
             fields=[
-                ('container_ptr', models.OneToOneField(auto_created=True, on_delete=django.db.models.deletion.CASCADE, parent_link=True, primary_key=True, serialize=False, to='inventory.container')),
-                ('index', models.PositiveIntegerField(verbose_name='Index of compartment in layout')),
+                ('container_ptr', models.OneToOneField(auto_created=True, on_delete=django.db.models.deletion.CASCADE,
+                 parent_link=True, primary_key=True, serialize=False, to='inventory.container')),
+                ('index', models.PositiveIntegerField(
+                    verbose_name='Index of compartment in layout')),
                 ('name', models.CharField(max_length=255, unique=True)),
                 ('description', models.CharField(max_length=4096)),
-                ('show_sub_area', models.BooleanField(default=True, help_text='Allow sub-areas to be defined in this area')),
+                ('show_sub_area', models.BooleanField(default=True,
+                 help_text='Allow sub-areas to be defined in this area')),
                 ('created_at', models.DateTimeField(auto_now_add=True)),
                 ('changed_at', models.DateTimeField(auto_now=True)),
-                ('container', models.ForeignKey(null=True, on_delete=django.db.models.deletion.CASCADE, related_name='area_related', to='inventory.container')),
+                ('container', models.ForeignKey(null=True, on_delete=django.db.models.deletion.CASCADE,
+                 related_name='area_related', to='inventory.container')),
             ],
             options={
                 'abstract': False,

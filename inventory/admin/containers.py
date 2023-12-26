@@ -53,7 +53,6 @@ class ItemInlineAdmin(NestedStackedInline):
     model = Item
     extra = 1
     filter_horizontal = ('tags', 'documentation')
-    #inlines = [DocumentationInlineAdmin]
 
 
 class BoxAdmin(NestedModelAdmin):

@@ -15,12 +15,12 @@ As configured by default you will need the following:
 
 - A postgres database named `inventory` with a postgres user `inventory` that
   may connect without password or by default with the password `inventory`
-- Python > 3.7
+- Python > 3.10
 - Poetry to install requirements and create a virtualenv
 
 ### Installation
 
-This is a standard Django 3.1 application, if you know how to deploy those the
+This is a standard Django 5.0 application, if you know how to deploy those the
 following might sound familiar:
 
 1. Checkout repository: `git clone https://github.com/dunkelstern/inventory.git`

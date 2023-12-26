@@ -9,10 +9,7 @@
         "**/__pycache__": true,
         ".mypy_cache": true
     },
-    "python.linting.flake8Enabled": true,
-    "python.linting.mypyEnabled": false,
-    "python.linting.pylintEnabled": false,
-    "python.linting.flake8Args": [
+    "flake8.args": [
         "--max-line-length=120"
     ]
 }

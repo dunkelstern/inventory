@@ -25,6 +25,9 @@ let
   };
 in inventoryAppEnv.env.overrideAttrs (oldAttrs: {
   buildInputs = with pkgs ; [ 
-    postgresql
+    postgresql.lib
   ];
+  shellHook = ''
+    export LD_LIBRARY_PATH="$LD_LIBRARY_PATH:${pkgs.postgresql.lib}/lib"
+  '';
 })

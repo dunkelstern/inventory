@@ -1,0 +1,58 @@
+{% load static %}
+
+<table class="list">
+    <thead>
+        <tr>
+            <th>Name</th>
+            <th></th>
+            <th>Description</th>
+            <th>Container</th>
+            {% if show_manufacturer %}
+            <th>Manufacturer</th>
+            {% endif %}
+            {% if show_distributor %}
+            <th>Distributor</th>
+            {% endif %}
+        </tr>
+    </thead>
+    <tbody>
+        {% for item in items %}
+        <tr>
+            <td><a href="{% url 'item-detail' item.id %}">{{ item.name }}</a></td>
+            <td class="right">
+                {% if item.documentation.all %}
+                    <a class="datasheet" href="{{ item.documentation.all.0.file.url }}"><img class="icon" src="{% static "inventory/img/datasheet.svg" %}"></a>
+                {% endif %}
+                {% if user.is_staff %}
+                    <a class="edit" href="{% url "admin:inventory_item_change" object_id=item.pk %}"><img class="icon" src="{% static "inventory/img/edit.svg" %}"></a>
+                {% endif %}
+            </td>
+            <td>{{ item.description }}</td>
+            <td><a href="{{ item.container_url }}">{{ item.container.display_name }}</a></td>
+            {% if show_manufacturer %}
+            <td>
+                {% if item.manufacturer %}
+                <a href="{% url 'manufacturer-detail' item.manufacturer.id %}">
+                    {% if item.manufacturer.icon %}<img src="{{ item.manufacturer.icon.url }}" class="logo">{% endif %}{{ item.manufacturer.name }}
+                </a>
+                {% else %}
+                    -
+                {% endif %}
+            </td>
+            {% endif %}
+            {% if show_distributor %}
+            <td>
+                {% if item.distributor %}
+                <a href="{% url 'distributor-detail' item.distributor.id %}">
+                    {% if item.distributor.icon %}<img src="{{ item.distributor.icon.url }}" class="icon">{% endif %}{{ item.distributor.name }}
+                </a>
+                {% else %}
+                    -
+                {% endif %}
+            </td>
+            {% endif %}
+
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>

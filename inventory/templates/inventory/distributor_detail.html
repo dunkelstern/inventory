@@ -95,70 +95,9 @@
 
     <h2>Items</h2>
 
-    <div class="pagination" id="paginator_top">
-        {% if items.has_previous %}
-            <a href="{% url 'distributor-detail' distributor.id %}?item_page=1#paginator_top"><img src="{% static 'inventory/img/first.svg' %}" class="icon" title="First page"></a>
-            <a href="{% url 'distributor-detail' distributor.id %}?item_page={{ items.previous_page_number }}#paginator_top"><img src="{% static 'inventory/img/previous.svg' %}" class="icon" title="Previous page"></a>
-        {% endif %}
-        {% if items.paginator.num_pages > 1 %}
-            {{ items.number }}/{{ items.paginator.num_pages }}
-        {% endif %}
-        {% if items.has_next %}
-            <a href="{% url 'distributor-detail' distributor.id %}?item_page={{ items.next_page_number }}#paginator_top"><img src="{% static 'inventory/img/next.svg' %}" class="icon" title="Next page"></a>
-            <a href="{% url 'distributor-detail' distributor.id %}?item_page={{ items.paginator.num_pages}}#paginator_top"><img src="{% static 'inventory/img/last.svg' %}" class="icon" title="Last page"></a>
-        {% endif %}
-    </div>
-    
-    <table class="list">
-        <thead>
-            <tr>
-                <th>Name</th>
-                <th></th>
-                <th>Description</th>
-                <th>Container</th>
-                <th>Manufacturer</th>
-            </tr>
-        </thead>
-        <tbody>
-            {% for item in items %}
-            <tr>
-                <td><a href="{% url 'item-detail' item.id %}">{{ item.name }}</a></td>
-                <td class="right">
-                    {% if item.documentation.all %}
-                        <a class="datasheet" href="{{ item.documentation.all.0.file.url }}"><img class="icon" src="{% static "inventory/img/datasheet.svg" %}"></a>
-                    {% endif %}
-                    {% if user.is_staff %}
-                        <a class="edit" href="{% url "admin:inventory_item_change" object_id=item.pk %}"><img class="icon" src="{% static "inventory/img/edit.svg" %}"></a>
-                    {% endif %}
-                </td>
-                <td>{{ item.description }}</td>
-                <td><a href="{{ item.container_url }}">{{ item.container.display_name }}</a></td>
-                <td>
-                    {% if item.manufacturer %}
-                    <a href="{% url 'manufacturer-detail' item.manufacturer.id %}">
-                        {% if item.manufacturer.icon %}<img src="{{ item.manufacturer.icon.url }}" class="logo">{% endif %}{{ item.manufacturer.name }}
-                    </a>
-                    {% else %}
-                        -
-                    {% endif %}
-                </td>
-            </tr>
-            {% endfor %}
-        </tbody>
-    </table>
-
-    <div class="pagination" id="paginator_bottom">
-        {% if items.has_previous %}
-            <a href="{% url 'distributor-detail' distributor.id %}?item_page=1#paginator_bottom"><img src="{% static 'inventory/img/first.svg' %}" class="icon" title="First page"></a>
-            <a href="{% url 'distributor-detail' distributor.id %}?item_page={{ items.previous_page_number }}#paginator_bottom"><img src="{% static 'inventory/img/previous.svg' %}" class="icon" title="Previous page"></a>
-        {% endif %}
-        {% if items.paginator.num_pages > 1 %}
-            {{ items.number }}/{{ items.paginator.num_pages }}
-        {% endif %}
-        {% if items.has_next %}
-            <a href="{% url 'distributor-detail' distributor.id %}?item_page={{ items.next_page_number }}#paginator_bottom"><img src="{% static 'inventory/img/next.svg' %}" class="icon" title="Next page"></a>
-            <a href="{% url 'distributor-detail' distributor.id %}?item_page={{ items.paginator.num_pages}}#paginator_bottom"><img src="{% static 'inventory/img/last.svg' %}" class="icon" title="Last page"></a>
-        {% endif %}
-    </div>
+    {% url 'distributor-detail' distributor.id as this_url %}
+    {% include "inventory/pagination.html" with url=this_url id="paginator_top" param="item" paginator=items %}
+    {% include "inventory/item_list.html" with items=items show_manufacturer=1 %}
+    {% include "inventory/pagination.html" with url=this_url id="paginator_top" param="item" paginator=items %}
 
 {% endblock %}

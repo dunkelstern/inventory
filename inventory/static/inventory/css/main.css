@@ -150,6 +150,14 @@ img.icon {
     top: 2px;
 }
 
+img.logo {
+    display: inline-block;
+    margin-right: 10px;
+    height: 18px;
+    position: relative;
+    top: 2px;
+}
+
 td.icon, th.icon {
     width: 28px;
 }

@@ -22,6 +22,17 @@
             {% block header_icons %}
             {% endblock %}
         </ul>
+        <ul class="icon-nav">
+            <li>
+                <a href="{% url 'manufacturer-list' %}"><img class="icon" title="Manufacturers" src="{% static "inventory/img/manufacturer.svg" %}"></a>
+            </li>
+            <li>
+                <a href="{% url 'distributor-list' %}"><img class="icon" title="Distributors" src="{% static "inventory/img/distributor.svg" %}"></a>
+            </li>
+            <li>
+                <a href="{% url 'workshop-list' %}"><img class="icon" title="Workshops" src="{% static "inventory/img/workshop.svg" %}"></a>
+            </li>
+        </ul>
 
         {% if user.is_authenticated %}
         <form method="POST" action="{% url "logout" %}">

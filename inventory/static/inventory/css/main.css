@@ -244,3 +244,18 @@ table.list tbody td {
     border-bottom: 1px solid black;
     padding: 10px;
 }
+
+.pagination {
+    margin-bottom: 10px;
+    margin-top: 10px;
+}
+
+.pagination img.icon {
+    display: inline-block;
+    margin-right: 10px;
+    margin-left: 10px;
+    width: 18px;
+    height: 18px;
+    position: relative;
+    top: 4px;
+}

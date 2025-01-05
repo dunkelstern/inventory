@@ -1,0 +1,131 @@
+{% extends "base.html" %}
+{% load static %}
+{% load formatstring %}
+
+{% block title %}Manufacturer: {{ manufacturer }}{% endblock %}
+
+{% block header_bar %}
+    <a href="{% url 'manufacturer-list' %}"><img class="icon" src="{% static "inventory/img/back.svg" %}"></a>
+    Manufacturer: {{ manufacturer.name }}
+    <span class="small">{{ manufacturer.description }}</span></h2>
+{% endblock %}
+
+{% block header_icons %}
+    {% if user.is_staff %}
+        <li>
+            <a href="{% url "admin:inventory_manufacturer_change" object_id=manufacturer.pk %}"><img class="icon" src="{% static "inventory/img/edit.svg" %}"></a>
+        </li>
+    {% endif %}
+{% endblock %}
+
+{% block content %}
+    <table class="attribute-list">
+        <tbody>
+            <tr>
+                <th>Name</th>
+                <td>{{ manufacturer.name }}</td>
+            </tr>
+            <tr>
+                <th>Description</th>
+                <td>{{ manufacturer.description }}</td>
+            </tr>
+        {% if manufacturer.icon %}
+            <tr>
+                <th>Icon</th>
+                <td><img src="{{ manufacturer.icon.url }}" title="{{ manufacturer.name }}" style="max-height: 20px;"></td>
+            </tr>
+        {% endif %}
+        <tr>
+            <th>Link</th>
+            <td>{% if manufacturer.web_link %}<a href="{{ manufacturer.web_link }}" title="{{ manufacturer.name }}">{{ manufacturer.web_link }}{% else %}-{% endif %}</td>
+        </tr>
+        
+        <tr>
+            <th>Tags</th>
+            <td>
+                <ul class="tag-list">
+                    {% for tag in manufacturer.tags.all %}
+                        <li><a href="{% url 'tag-detail' tag.id %}" title="{{ tag.name }}">{{ tag.name }}</a></li>
+                    {% empty %}
+                        No tags
+                    {% endfor %}
+                </ul>
+            </td>
+        </tr>
+
+            <tr><th>Created at</th><td>{{ manufacturer.created_at }}</td></tr>
+        {% if manufacturer.created_at != manufacturer.changed_at %}
+            <tr><th>Last change</th><td>{{ manufacturer.changed_at }}</td></tr>
+        {% endif %}
+        </tbody>
+    </table>
+
+    <h2>Items</h2>
+
+    <div class="pagination" id="paginator_top">
+        {% if items.has_previous %}
+            <a href="{% url 'manufacturer-detail' manufacturer.id %}?item_page=1#paginator_top"><img src="{% static 'inventory/img/first.svg' %}" class="icon" title="First page"></a>
+            <a href="{% url 'manufacturer-detail' manufacturer.id %}?item_page={{ items.previous_page_number }}#paginator_top"><img src="{% static 'inventory/img/previous.svg' %}" class="icon" title="Previous page"></a>
+        {% endif %}
+        {% if items.paginator.num_pages > 1 %}
+            {{ items.number }}/{{ items.paginator.num_pages }}
+        {% endif %}
+        {% if items.has_next %}
+            <a href="{% url 'manufacturer-detail' manufacturer.id %}?item_page={{ items.next_page_number }}#paginator_top"><img src="{% static 'inventory/img/next.svg' %}" class="icon" title="Next page"></a>
+            <a href="{% url 'manufacturer-detail' manufacturer.id %}?item_page={{ items.paginator.num_pages}}#paginator_top"><img src="{% static 'inventory/img/last.svg' %}" class="icon" title="Last page"></a>
+        {% endif %}
+    </div>
+    
+    <table class="list">
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th></th>
+                <th>Description</th>
+                <th>Container</th>
+                <th>Distributor</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for item in items %}
+            <tr>
+                <td><a href="{% url 'item-detail' item.id %}">{{ item.name }}</a></td>
+                <td>
+                    {% if item.documentation.all %}
+                        <a class="datasheet" href="{{ item.documentation.all.0.file.url }}"><img class="icon" src="{% static "inventory/img/datasheet.svg" %}"></a>
+                    {% endif %}
+                    {% if user.is_staff %}
+                        <a class="edit" href="{% url "admin:inventory_item_change" object_id=item.pk %}"><img class="icon" src="{% static "inventory/img/edit.svg" %}"></a>
+                    {% endif %}
+                </td>
+                <td>{{ item.description }}</td>
+                <td><a href="{{ item.container_url }}">{{ item.container.display_name }}</a></td>
+                <td>
+                    {% if item.distributor %}
+                    <a href="{% url 'distributor-detail' item.distributor.id %}">
+                        {% if item.distributor.icon %}<img src="{{ item.distributor.icon.url }}" class="icon">{% endif %}{{ item.distributor.name }}
+                    </a>
+                    {% else %}
+                        -
+                    {% endif %}
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    <div class="pagination" id="paginator_bottom">
+        {% if items.has_previous %}
+            <a href="{% url 'manufacturer-detail' manufacturer.id %}?item_page=1#paginator_bottom"><img src="{% static 'inventory/img/first.svg' %}" class="icon" title="First page"></a>
+            <a href="{% url 'manufacturer-detail' manufacturer.id %}?item_page={{ items.previous_page_number }}#paginator_bottom"><img src="{% static 'inventory/img/previous.svg' %}" class="icon" title="Previous page"></a>
+        {% endif %}
+        {% if items.paginator.num_pages > 1 %}
+            {{ items.number }}/{{ items.paginator.num_pages }}
+        {% endif %}
+        {% if items.has_next %}
+            <a href="{% url 'manufacturer-detail' manufacturer.id %}?item_page={{ items.next_page_number }}#paginator_bottom"><img src="{% static 'inventory/img/next.svg' %}" class="icon" title="Next page"></a>
+            <a href="{% url 'manufacturer-detail' manufacturer.id %}?item_page={{ items.paginator.num_pages}}#paginator_bottom"><img src="{% static 'inventory/img/last.svg' %}" class="icon" title="Last page"></a>
+        {% endif %}
+    </div>
+
+{% endblock %}

@@ -259,3 +259,7 @@ table.list tbody td {
     position: relative;
     top: 4px;
 }
+
+.right {
+    text-align: right;
+}

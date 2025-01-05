@@ -90,7 +90,7 @@
             {% for item in items %}
             <tr>
                 <td><a href="{% url 'item-detail' item.id %}">{{ item.name }}</a></td>
-                <td>
+                <td class="right">
                     {% if item.documentation.all %}
                         <a class="datasheet" href="{{ item.documentation.all.0.file.url }}"><img class="icon" src="{% static "inventory/img/datasheet.svg" %}"></a>
                     {% endif %}

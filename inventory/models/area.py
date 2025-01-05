@@ -13,3 +13,6 @@ class Area(CanBeContained, Container):
     @property
     def url(self):
         return reverse("area-detail", args=[self.pk])
+
+    class Meta:
+        ordering = ("name", )

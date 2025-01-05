@@ -16,3 +16,6 @@ class FormFactor(models.Model):
         items = [self.name]
         items.extend([tag.description for tag in self.tags.all()])
         return ", ".join(items)
+
+    class Meta:
+        ordering = ("name", )

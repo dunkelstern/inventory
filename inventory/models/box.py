@@ -31,3 +31,6 @@ class Box(CanBeContained, Container):
     @property
     def url(self):
         return reverse("box-detail", args=[self.pk])
+
+    class Meta:
+        ordering = ("name", )

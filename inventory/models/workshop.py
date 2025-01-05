@@ -15,3 +15,6 @@ class Workshop(Container):
     @property
     def url(self):
         return reverse("workshop-detail", args=[self.pk])
+
+    class Meta:
+        ordering = ("name", )

@@ -29,3 +29,6 @@ class Item(CanBeContained):
     @property
     def all_tags(self):
         return list(self.tags.all()) + list(self.form_factor.tags.all())
+
+    class Meta:
+        ordering = ("name", )

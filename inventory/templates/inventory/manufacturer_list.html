@@ -1,0 +1,45 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}Manufacturers{% endblock %}
+
+{% block header_bar %}
+    Inventory management - Manufacturers
+{% endblock %}
+
+{% block content %}
+    <table class="list">
+        <thead>
+            <tr>
+                <th>Logo</th>
+                <th>Manufacturer</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for manufacturer in object_list %}
+            <tr>
+                <td class="logo">
+                    {% if manufacturer.icon %}
+                        <img src="{{ manufacturer.icon.url }}">
+                    {% endif %}       
+                </td>         
+                <td>
+                    <a href="{% url 'manufacturer-detail' manufacturer.id %}" title="{{ manufacturer.description }}">{{ manufacturer.name }}</a>
+                </td>
+                <td>
+                {% if user.is_staff %}
+                    <a class="edit" href="{% url "admin:inventory_manufacturer_change" object_id=manufacturer.pk %}"><img class="icon" src="{% static 'inventory/img/edit.svg' %}"></a>
+                {% endif %}
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    {% if user.is_staff %}
+        <p><a href="{% url "admin:inventory_manufacturer_add" %}?layout=1">Create new manufacturer...</a></p>
+    {% endif %}
+
+
+{% endblock %}

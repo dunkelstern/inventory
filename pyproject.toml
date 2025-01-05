@@ -6,13 +6,13 @@ authors = ["Johannes Schriewer <hallo@dunkelstern.de>"]
 
 [tool.poetry.dependencies]
 python = "^3.10"
-django = "^5.0"
-gunicorn = "^20.0.0"
-whitenoise = "^6.6.0"
-commentjson = "^0.9.0"
-psycopg = { version = "^3.1.0", extras = [ "binary" ] }
+django = "^5"
+gunicorn = "^20"
+whitenoise = "^6.6"
+commentjson = "^0.9"
+psycopg = { version = "^3", extras = [ "binary" ] }
 django-nested-admin = "^4.0.0"
-pillow = "^10.1.0"
+pillow = "^10"
 
 [tool.poetry.group.dev.dependencies]
 mypy = "*"

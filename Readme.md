@@ -32,7 +32,7 @@ following might sound familiar:
   - Development server (not for deployment!): `poetry run python manage.py runserver`
   - Deployment via `gunicorn` on port 8000: `poetry run gunicorn inventory_project.wsgi -b 0.0.0.0:8000`
 
-Then login on `http://localhost;8000/admin/` for the Django admin interface or
+Then login on `http://localhost:8000/admin/` for the Django admin interface or
 go to `http://localhost:8000` to enter the inventory management system directly
 
 ### Additional information

@@ -22,37 +22,51 @@
 
     {% if area.show_sub_area %}
         <h3>Areas</h3>
-        <ul class="nav-list">
-            {% for a in area.area_related.all %}
-                <li>
-                    <a href="{% url 'area-detail' a.id %}" title="{{ a.description }}">{{ a.name }}</a>
-                    {% if user.is_staff %}
-                        <a class="edit" href="{% url "admin:inventory_area_change" object_id=area.pk %}"><img class="icon" src="{% static "inventory/img/edit.svg" %}"></a>
-                    {% endif %}
-                </li>
-            {% empty %}
-                <li>No areas defined</li>
-            {% endfor %}
-        </ul>
 
+        <table class="list">
+            <tbody>
+            {% for a in area.area_related.all %}
+                <tr>
+                    <td>
+                        <a href="{% url 'area-detail' a.id %}" title="{{ a.description }}">{{ a.name }}</a>
+                    </td>
+                    <td>
+                    {% if user.is_staff %}
+                        <a class="edit" href="{% url "admin:inventory_area_change" object_id=a.pk %}"><img class="icon" src="{% static 'inventory/img/edit.svg' %}"></a>
+                    {% endif %}
+                    </td>
+                </tr>
+            {% empty %}
+                <tr><td>No areas defined</td></tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    
         {% if user.is_staff %}
             <p><a href="{% url "admin:inventory_area_add" %}?container={{ area.id }}&index=0">Create new area...</a></p>
         {% endif %}
     {% endif %}
 
     <h3>Containers</h3>
-    <ul class="nav-list">
+
+    <table class="list">
+        <tbody>
         {% for box in area.box_related.all %}
-            <li>
-                <a href="{% url 'box-detail' box.id %}" title="{{ box.description }}">{{ box.name }} ({{ box.layout.name }})</a>
+            <tr>
+                <td>
+                    <a href="{% url 'box-detail' box.id %}" title="{{ box.description }}">{{ box.name }}</a>
+                </td>
+                <td>
                 {% if user.is_staff %}
-                    <a class="edit" href="{% url "admin:inventory_box_change" object_id=box.pk %}"><img class="icon" src="{% static "inventory/img/edit.svg" %}"></a>
+                    <a class="edit" href="{% url "admin:inventory_box_change" object_id=box.pk %}"><img class="icon" src="{% static 'inventory/img/edit.svg' %}"></a>
                 {% endif %}
-            </li>
+                </td>
+            </tr>
         {% empty %}
-            <li>No containers defined</li>
+            <tr><td>No containers defined</td></tr>
         {% endfor %}
-    </ul>
+        </tbody>
+    </table>
 
     {% if user.is_staff %}
         <p><a href="{% url "admin:inventory_box_add" %}?container={{ area.id }}&index=0">Create new container...</a></p>

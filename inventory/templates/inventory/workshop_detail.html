@@ -20,19 +20,25 @@
 
 {% block content %}
     <h3>Areas</h3>
-    <ul class="nav-list">
+
+    <table class="list">
+        <tbody>
         {% for area in workshop.area_related.all %}
-            <li>
-                <a href="{% url 'area-detail' area.id %}" title="{{ area.description }}">{{ area.name }}</a>
-                ({{ area.description }})
+            <tr>
+                <td>
+                    <a href="{% url 'area-detail' area.id %}" title="{{ area.description }}">{{ area.name }}</a>
+                </td>
+                <td>
                 {% if user.is_staff %}
-                    <a class="edit" href="{% url "admin:inventory_area_change" object_id=area.pk %}"><img class="icon" src="{% static "inventory/img/edit.svg" %}"></a>
+                    <a class="edit" href="{% url "admin:inventory_area_change" object_id=area.pk %}"><img class="icon" src="{% static 'inventory/img/edit.svg' %}"></a>
                 {% endif %}
-            </li>
+                </td>
+            </tr>
         {% empty %}
-            <li>No areas defined</li>
+            <tr><td>No areas defined</td></tr>
         {% endfor %}
-    </ul>
+        </tbody>
+    </table>
 
     {% if user.is_staff %}
         <p><a href="{% url "admin:inventory_area_add" %}?container={{ workshop.id }}&index=0">Create new area...</a></p>
@@ -40,20 +46,25 @@
 
     {% if workshop.show_boxes %}
         <h3>Containers</h3>
-        <ul class="nav-list">
+        <table class="list">
+            <tbody>
             {% for box in workshop.box_related.all %}
-                <li>
-                    <a href="{% url 'box-detail' box.id %}" title="{{ box.description }}">{{ box.name }} ({{ box.layout.name }})</a>
-                    ({{ box.description }})
+                <tr>
+                    <td>
+                        <a href="{% url 'box-detail' box.id %}" title="{{ box.description }}">{{ box.name }}</a>
+                    </td>
+                    <td>
                     {% if user.is_staff %}
-                        <a class="edit" href="{% url "admin:inventory_box_change" object_id=box.pk %}"><img class="icon" src="{% static "inventory/img/edit.svg" %}"></a>
+                        <a class="edit" href="{% url "admin:inventory_box_change" object_id=box.pk %}"><img class="icon" src="{% static 'inventory/img/edit.svg' %}"></a>
                     {% endif %}
-                </li>
+                    </td>
+                </tr>
             {% empty %}
-                <li>No containers defined</li>
+                <tr><td>No containers defined</td></tr>
             {% endfor %}
-        </ul>
-
+            </tbody>
+        </table>
+    
         {% if user.is_staff %}
             <p><a href="{% url "admin:inventory_box_add" %}?container={{ workshop.id }}&index=0">Create new container...</a></p>
         {% endif %}

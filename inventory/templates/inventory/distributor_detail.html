@@ -1,0 +1,164 @@
+{% extends "base.html" %}
+{% load static %}
+{% load formatstring %}
+
+{% block title %}Distributor: {{ distributor }}{% endblock %}
+
+{% block header_bar %}
+    <a href="{% url 'distributor-list' %}"><img class="icon" src="{% static "inventory/img/back.svg" %}"></a>
+    Distributor: {{ distributor.name }}
+    <span class="small">{{ distributor.description }}</span></h2>
+{% endblock %}
+
+{% block header_icons %}
+    {% if user.is_staff %}
+        <li>
+            <a href="{% url "admin:inventory_distributor_change" object_id=distributor.pk %}"><img class="icon" src="{% static "inventory/img/edit.svg" %}"></a>
+        </li>
+    {% endif %}
+{% endblock %}
+
+{% block content %}
+    <table class="attribute-list">
+        <tbody>
+            <tr>
+                <th>Name</th>
+                <td>{{ distributor.name }}</td>
+            </tr>
+            <tr>
+                <th>Description</th>
+                <td>{{ distributor.description }}</td>
+            </tr>
+        {% if distributor.icon %}
+            <tr>
+                <th>Icon</th>
+                <td><img src="{{ distributor.icon.url }}" title="{{ distributor.name }}" style="max-height: 20px;"></td>
+            </tr>
+        {% endif %}
+        <tr>
+            <th>Link</th>
+            <td>{% if distributor.web_link %}<a href="{{ distributor.web_link }}" title="{{ distributor.name }}">{{ distributor.web_link }}{% else %}-{% endif %}</td>
+        </tr>
+        {% if distributor.search_link %}
+        <tr>
+            <th>Search</th>
+            <td>
+                <script>
+                    function distro_search(e) {
+                        const input = document.getElementById('distributor_search');
+                        const link = '{{ distributor.search_link }}'.replace('{}', encodeURIComponent(input.value)).replace('{0}', encodeURIComponent(input.value));
+                        window.location.href = link;
+                        e = e || window.event;
+                        e.preventDefault();
+                    }
+                </script>
+                <form>
+                    <label for="distributor_search">Search query:</label>
+                    <input name="distributor_search" id="distributor_search" type="text">
+                    <button onclick="distro_search(event)" type="submit">Search</button>
+                </form>
+            </td>
+        </tr>
+        {% endif %}
+        {% if distributor.phone %}
+        <tr>
+            <th>Phone</th>
+            <td>{{ distributor.phone }}</td>
+        </tr>
+        {% endif %}        
+        {% if distributor.email %}
+        <tr>
+            <th>Email</th>
+            <td><a href="mailto:{{ distributor.email }}">{{ distributor.email }}</a></td>
+        </tr>
+        {% endif %}        
+
+        <tr>
+            <th>Tags</th>
+            <td>
+                <ul class="tag-list">
+                    {% for tag in distributor.tags.all %}
+                        <li><a href="{% url 'tag-detail' tag.id %}" title="{{ tag.name }}">{{ tag.name }}</a></li>
+                    {% empty %}
+                        No tags
+                    {% endfor %}
+                </ul>
+            </td>
+        </tr>
+
+            <tr><th>Created at</th><td>{{ distributor.created_at }}</td></tr>
+        {% if distributor.created_at != distributor.changed_at %}
+            <tr><th>Last change</th><td>{{ distributor.changed_at }}</td></tr>
+        {% endif %}
+        </tbody>
+    </table>
+
+    <h2>Items</h2>
+
+    <div class="pagination" id="paginator_top">
+        {% if items.has_previous %}
+            <a href="{% url 'distributor-detail' distributor.id %}?item_page=1#paginator_top"><img src="{% static 'inventory/img/first.svg' %}" class="icon" title="First page"></a>
+            <a href="{% url 'distributor-detail' distributor.id %}?item_page={{ items.previous_page_number }}#paginator_top"><img src="{% static 'inventory/img/previous.svg' %}" class="icon" title="Previous page"></a>
+        {% endif %}
+        {% if items.paginator.num_pages > 1 %}
+            {{ items.number }}/{{ items.paginator.num_pages }}
+        {% endif %}
+        {% if items.has_next %}
+            <a href="{% url 'distributor-detail' distributor.id %}?item_page={{ items.next_page_number }}#paginator_top"><img src="{% static 'inventory/img/next.svg' %}" class="icon" title="Next page"></a>
+            <a href="{% url 'distributor-detail' distributor.id %}?item_page={{ items.paginator.num_pages}}#paginator_top"><img src="{% static 'inventory/img/last.svg' %}" class="icon" title="Last page"></a>
+        {% endif %}
+    </div>
+    
+    <table class="list">
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th></th>
+                <th>Description</th>
+                <th>Container</th>
+                <th>Manufacturer</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for item in items %}
+            <tr>
+                <td><a href="{% url 'item-detail' item.id %}">{{ item.name }}</a></td>
+                <td>
+                    {% if item.documentation.all %}
+                        <a class="datasheet" href="{{ item.documentation.all.0.file.url }}"><img class="icon" src="{% static "inventory/img/datasheet.svg" %}"></a>
+                    {% endif %}
+                    {% if user.is_staff %}
+                        <a class="edit" href="{% url "admin:inventory_item_change" object_id=item.pk %}"><img class="icon" src="{% static "inventory/img/edit.svg" %}"></a>
+                    {% endif %}
+                </td>
+                <td>{{ item.description }}</td>
+                <td><a href="{{ item.container_url }}">{{ item.container.display_name }}</a></td>
+                <td>
+                    {% if item.manufacturer %}
+                    <a href="{% url 'manufacturer-detail' item.manufacturer.id %}">
+                        {% if item.manufacturer.icon %}<img src="{{ item.manufacturer.icon.url }}" class="logo">{% endif %}{{ item.manufacturer.name }}
+                    </a>
+                    {% else %}
+                        -
+                    {% endif %}
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    <div class="pagination" id="paginator_bottom">
+        {% if items.has_previous %}
+            <a href="{% url 'distributor-detail' distributor.id %}?item_page=1#paginator_bottom"><img src="{% static 'inventory/img/first.svg' %}" class="icon" title="First page"></a>
+            <a href="{% url 'distributor-detail' distributor.id %}?item_page={{ items.previous_page_number }}#paginator_bottom"><img src="{% static 'inventory/img/previous.svg' %}" class="icon" title="Previous page"></a>
+        {% endif %}
+        {% if items.paginator.num_pages > 1 %}
+            {{ items.number }}/{{ items.paginator.num_pages }}
+        {% endif %}
+        {% if items.has_next %}
+            <a href="{% url 'distributor-detail' distributor.id %}?item_page={{ items.next_page_number }}#paginator_bottom"><img src="{% static 'inventory/img/next.svg' %}" class="icon" title="Next page"></a>
+            <a href="{% url 'distributor-detail' distributor.id %}?item_page={{ items.paginator.num_pages}}#paginator_bottom"><img src="{% static 'inventory/img/last.svg' %}" class="icon" title="Last page"></a>
+        {% endif %}
+    </div>
+
+{% endblock %}

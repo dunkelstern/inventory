@@ -22,9 +22,42 @@
     <table class="attribute-list">
         <tbody>
             <tr>
-                <th>Description</th>
-                <td>{{ item }}</td>
+                <th>Name</th>
+                <td>{{ item.name }}</td>
             </tr>
+            <tr>
+                <th>Description</th>
+                <td>{{ item.description }}</td>
+            </tr>
+            <tr>
+                <th>Tags</th>
+                <td>
+                    <ul class="tag-list">
+                        {% for tag in item.all_tags %}
+                            <li><a href="{% url 'tag-detail' tag.id %}" title="{{ tag.name }}">{{ tag.name }}</a></li>
+                        {% empty %}
+                            No tags
+                        {% endfor %}
+                    </ul>
+                </td>
+            </tr>
+
+        {% if item.form_factor %}
+            <tr>
+                <th>Form factor</th>
+                <td>
+                    {% if item.form_factor.datasheet %}
+                        <a href="{% url 'distributor-detail' item.distributor.id %}">
+                            {% if item.form_factor.icon %}<img src="{{ item.form_factor.icon.url }}" class="icon">{% endif %}
+                            {{ item.form_factor.name }}
+                        </a>
+                    {% else %}
+                        {% if item.form_factor.icon %}<img src="{{ item.form_factor.icon.url }}" class="icon">{% endif %}
+                        {{ item.form_factor.name }}
+                    {% endif %}
+                </td>
+            </tr>
+        {% endif %}
 
         {% if item.manufacturer %}
             <tr>
@@ -44,23 +77,6 @@
                     <a href="{% url 'distributor-detail' item.distributor.id %}">
                         {% if item.distributor.icon %}<img src="{{ item.distributor.icon.url }}" class="icon">{% endif %}{{ item.distributor.name }}
                     </a>
-                </td>
-            </tr>
-        {% endif %}
-
-        {% if item.form_factor %}
-            <tr>
-                <th>Form factor</th>
-                <td>
-                    {% if item.form_factor.datasheet %}
-                        <a href="{% url 'distributor-detail' item.distributor.id %}">
-                            {% if item.form_factor.icon %}<img src="{{ item.form_factor.icon.url }}" class="icon">{% endif %}
-                            {{ item.form_factor.name }}
-                        </a>
-                    {% else %}
-                        {% if item.form_factor.icon %}<img src="{{ item.form_factor.icon.url }}" class="icon">{% endif %}
-                        {{ item.form_factor.name }}
-                    {% endif %}
                 </td>
             </tr>
         {% endif %}

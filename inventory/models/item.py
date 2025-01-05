@@ -28,4 +28,4 @@ class Item(CanBeContained):
 
     @property
     def all_tags(self):
-        return self.tags.all() + self.form_factor.tags.all()
+        return list(self.tags.all()) + list(self.form_factor.tags.all())

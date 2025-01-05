@@ -3,7 +3,7 @@ __pycache__
 .python_version
 *.egg-info
 
-./media/
+media/
 ./static/
 media.tar.gz
 *.pg

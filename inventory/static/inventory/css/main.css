@@ -195,6 +195,28 @@ ul.nav-list li {
     list-style-type: none;
 }
 
+ul.tag-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    max-width: 500px;
+    text-indent: 0;
+    padding-left: 0;
+}
+
+ul.tag-list li {
+    display: inline-block;
+    border: 1px solid #808080;
+    border-radius: 12px;
+    height: 18px;
+    background-color: #e0e0e0;
+    padding: 3px 6px 3px 6px;
+}
+
+ul.tag-list li a {
+    text-decoration: none;
+}
+
 table.list {
     border: 2px solid black;
     border-spacing: 0px;

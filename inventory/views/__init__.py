@@ -5,6 +5,7 @@ from .item import ItemView, ItemListView
 from .manufacturer import ManufacturerView, ManufacturerListView
 from .workshop import WorkshopView, WorkshopListView
 from .index import IndexView
+from .tag import TagListView, TagView
 
 __all__ = [
     AreaView, AreaListView,
@@ -13,5 +14,6 @@ __all__ = [
     ItemView, ItemListView,
     ManufacturerView, ManufacturerListView,
     WorkshopView, WorkshopListView,
-    IndexView
+    IndexView,
+    TagView, TagListView
 ]

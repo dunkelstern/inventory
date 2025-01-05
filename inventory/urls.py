@@ -16,8 +16,25 @@ Including another URLconf
 
 from django.urls import path
 
-from .views import WorkshopListView, AreaListView, BoxListView, ItemListView, ManufacturerListView, DistributorListView
-from .views import WorkshopView, AreaView, BoxView, ItemView, DistributorView, ManufacturerView, IndexView
+from .views import (
+    WorkshopListView,
+    AreaListView,
+    BoxListView,
+    ItemListView,
+    ManufacturerListView,
+    DistributorListView,
+    TagListView
+)
+from .views import (
+    WorkshopView,
+    AreaView,
+    BoxView,
+    ItemView,
+    DistributorView,
+    ManufacturerView,
+    IndexView,
+    TagView
+)
 
 urlpatterns = [
     path('workshops', WorkshopListView.as_view(), name='workshop-list'),
@@ -33,5 +50,7 @@ urlpatterns = [
     path('manufacturer/<int:pk>', ManufacturerView.as_view(), name='manufacturer-detail'),
     path('distributors', DistributorListView.as_view(), name='distributor-list'),
     path('distributor/<int:pk>', DistributorView.as_view(), name='distributor-detail'),
+    path('tags', TagListView.as_view(), name='tag-list'),
+    path('tag/<int:pk>', TagView.as_view(), name='tag-detail'),
     path('', IndexView.as_view(), name='index')
 ]

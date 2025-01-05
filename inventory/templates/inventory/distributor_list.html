@@ -1,0 +1,46 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}Distributors{% endblock %}
+
+{% block header_bar %}
+    Inventory management - Distributors
+{% endblock %}
+
+{% block content %}
+    <table class="list">
+        <thead>
+            <tr>
+                <th class="icon">Logo</th>
+                <th>Distributor</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for distributor in object_list %}
+            <tr>
+                <td class="icon">
+                    {% if distributor.icon %}
+                        <img src="{{ distributor.icon.url }}" title="{{ distributor.name }}">
+                    {% endif %}       
+                </td>         
+                <td>
+                    <a href="{% url 'distributor-detail' distributor.id %}" title="{{ distributor.description }}">{{ distributor.name }}</a>
+                </td>
+                <td>
+                {% if user.is_staff %}
+                    <a class="edit" href="{% url "admin:inventory_distributor_change" object_id=distributor.pk %}"><img class="icon" src="{% static 'inventory/img/edit.svg' %}"></a>
+                {% endif %}
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+
+    {% if user.is_staff %}
+        <p><a href="{% url "admin:inventory_distributor_add" %}?layout=1">Create new distributor...</a></p>
+    {% endif %}
+
+
+{% endblock %}

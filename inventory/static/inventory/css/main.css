@@ -135,9 +135,13 @@ main {
     padding: 20px;
 }
 
+body {
+    font-size: 12px;
+}
+
 @media (max-width: 1024px) {
     body {
-        font-size: 12px;
+        font-size: 10px;
     }
 }
 

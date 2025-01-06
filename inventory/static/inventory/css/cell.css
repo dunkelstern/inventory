@@ -47,7 +47,7 @@ td.disabled {
 }
 
 .search-hilight {
-    background-color: #ffa0a0;
+    background-color: #ffa0a0 !important;
 }
 
 .cell:nth-child(2n) {

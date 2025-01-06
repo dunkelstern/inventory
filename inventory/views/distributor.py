@@ -2,6 +2,7 @@ from django.core.paginator import Paginator
 from django.contrib.auth.decorators import login_required
 from django.utils.decorators import method_decorator
 from django.views.generic import ListView, DetailView
+from django.conf import settings
 
 from inventory.models import Distributor, Item
 
@@ -13,7 +14,8 @@ class DistributorView(DetailView):
     def get_context_data(self, *args, object_list=None, **kwargs):
         result = super().get_context_data(*args, object_list=object_list, **kwargs)
         p = self.request.GET.get("item_page", 1)
-        paginator = Paginator(Item.objects.filter(distributor=self.get_object()).select_related('container', 'manufacturer').order_by('name'), 50)
+        items = Item.objects.filter(distributor=self.get_object()).select_related('container', 'manufacturer')
+        paginator = Paginator(items, getattr(settings, "PAGE_SIZE", 10))
         result.update({
             "items": paginator.get_page(p)
         })

@@ -139,3 +139,6 @@ STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 SERVE_MEDIA_FILES = DEBUG
+
+# Default page size for paginated content
+PAGE_SIZE = 25

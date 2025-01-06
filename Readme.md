@@ -20,7 +20,7 @@ As configured by default you will need the following:
 
 ### Installation
 
-This is a standard Django 5.0 application, if you know how to deploy those the
+This is a standard Django 5.1 application, if you know how to deploy those the
 following might sound familiar:
 
 1. Checkout repository: `git clone https://github.com/dunkelstern/inventory.git`
@@ -43,8 +43,24 @@ go to `http://localhost:8000` to enter the inventory management system directly
 2. For editing parts the Django admin interface is used, so edit-links will only
   appear if the currently logged in user is a `staff` user (set the checkbox
   in the admin area).
+3. If you want to change the default number of items on paginated views you can
+  set the page size in the settings by providing a parameter `PAGE_SIZE`
 
 ### Screenshots
+
+#### Login
+
+To be able to list all parts you'll need to login. You basically have three
+levels of permissions:
+
+- Normal Users
+- Staff Users
+- Admin Users
+
+Normal users can view all parts and search, Staff users may edit in addition.
+Admin users can create Users and do everything (like adding new layouts, etc.).
+
+![Login page](docs/login.jpeg)
 
 #### Overview Page
 
@@ -52,7 +68,7 @@ here we have a layer of containers, you may nest multiple containers into each
 other, for example to define a cupboard which contains multiple boxes of parts,
 or multiple rooms in your workshop that contain cupboards, etc.
 
-![Overview](docs/example_overview.png)
+![Overview](docs/main_area.jpeg)
 
 #### Box View
 
@@ -61,9 +77,9 @@ compartments, number of items per compartment and layout of compartments
 themselves) all by yourself in the admin backend, by default the database comes
 with an assortment of Ikea and Raaco sorter boxes.
 
-![Box view 1](docs/example_box.png)
+![Box view 1](docs/smd_box.jpeg)
 
-![Box view 2](docs/example_box2.png)
+![Box view 2](docs/smd_box_marker.jpeg)
 
 The Overview and Box views are designed to be used on a touch-screen and the HTML,
 CSS and Javascript are designed to work on older Hardware (Apple iOS 9 has been
@@ -74,7 +90,7 @@ tested at lowest, so this works from iPad 2 up to the newest pro).
 This is the detail view of a part, this is useful to find all parts by manufacturer
 or distributor, or when a part has multiple datasheets.
 
-![Detail view](docs/example_detail.png)
+![Detail view](docs/part.jpeg)
 
 #### Part edit view
 
@@ -82,4 +98,58 @@ Editing is done on the standard Django admin interface, so all users that have n
 *staff* privileges only can view all parts, all with *staff* privileges have access
 to the django admin backend and can edit parts too.
 
-![Edit view](docs/example_edit.png)
+![Edit view](docs/edit_part.jpeg)
+
+#### Search function
+
+If you click on the loupe symbol on top you'll get a popup searchbox for a fulltext
+search through all parts.
+
+![Search view](docs/search.jpeg)
+
+The search results contain a link to the container the object is stored in and if
+you click that link the compartment will be hilighted so you can find the part faster:
+
+![Search view hilight](docs/search_hilight.jpeg)
+
+You can also reach the first datasheet directly from the search results by clicking
+on the icon in front of the description text.
+
+#### Tag cloud
+
+If you select the tag icon in the header bar you will get a dynamically searchable
+tag cloud if you do not know a search term exactly or if you need a group of parts
+(e.g. give me all transistors of any type).
+
+![Tag cloud](docs/tags.jpeg)
+
+The detail view of a tag will list all items with that tag, as well as all containers
+or footprints that have been assigned this tag:
+
+![Tag detail](docs/tag_detail.jpeg)
+
+Editing is in Django backend:
+
+![Tag editing](docs/edit_tag.jpeg)
+
+#### Other options
+
+You can browse your parts inventory by distributor or part manufacturer if you want:
+
+![Manufacturer list](docs/manufacturer.jpeg)
+
+![Manufacturer detail](docs/manufacturer_detail.jpeg)
+
+![Manufacturer edit](docs/edit_manufacturer.jpeg)
+
+The distributor views have a convenient search box if a parametrized search link has
+been set up in the backend.
+
+This link will be used to link to a part directly if a part has a distributor part
+number saved.
+
+![Distributor list](docs/distributor.jpeg)
+
+![Distributor detail](docs/distributor_detail.jpeg)
+
+![Distributor edit](docs/edit_distributor.jpeg)

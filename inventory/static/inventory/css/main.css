@@ -207,7 +207,6 @@ ul.tag-list {
     display: flex;
     flex-wrap: wrap;
     gap: 6px;
-    max-width: 500px;
     text-indent: 0;
     padding-left: 0;
 }
@@ -291,4 +290,23 @@ table.list tbody td {
 
 .right {
     text-align: right;
+}
+
+#search-container {
+    display: none;
+    position: absolute;
+    background-color: #292981;
+    padding: 10px;
+    border: 1px solid white;
+    box-shadow: 2px 2px 8px rgba(0, 0, 0, 0.8);
+}
+
+.search-result em {
+    color: #c00000;
+}
+
+.search-result .small {
+    font-size: 9pt;
+    font-weight: normal;
+    color: #808080;
 }

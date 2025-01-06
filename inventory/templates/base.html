@@ -24,6 +24,29 @@
         </ul>
         <ul class="icon-nav">
             <li>
+                <script>
+                    function showSearch(e) {
+                        const searchBox = document.getElementById("search-container");
+                        if ((searchBox.style.display === '') || (searchBox.style.display === 'none')) {
+                            searchBox.style.display = 'block';
+                            searchBox.getElementsByTagName('input')[0].focus();
+                        } else {
+                            searchBox.style.display = 'none';
+                        }
+                        if (e) {
+                            e.preventDefault();
+                        }
+                    }
+                </script>
+                <a href="{% url 'search' %}" onclick="showSearch(event)"><img class="icon" title="Search" src="{% static "inventory/img/search.svg" %}"></a>
+                <div id="search-container">
+                    <form action="{% url 'search' %}" method="get">
+                        <input name="q" id="search" type="text">
+                        <button type="submit">Search</button>
+                    </form>
+                </div>
+            </li>
+            <li>
                 <a href="{% url 'manufacturer-list' %}"><img class="icon" title="Manufacturers" src="{% static "inventory/img/manufacturer.svg" %}"></a>
             </li>
             <li>
@@ -33,7 +56,7 @@
                 <a href="{% url 'tag-list' %}"><img class="icon" title="Tags" src="{% static "inventory/img/tags.svg" %}"></a>
             </li>
             <li>
-                <a href="{% url 'workshop-list' %}"><img class="icon" title="Workshops" src="{% static "inventory/img/workshop.svg" %}"></a>
+                <a href="{% url 'index' %}"><img class="icon" title="Workshops" src="{% static "inventory/img/workshop.svg" %}"></a>
             </li>
         </ul>
 

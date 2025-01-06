@@ -1,0 +1,43 @@
+{% extends "base.html" %}
+{% load static %}
+{% load hilight %}
+
+{% block title %}Search{% endblock %}
+
+{% block header_bar %}
+    Search
+{% endblock %}
+
+{% block content %}
+<form method="get" action="{% url 'search' %}">
+    <input type="text" id="search" name="q" value="{{ q }}">
+    <button type="submit">Search</button>
+</form>
+
+    <h2>Search result for '{{ q }}'</h2>
+
+    {% for result in results %}
+        <div class="search-result">
+            <h3><a href="{{ result.url }}">{{ result.title | hilight:tokens }}</a></h3>
+            {{ result.text | safe }}
+            <hr>
+        </div>
+    {% empty %}
+        <p>Noting found</p>
+    {% endfor %}
+
+    {% if pages > 1 %}
+    <div class="pagination">
+        {% if page > 1 %}
+            <a href="{% url 'search' %}?q={{ q }}&page=1"><img src="{% static 'inventory/img/first.svg' %}" class="icon" title="First page"></a>
+            <a href="{% url 'search' %}?q={{ q }}&page={{ page | add:'-1'}}"><img src="{% static 'inventory/img/previous.svg' %}" class="icon" title="Previous page"></a>
+        {% endif %}
+        {{ page }}/{{ pages }}
+        {% if page < pages %}
+            <a href="{% url 'search' %}?q={{ q }}&page={{ page | add:'1'}}"><img src="{% static 'inventory/img/next.svg' %}" class="icon" title="Next page"></a>
+            <a href="{% url 'search' %}?q={{ q }}&page={{ pages }}"><img src="{% static 'inventory/img/last.svg' %}" class="icon" title="Last page"></a>
+        {% endif %}
+    </div>
+    {% endif %}
+    
+{% endblock %}

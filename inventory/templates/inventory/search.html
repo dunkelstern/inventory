@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}Search{% endblock %}
+
+{% block header_bar %}
+    Search
+{% endblock %}
+
+{% block content %}
+    <form method="get" action="{% url 'search' %}">
+        <input type="text" id="search" name="q">
+        <button type="submit">Search</button>
+    </form>
+{% endblock %}

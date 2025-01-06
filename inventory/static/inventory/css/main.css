@@ -219,10 +219,39 @@ ul.tag-list li {
     height: 18px;
     background-color: #e0e0e0;
     padding: 3px 6px 3px 6px;
+    line-height: 18px;
+}
+
+ul.tag-list li::before {
+    content: url(/static/inventory/img/tag.svg);
+    width: 16px;
+    height: 16px;
+    padding-right: 3px;
+    display: inline-block;
+    opacity: 0.2;
+    vertical-align: text-top;
 }
 
 ul.tag-list li a {
     text-decoration: none;
+}
+
+ul.compact-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    max-width: 500px;
+    text-indent: 0;
+    padding-left: 0;
+}
+
+ul.compact-list li {
+    display: inline-block;
+    border: 1px solid #808080;
+    height: 18px;
+    background-color: #e0e0e0;
+    padding: 3px 6px 3px 6px;
+    line-height: 18px;
 }
 
 table.list {

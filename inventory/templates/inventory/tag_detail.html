@@ -1,0 +1,118 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}Tag {{ tag.name }}{% endblock %}
+
+{% block header_bar %}
+    <a href="{% url "tag-list" %}"><img class="icon" src="{% static "inventory/img/back.svg" %}"></a>
+    {{ tag.name }}
+    <span class="small">{{ tag.description}}</span>
+{% endblock %}
+
+{% block header_icons %}
+    {% if user.is_staff %}
+        <li>
+            <a href="{% url "admin:inventory_tag_change" object_id=tag.pk %}"><img class="icon" src="{% static "inventory/img/edit.svg" %}"></a>
+        </li>
+    {% endif %}
+{% endblock %}
+
+{% block content %}
+    {% if tag.workshop_set.count > 0 %}
+    <h3>Workshops</h3>
+    <table class="list">
+        <tbody>
+        {% for workshop in tag.workshop_set.all %}
+            <tr>
+                <td>
+                    <a href="{% url 'workshop-detail' workshop.id %}" title="{{ workshop.description }}">{{ workshop.name }}</a>
+                </td>
+                <td>
+                {% if user.is_staff %}
+                    <a class="edit" href="{% url "admin:inventory_workshop_change" object_id=workshop.pk %}"><img class="icon" src="{% static 'inventory/img/edit.svg' %}"></a>
+                {% endif %}
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+    {% endif %}
+
+    {% if tag.box_set.count > 0 %}
+    <h3>Boxes</h3>
+    <table class="list">
+        <tbody>
+        {% for box in tag.box_set.all %}
+            <tr>
+                <td>
+                    <a href="{% url 'box-detail' box.id %}" title="{{ box.description }}">{{ box.name }}</a>
+                </td>
+                <td>
+                {% if user.is_staff %}
+                    <a class="edit" href="{% url "admin:inventory_workshop_change" object_id=box.pk %}"><img class="icon" src="{% static 'inventory/img/edit.svg' %}"></a>
+                {% endif %}
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+    {% endif %}
+
+    {% if tag.distributor_set.count > 0 %}
+    <h3>Distributors</h3>
+    <table class="list">
+        <tbody>
+        {% for distributor in tag.distributor_set.all %}
+            <tr>
+                <td>
+                    <a href="{% url 'distributor-detail' distributor.id %}" title="{{ distributor.description }}">{{ distributor.name }}</a>
+                </td>
+                <td>
+                {% if user.is_staff %}
+                    <a class="edit" href="{% url "admin:inventory_workshop_change" object_id=distributor.pk %}"><img class="icon" src="{% static 'inventory/img/edit.svg' %}"></a>
+                {% endif %}
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+    {% endif %}
+
+    {% if tag.manufacturer_set.count > 0 %}
+    <h3>Manufacturers</h3>
+    <table class="list">
+        <tbody>
+        {% for manufacturer in tag.manufacturer_set.all %}
+            <tr>
+                <td>
+                    <a href="{% url 'manufacturer-detail' manufacturer.id %}" title="{{ manufacturer.description }}">{{ manufacturer.name }}</a>
+                </td>
+                <td>
+                {% if user.is_staff %}
+                    <a class="edit" href="{% url "admin:inventory_workshop_change" object_id=manufacturer.pk %}"><img class="icon" src="{% static 'inventory/img/edit.svg' %}"></a>
+                {% endif %}
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+    {% endif %}
+
+    {% if items %}
+        <h3>Items</h3>
+        {% url 'tag-detail' tag.id as this_url %}
+        {% include "inventory/pagination.html" with url=this_url id="items_paginator_top" param="item" paginator=items %}
+        {% include "inventory/item_list.html" with items=items show_manufacturer=1 show_distributor=1 %}
+        {% include "inventory/pagination.html" with url=this_url id="items_paginator_bottom" param="item" paginator=items %}
+    {% endif %}
+
+    {% if tag.formfactor_set.count > 0 %}
+    <h3>Form factors</h3>
+    <ul class="compact-list">
+        {% for formfactor in tag.formfactor_set.all %}
+            <li>{{ formfactor.name }}</li>
+        {% endfor %}
+    </ul>
+    {% endif %}
+
+{% endblock %}

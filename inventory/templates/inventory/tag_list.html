@@ -1,0 +1,58 @@
+{% extends "base.html" %}
+{% load static %}
+{% load formatstring %}
+
+{% block title %}Tags{% endblock %}
+
+{% block header_bar %}
+    Tags
+{% endblock %}
+
+{% block content %}
+    <script>
+        function updateSearch(e) {
+            const input = document.getElementById('search');
+            const text = input.value.toLowerCase();
+
+            if (text.length >= 2) {
+                const tagcloud = document.getElementById('tagcloud');
+                const items = tagcloud.getElementsByTagName('li');
+                for(i = 0; i < items.length; i++) {
+                    const element = items[i];
+                    if (element.dataset.search.includes(text)) {
+                        element.style.display = "inline-block";
+                    } else {
+                        element.style.display = "none";
+                    }
+                }
+            } else {
+                const tagcloud = document.getElementById('tagcloud');
+                const items = tagcloud.getElementsByTagName('li');
+                for(i = 0; i < items.length; i++) {
+                    const element = items[i];
+                    element.style.display = "inline-block";
+                }
+            }
+            if (e) {
+                e.preventDefault();
+            }
+        }
+    </script>
+    <form>
+        <label for="search">Search:</label>
+        <input type="text" id="search" name="search" oninput="updateSearch(event)">
+        <button onclick="updateSearch(event)">Search</button>
+    </form>
+    <ul class="tag-list" id="tagcloud">
+        {% for tag in object_list %}
+            <li data-search="{{ tag.name | lower }} {{ tag.description | lower }}"><a href="{% url 'tag-detail' tag.id %}" title="{{ tag.name }}">{{ tag.name }}</a></li>
+        {% empty %}
+            No tags
+        {% endfor %}
+    </ul>
+
+    {% if user.is_staff %}
+        <p><a href="{% url "admin:inventory_tag_add" %}?layout=1">Create new tag...</a></p>
+    {% endif %}
+
+{% endblock %}

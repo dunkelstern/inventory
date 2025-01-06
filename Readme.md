@@ -25,7 +25,7 @@ following might sound familiar:
 
 1. Checkout repository: `git clone https://github.com/dunkelstern/inventory.git`
 2. Change to checkout: `cd inventory`
-3. Install virtualenv and dependencies: `poetry install`
+3. Install virtualenv and dependencies: `poetry install --no-root`
 4. Migrate the Database: `poetry run python manage.py migrate`
 5. Create an admin user: `poetry run python manage.py createsuperuser`
 6. Run the server
@@ -45,6 +45,9 @@ go to `http://localhost:8000` to enter the inventory management system directly
   in the admin area).
 3. If you want to change the default number of items on paginated views you can
   set the page size in the settings by providing a parameter `PAGE_SIZE`
+4. If you want to run this as a systemd service see the
+  [the service file](inventory.service) in the root of this repository for an
+  example.
 
 ### Screenshots
 

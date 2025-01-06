@@ -1,7 +1,6 @@
 {% load static %}
 {% load admin_urls %}
-
-<div class="cell">
+<div class="cell{% if hilight == item.id %} search-hilight{% endif %}">
     {% if item.name %}
         {% if item.metadata.package %}
         <div class="package">{{ item.metadata.package }}</div>

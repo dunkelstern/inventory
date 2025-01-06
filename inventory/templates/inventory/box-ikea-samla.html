@@ -9,7 +9,7 @@
                 <td>
                     <div class="compartments">
                     {% for compartment in layouted.0 %}
-                        {% include "inventory/cell.html" with item=compartment %}
+                        {% include "inventory/cell.html" with item=compartment hilight=hilight %}
                     {% endfor %}
                     </div>
                 </td>

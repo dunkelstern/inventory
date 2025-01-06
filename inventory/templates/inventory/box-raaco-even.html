@@ -11,7 +11,7 @@
                     <td>
                         <div class="compartments">
                         {% for compartment in item %}
-                            {% include "inventory/cell.html" with item=compartment %}
+                            {% include "inventory/cell.html" with item=compartment hilight=hilight %}
                         {% endfor %}
                         </div>
                     </td>

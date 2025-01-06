@@ -46,6 +46,10 @@ td.disabled {
     align-items: center;
 }
 
+.search-hilight {
+    background-color: #ffa0a0;
+}
+
 .cell:nth-child(2n) {
     background-color: #f8f8f8;
 }

@@ -15,7 +15,7 @@
     <h3>Items</h3>
     <ul>
         {% for item in box.item_related.all %}
-            <li><a href="{% url 'item-detail' item.id %}" title="{{ item.description }}">{{ item.name }}</a></li>
+            <li {% if hilight == item.id %}class="hilighted"{% endif %}><a href="{% url 'item-detail' item.id %}" title="{{ item.description }}">{{ item.name }}</a></li>
         {% endfor %}
     </ul>
     {% endif %}

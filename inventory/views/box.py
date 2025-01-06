@@ -49,9 +49,11 @@ class BoxView(CanBeIndexMixin, DetailView):
         return result, idx
 
     def get(self, request, *args, **kwargs):
+        hilighted = int(request.GET.get('hilight', "0"))
         self.object = cast(Box, self.get_object())
         context = self.get_context_data(object=self.object)
         context['layouted'], _ = self.layout(self.object.item_related.all().order_by('index'), self.object.layout.data)
+        context['hilight'] = hilighted
         return self.render_to_response(context)
 
 

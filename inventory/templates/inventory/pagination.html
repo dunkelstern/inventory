@@ -1,6 +1,6 @@
 {% load static %}
 
-<div class="pagination" id="paginator_top">
+<div class="pagination" id="{{ id }}">
     {% if paginator.has_previous %}
         <a href="{{ url }}?{{ param }}_page=1#{{ id }}"><img src="{% static 'inventory/img/first.svg' %}" class="icon" title="First page"></a>
         <a href="{{ url }}?{{ param }}_page={{ paginator.previous_page_number }}#{{ id }}"><img src="{% static 'inventory/img/previous.svg' %}" class="icon" title="Previous page"></a>

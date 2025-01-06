@@ -2,8 +2,8 @@ from django.db import models
 
 
 class FormFactor(models.Model):
-    name = models.CharField(max_length=255, unique=True)
-    description = models.CharField(max_length=4096)
+    name = models.CharField(max_length=255, unique=True, db_collation="numeric")
+    description = models.CharField(max_length=4096, db_collation="numeric")
 
     icon = models.ImageField(null=True, blank=True)
     datasheet = models.FileField(null=True, blank=True)

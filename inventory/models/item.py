@@ -4,8 +4,8 @@ from .container import CanBeContained
 
 
 class Item(CanBeContained):
-    name = models.TextField(max_length=255)
-    description = models.CharField(max_length=4096)
+    name = models.TextField(max_length=255, db_collation="numeric")
+    description = models.CharField(max_length=4096, db_collation="numeric")
     size = models.PositiveIntegerField(default=1, help_text="Number of sub-compartments this item takes up")
     form_factor = models.ForeignKey('inventory.FormFactor', null=True, blank=True, on_delete=models.PROTECT)
     manufacturer = models.ForeignKey('inventory.Manufacturer', null=True, blank=True, on_delete=models.PROTECT)

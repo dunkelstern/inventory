@@ -23,7 +23,9 @@ As configured by default you will need the following:
 This is a standard Django 5.1 application, if you know how to deploy those the
 following might sound familiar:
 
-1. Checkout repository: `git clone https://github.com/dunkelstern/inventory.git`
+1. Checkout repository:
+   - Github `git clone https://github.com/dunkelstern/inventory.git`
+   - ForgeJo: `git clone https://git.dunkelstern.de/dunkelstern/inventory.git`
 2. Change to checkout: `cd inventory`
 3. Install virtualenv and dependencies: `poetry install --no-root`
 4. Migrate the Database: `poetry run python manage.py migrate`

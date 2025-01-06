@@ -64,6 +64,11 @@
         <tbody>
         {% for distributor in tag.distributor_set.all %}
             <tr>
+                <td class="icon">
+                    {% if distributor.icon %}
+                        <img src="{{ distributor.icon.url }}" title="{{ distributor.name }}">
+                    {% endif %}       
+                </td>         
                 <td>
                     <a href="{% url 'distributor-detail' distributor.id %}" title="{{ distributor.description }}">{{ distributor.name }}</a>
                 </td>
@@ -84,6 +89,11 @@
         <tbody>
         {% for manufacturer in tag.manufacturer_set.all %}
             <tr>
+                <td class="logo">
+                    {% if manufacturer.icon %}
+                        <img src="{{ manufacturer.icon.url }}">
+                    {% endif %}       
+                </td>
                 <td>
                     <a href="{% url 'manufacturer-detail' manufacturer.id %}" title="{{ manufacturer.description }}">{{ manufacturer.name }}</a>
                 </td>

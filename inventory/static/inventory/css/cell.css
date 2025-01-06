@@ -146,3 +146,25 @@ td.disabled {
 .dock-top {
     margin-top: -1px;
 }
+
+@media (max-width: 1024px) {
+    .cell .form_factor {
+        font-size: 75%;
+        top: 3px;
+        right: 7px;
+    }
+    
+    .cell .price {
+        font-size: 75%;
+        bottom: 3px;
+        left: 3px;
+    }
+
+    .cell .shop {
+        bottom: 3px;
+        right: 7px;
+        width: 10px;
+        height: 10px;
+    }
+    
+}

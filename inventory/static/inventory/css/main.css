@@ -94,8 +94,12 @@ h1 .small {
 }
 
 h2 .small {
+    display: inline-block;
+    max-width: 400px;
     font-size: 12px;
     font-weight: normal;
+    vertical-align: middle;
+    margin-left: 5px;
 }
 
 nav h2 {
@@ -142,6 +146,10 @@ body {
 @media (max-width: 1024px) {
     body {
         font-size: 10px;
+    }
+
+    h2 .small {
+        max-width: 200px;
     }
 }
 

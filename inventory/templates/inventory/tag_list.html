@@ -11,7 +11,7 @@
 {% block content %}
     <script>
         function updateSearch(e) {
-            const input = document.getElementById('search');
+            const input = document.getElementById('tag-search');
             const text = input.value.toLowerCase();
 
             if (text.length >= 2) {
@@ -39,8 +39,7 @@
         }
     </script>
     <form>
-        <label for="search">Search:</label>
-        <input type="text" id="search" name="search" oninput="updateSearch(event)">
+        <input type="text" id="tag-search" name="tag-search" placeholder="Search" oninput="updateSearch(event)">
         <button onclick="updateSearch(event)">Search</button>
     </form>
     <ul class="tag-list" id="tagcloud">

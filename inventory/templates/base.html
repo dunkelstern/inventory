@@ -41,7 +41,7 @@
                 <a href="{% url 'search' %}" onclick="showSearch(event)"><img class="icon" title="Search" src="{% static "inventory/img/search.svg" %}"></a>
                 <div id="search-container">
                     <form action="{% url 'search' %}" method="get">
-                        <input name="q" id="search" type="text">
+                        <input name="q" id="search" type="text" placeholder="Search">
                         <button type="submit">Search</button>
                     </form>
                 </div>

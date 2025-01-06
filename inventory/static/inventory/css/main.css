@@ -88,13 +88,13 @@ h1 {
 }
 
 h1 .small {
-    font-size: 12pt;
+    font-size: 12px;
     font-weight: normal;
     color: #808080;
 }
 
 h2 .small {
-    font-size: 12pt;
+    font-size: 12px;
     font-weight: normal;
 }
 
@@ -310,7 +310,7 @@ table.list tbody td {
 }
 
 .search-result .small {
-    font-size: 9pt;
+    font-size: 10px;
     font-weight: normal;
     color: #808080;
 }

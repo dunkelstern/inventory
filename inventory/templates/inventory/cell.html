@@ -18,6 +18,13 @@
             <a class="details" href="{% url "item-detail" pk=item.pk %}"><img class="icon" src="{% static "inventory/img/detail.svg" %}"></a>
         </div>
 
+        {% if settings.track_amount %}
+            {% if item.count <= item.low_count %}
+            <div class="stock"><div class="icon warning-icon" title="Low stock"></div>{{ item.count }}</div>
+            {% else %}
+            <div class="stock">{{ item.count }}</div>
+            {% endif %}
+        {% endif %}
         {% if item.price %}
         <div class="price">{{ item.price | floatformat:2 }} &euro;</div>
         {% endif %}

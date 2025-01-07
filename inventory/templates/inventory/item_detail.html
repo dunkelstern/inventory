@@ -29,6 +29,25 @@
                 <th>Description</th>
                 <td>{{ item.description }}</td>
             </tr>
+            {% if settings.track_amount %}
+            <tr>
+                <th>Amount</th>
+                <td>
+                    <form method="post" action="{% url 'item-detail' item.pk %}">
+                        {% csrf_token %}
+                        <label for="amount">
+                            {% if item.count <= item.low_count %}
+                            <div class="icon warning-icon" title="Low stock"></div>
+                            {% endif %}        
+                        </label>
+                        <input type="text" name="amount" id="amount" value="{{ item.count }}" placeholder="Amount">
+                        <button name="save" type="submit">Update</button>
+                        <button name="dec" type="submit">-1</button>
+                    </form>
+                    <span class="small right">Low watermark: {{ item.low_count }}</span>
+                </td>
+            </tr>
+            {% endif %}
             <tr>
                 <th>Tags</th>
                 <td>

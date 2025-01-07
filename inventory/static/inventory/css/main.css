@@ -26,6 +26,11 @@ table.attribute-list th {
     border-style: solid;
 }
 
+table.attribute-list .small {
+    color: #808080;
+    font-size: xx-small;
+}
+
 table.box {
     width: 100%;
     border-collapse: collapse;
@@ -158,8 +163,7 @@ img.icon {
     margin-right: 10px;
     width: 18px;
     height: 18px;
-    position: relative;
-    top: 2px;
+    vertical-align: middle;
 }
 
 img.logo {
@@ -277,9 +281,6 @@ table.list thead th {
     padding: 10px;
 }
 
-table.list tbody tr {
-}
-
 table.list tbody td {
     border-bottom: 1px solid black;
     padding: 10px;
@@ -321,4 +322,17 @@ table.list tbody td {
     font-size: 10px;
     font-weight: normal;
     color: #808080;
+}
+
+div.icon {
+    width: 18px;
+    height: 18px;
+    display: inline-block;
+    vertical-align: middle;
+}
+
+div.warning-icon {
+    background-color: #c00000;
+    -webkit-mask: url(/static/inventory/img/warn.svg) no-repeat center;
+    mask: url(/static/inventory/img/warn.svg) no-repeat center;
 }

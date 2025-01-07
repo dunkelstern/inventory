@@ -16,9 +16,17 @@ class Item(CanBeContained):
     documentation = models.ManyToManyField('inventory.Documentation', related_name='items', blank=True)
     tags = models.ManyToManyField('inventory.Tag', blank=True)
 
-    metadata = models.JSONField('Custom metadata, used by templates', blank=True, null=True)
-    created_at = models.DateTimeField(auto_now_add=True)
-    changed_at = models.DateTimeField(auto_now=True)
+    count = models.PositiveIntegerField(
+        default=1,
+        null=False,
+        help_text="Number of parts available"
+    )
+    low_count = models.PositiveIntegerField(
+        default=0,
+        null=False,
+        help_text="Low watermark on which to alert ordering more"
+    )
+
 
     def __str__(self):
         items = [self.name, self.description]
@@ -32,6 +40,10 @@ class Item(CanBeContained):
             return list(self.tags.all()) + list(self.form_factor.tags.all())
         else:
             return list(self.tags.all())
-        
+    
+    @property
+    def value(self):
+        return self.count * self.price
+
     class Meta:
         ordering = ("name", )

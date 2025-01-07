@@ -1,6 +1,7 @@
 {% extends "base.html" %}
 {% load static %}
 {% load formatstring %}
+{% load currency %}
 
 {% block title %}{{ item }}{% endblock %}
 
@@ -103,7 +104,7 @@
         {% if item.price %}
             <tr>
                 <th>Price</th>
-                <td>{{ item.price }} Euro</td>
+                <td>{{ item.price | currency:"detail" }} <span class="small">{% if settings.track_amount %}(sum: {{ item.value | currency:"long" }}){% endif %}</span></td>
             </tr>
         {% endif %}
 

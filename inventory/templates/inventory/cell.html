@@ -1,5 +1,7 @@
 {% load static %}
 {% load admin_urls %}
+{% load currency %}
+
 <div class="cell{% if hilight == item.id %} search-hilight{% endif %}">
     {% if item.name %}
         {% if item.metadata.package %}
@@ -26,7 +28,7 @@
             {% endif %}
         {% endif %}
         {% if item.price %}
-        <div class="price">{{ item.price | floatformat:2 }} &euro;</div>
+        <div class="price">{{ item.price | currency:"short" }}</div>
         {% endif %}
         {% if item.form_factor %}
         <div class="form_factor">{{ item.form_factor.name }}</div>

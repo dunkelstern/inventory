@@ -1,17 +1,16 @@
 {% load static %}
+{% load i18n %}
 {% load hilight %}
 <p>
 {% if item.documentation.all %}
-    <a class="datasheet" href="{{ item.documentation.all.0.file.url }}"><img class="icon" src="{% static "inventory/img/datasheet.svg" %}"></a>
+    <a class="datasheet" href="{{ item.documentation.all.0.file.url }}"><img class="icon" src="{% static "inventory/img/datasheet.svg" %}" title="{% translate 'Datasheet' %}"></a>
 {% endif %}
 {{ item | hilight:tokens }}
 <span class="small">{{item.form_factor.name}}</span>
 </p>
-<p>Contained in: <a href="{{ item.container_url }}?hilight={{ item.id }}">{{ item.container.display_name }}</a></p>
+<p>{% translate 'Contained in' %}: <a href="{{ item.container_url }}?hilight={{ item.id }}">{{ item.container.display_name }}</a></p>
 <ul class="tag-list">
     {% for tag in item.all_tags %}
         <li><a href="{% url 'tag-detail' tag.id %}" title="{{ tag.name }}">{{ tag.name }}</a></li>
-    {% empty %}
-        No tags
     {% endfor %}
 </ul>

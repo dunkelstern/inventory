@@ -1,11 +1,12 @@
 {% extends "base.html" %}
 {% load static %}
+{% load i18n %}
 {% load formatstring %}
 
 {% block title %}Tags{% endblock %}
 
 {% block header_bar %}
-    Inventory Management - Tags
+    {% translate 'Inventory management' %} - {% translate 'Tags' %}
 {% endblock %}
 
 {% block content %}
@@ -39,19 +40,19 @@
         }
     </script>
     <form>
-        <input type="text" id="tag-search" name="tag-search" placeholder="Search" oninput="updateSearch(event)">
-        <button onclick="updateSearch(event)">Search</button>
+        <input type="text" id="tag-search" name="tag-search" placeholder="{% translate 'Search' %}" oninput="updateSearch(event)">
+        <button onclick="updateSearch(event)">{% translate 'Search' %}</button>
     </form>
     <ul class="tag-list" id="tagcloud">
         {% for tag in object_list %}
             <li data-search="{{ tag.name | lower }} {{ tag.description | lower }}"><a href="{% url 'tag-detail' tag.id %}" title="{{ tag.name }}">{{ tag.name }}</a></li>
         {% empty %}
-            No tags
+            {% translate 'No tags' %}
         {% endfor %}
     </ul>
 
     {% if user.is_staff %}
-        <p><a href="{% url "admin:inventory_tag_add" %}?layout=1">Create new tag...</a></p>
+        <p><a href="{% url "admin:inventory_tag_add" %}?layout=1">{% translate 'Create new tag...' %}</a></p>
     {% endif %}
 
 {% endblock %}

@@ -1,15 +1,16 @@
 {% load static %}
+{% load i18n %}
 
 <div class="pagination" id="{{ id }}">
     {% if paginator.has_previous %}
-        <a href="{{ url }}?{{ param }}_page=1#{{ id }}"><img src="{% static 'inventory/img/first.svg' %}" class="icon" title="First page"></a>
-        <a href="{{ url }}?{{ param }}_page={{ paginator.previous_page_number }}#{{ id }}"><img src="{% static 'inventory/img/previous.svg' %}" class="icon" title="Previous page"></a>
+        <a href="{{ url }}?{{ param }}_page=1#{{ id }}"><img src="{% static 'inventory/img/first.svg' %}" class="icon" title="{% translate 'First page' %}"></a>
+        <a href="{{ url }}?{{ param }}_page={{ paginator.previous_page_number }}#{{ id }}"><img src="{% static 'inventory/img/previous.svg' %}" class="icon" title="{% translate 'Previous page' %}"></a>
     {% endif %}
     {% if paginator.paginator.num_pages > 1 %}
         {{ paginator.number }}/{{ paginator.paginator.num_pages }}
     {% endif %}
     {% if paginator.has_next %}
-        <a href="{{ url }}?{{ param }}_page={{ paginator.next_page_number }}#{{ id }}"><img src="{% static 'inventory/img/next.svg' %}" class="icon" title="Next page"></a>
-        <a href="{{ url }}?{{ param }}_page={{ paginator.paginator.num_pages}}#{{ id }}"><img src="{% static 'inventory/img/last.svg' %}" class="icon" title="Last page"></a>
+        <a href="{{ url }}?{{ param }}_page={{ paginator.next_page_number }}#{{ id }}"><img src="{% static 'inventory/img/next.svg' %}" class="icon" title="{% translate 'Next page' %}"></a>
+        <a href="{{ url }}?{{ param }}_page={{ paginator.paginator.num_pages}}#{{ id }}"><img src="{% static 'inventory/img/last.svg' %}" class="icon" title="{% translate 'Last page' %}"></a>
     {% endif %}
 </div>

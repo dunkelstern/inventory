@@ -1,20 +1,21 @@
 {% extends "base.html" %}
 {% load static %}
+{% load i18n %}
 {% load hilight %}
 
-{% block title %}Search{% endblock %}
+{% block title %}{% translate 'Search' %}{% endblock %}
 
 {% block header_bar %}
-    Search
+    {% translate 'Search' %}
 {% endblock %}
 
 {% block content %}
 <form method="get" action="{% url 'search' %}">
-    <input type="text" id="search" name="q" value="{{ q }}">
-    <button type="submit">Search</button>
+    <input type="text" id="search" name="q" value="{{ q }}" placeholder="{% translate 'Search' %}">
+    <button type="submit">{% translate 'Search' %}</button>
 </form>
 
-    <h2>Search result for '{{ q }}'</h2>
+    <h2>{% translate 'Search result for' %} '{{ q }}'</h2>
 
     {% for result in results %}
         <div class="search-result">
@@ -23,19 +24,19 @@
             <hr>
         </div>
     {% empty %}
-        <p>Noting found</p>
+        <p>{% translate 'Nothing found' %}</p>
     {% endfor %}
 
     {% if pages > 1 %}
     <div class="pagination">
         {% if page > 1 %}
-            <a href="{% url 'search' %}?q={{ q }}&page=1"><img src="{% static 'inventory/img/first.svg' %}" class="icon" title="First page"></a>
-            <a href="{% url 'search' %}?q={{ q }}&page={{ page | add:'-1'}}"><img src="{% static 'inventory/img/previous.svg' %}" class="icon" title="Previous page"></a>
+            <a href="{% url 'search' %}?q={{ q }}&page=1"><img src="{% static 'inventory/img/first.svg' %}" class="icon" title="{% translate 'First page' %}"></a>
+            <a href="{% url 'search' %}?q={{ q }}&page={{ page | add:'-1'}}"><img src="{% static 'inventory/img/previous.svg' %}" class="icon" title="{% translate 'Previous page' %}"></a>
         {% endif %}
         {{ page }}/{{ pages }}
         {% if page < pages %}
-            <a href="{% url 'search' %}?q={{ q }}&page={{ page | add:'1'}}"><img src="{% static 'inventory/img/next.svg' %}" class="icon" title="Next page"></a>
-            <a href="{% url 'search' %}?q={{ q }}&page={{ pages }}"><img src="{% static 'inventory/img/last.svg' %}" class="icon" title="Last page"></a>
+            <a href="{% url 'search' %}?q={{ q }}&page={{ page | add:'1'}}"><img src="{% static 'inventory/img/next.svg' %}" class="icon" title="{% translate 'Next page' %}"></a>
+            <a href="{% url 'search' %}?q={{ q }}&page={{ pages }}"><img src="{% static 'inventory/img/last.svg' %}" class="icon" title="{% translate 'Last page' %}"></a>
         {% endif %}
     </div>
     {% endif %}

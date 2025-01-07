@@ -1,22 +1,25 @@
+from django.utils.translation import gettext_lazy as _
 from django.db import models
 
 
 class Distributor(models.Model):
-    name = models.CharField(max_length=255, unique=True)
-    description = models.CharField(max_length=4096)
+    name = models.CharField(_("Name"), max_length=255, unique=True)
+    description = models.CharField(_("Description"), max_length=4096)
 
-    web_link = models.URLField(null=True, blank=True)
-    search_link = models.URLField(help_text='Use {} for search placeholder', null=True, blank=True)
-    phone = models.CharField(max_length=128, null=True, blank=True)
-    email = models.EmailField(null=True, blank=True, default=None)
-    icon = models.ImageField(null=True, blank=True)
-    tags = models.ManyToManyField('inventory.Tag', blank=True)
+    web_link = models.URLField(_("Web link"), null=True, blank=True)
+    search_link = models.URLField(_("Search link"), help_text=_("Use {} for search placeholder"), null=True, blank=True)
+    phone = models.CharField(_("Phone"), max_length=128, null=True, blank=True)
+    email = models.EmailField(_("E-Mail"), null=True, blank=True, default=None)
+    icon = models.ImageField(_("Icon"), null=True, blank=True)
+    tags = models.ManyToManyField('inventory.Tag', verbose_name=_("Tags"), blank=True)
 
-    created_at = models.DateTimeField(auto_now_add=True)
-    changed_at = models.DateTimeField(auto_now=True)
+    created_at = models.DateTimeField(_("Created at"), auto_now_add=True)
+    changed_at = models.DateTimeField(_("Changed at"), auto_now=True)
 
     def __str__(self):
         return self.name
 
     class Meta:
         ordering = ("name", )
+        verbose_name = _("Distributor")
+        verbose_name_plural = _("Distributors")

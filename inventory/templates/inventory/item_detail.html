@@ -1,12 +1,13 @@
 {% extends "base.html" %}
 {% load static %}
+{% load i18n %}
 {% load formatstring %}
 {% load currency %}
 
 {% block title %}{{ item }}{% endblock %}
 
 {% block header_bar %}
-    <a href="{{ item.container_url }}"><img class="icon" src="{% static "inventory/img/back.svg" %}"></a>
+    <a href="{{ item.container_url }}"><img class="icon" src="{% static "inventory/img/back.svg" %}" title="{% translate 'Back' %}"></a>
     {{ item.name }}
     <span class="small">{{ item.description }}{% if item.form_factor %}, {{ item.form_factor }}{% endif %}</span></h2>
 {% endblock %}
@@ -14,7 +15,7 @@
 {% block header_icons %}
     {% if user.is_staff %}
         <li>
-            <a href="{% url "admin:inventory_item_change" object_id=item.pk %}"><img class="icon" src="{% static "inventory/img/edit.svg" %}"></a>
+            <a href="{% url "admin:inventory_item_change" object_id=item.pk %}"><img class="icon" src="{% static "inventory/img/edit.svg" %}" title="{% translate 'Edit' %}"></a>
         </li>
     {% endif %}
 {% endblock %}
@@ -23,40 +24,40 @@
     <table class="attribute-list">
         <tbody>
             <tr>
-                <th>Name</th>
+                <th>{% translate 'Name' %}</th>
                 <td>{{ item.name }}</td>
             </tr>
             <tr>
-                <th>Description</th>
+                <th>{% translate 'Description' %}</th>
                 <td>{{ item.description }}</td>
             </tr>
             {% if settings.track_amount %}
             <tr>
-                <th>Amount</th>
+                <th>{% translate 'Amount' %}</th>
                 <td>
                     <form method="post" action="{% url 'item-detail' item.pk %}">
                         {% csrf_token %}
                         <label for="amount">
                             {% if item.count <= item.low_count %}
-                            <div class="icon warning-icon" title="Low stock"></div>
+                            <div class="icon warning-icon" title="{% translate 'Low stock' %}"></div>
                             {% endif %}        
                         </label>
-                        <input type="text" name="amount" id="amount" value="{{ item.count }}" placeholder="Amount">
-                        <button name="save" type="submit">Update</button>
+                        <input type="text" name="amount" id="amount" value="{{ item.count }}" placeholder="{% translate 'Amount' %}">
+                        <button name="save" type="submit">{% translate 'Update' %}</button>
                         <button name="dec" type="submit">-1</button>
                     </form>
-                    <span class="small right">Low watermark: {{ item.low_count }}</span>
+                    <span class="small right">{% translate 'Low watermark' %}: {{ item.low_count }}</span>
                 </td>
             </tr>
             {% endif %}
             <tr>
-                <th>Tags</th>
+                <th>{% translate 'Tags' %}</th>
                 <td>
                     <ul class="tag-list">
                         {% for tag in item.all_tags %}
                             <li><a href="{% url 'tag-detail' tag.id %}" title="{{ tag.name }}">{{ tag.name }}</a></li>
                         {% empty %}
-                            No tags
+                            {% translate 'No tags' %}
                         {% endfor %}
                     </ul>
                 </td>
@@ -64,7 +65,7 @@
 
         {% if item.form_factor %}
             <tr>
-                <th>Form factor</th>
+                <th>{% translate 'Form factor' %}</th>
                 <td>
                     {% if item.form_factor.datasheet %}
                         <a href="{% url 'distributor-detail' item.distributor.id %}">
@@ -81,7 +82,7 @@
 
         {% if item.manufacturer %}
             <tr>
-                <th>Manufacturer</th>
+                <th>{% translate 'Manufacturer' %}</th>
                 <td>
                     <a href="{% url 'manufacturer-detail' item.manufacturer.id %}">
                         {% if item.manufacturer.icon %}<img src="{{ item.manufacturer.icon.url }}" class="icon">{% endif %}{{ item.manufacturer.name }}
@@ -92,7 +93,7 @@
 
         {% if item.distributor %}
             <tr>
-                <th>Distributor</th>
+                <th>{% translate 'Distributor' %}</th>
                 <td>
                     <a href="{% url 'distributor-detail' item.distributor.id %}">
                         {% if item.distributor.icon %}<img src="{{ item.distributor.icon.url }}" class="icon">{% endif %}{{ item.distributor.name }}
@@ -103,35 +104,35 @@
 
         {% if item.price %}
             <tr>
-                <th>Price</th>
-                <td>{{ item.price | currency:"detail" }} <span class="small">{% if settings.track_amount %}(sum: {{ item.value | currency:"long" }}){% endif %}</span></td>
+                <th>{% translate 'Price' %}</th>
+                <td>{{ item.price | currency:"detail" }} <span class="small">{% if settings.track_amount %}({% translate 'Sum' %}: {{ item.value | currency:"long" }}){% endif %}</span></td>
             </tr>
         {% endif %}
 
         {% if item.last_ordered_on %}
             <tr>
-                <th>Last ordered</th>
+                <th>{% translate 'Last ordered' %}</th>
                 <td>{{ item.last_ordered_on }}</td>
             </tr>
         {% endif %}
 
         {% if item.distributor_item_no %}
             <tr>
-                <th>Link</th>
+                <th>{% translate 'Search link' %}</th>
                 <td>
                     <a href="{% formatstring item.distributor.search_link item.distributor_item_no %}">{% formatstring item.distributor.search_link item.distributor_item_no %}</a>
                 </td>
             </tr>
         {% endif %}
 
-            <tr><th>Created at</th><td>{{ item.created_at }}</td></tr>
+            <tr><th>{% translate 'Created at' %}</th><td>{{ item.created_at }}</td></tr>
         {% if item.created_at != item.changed_at %}
-            <tr><th>Last change</th><td>{{ item.changed_at }}</td></tr>
+            <tr><th>{% translate 'Changed at' %}</th><td>{{ item.changed_at }}</td></tr>
         {% endif %}
 
         {% if item.documentation.exists %}
             <tr>
-                <th>Datasheets</th>
+                <th>{% translate 'Documentation' %}</th>
                 <td>
                     <ul>
                     {% for doc in item.documentation.all %}

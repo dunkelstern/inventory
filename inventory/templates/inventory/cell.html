@@ -1,4 +1,5 @@
 {% load static %}
+{% load i18n %}
 {% load admin_urls %}
 {% load currency %}
 
@@ -12,17 +13,17 @@
         </a>
         <div class="cell-buttons">
             {% if item.documentation.all %}
-                <a class="datasheet" href="{{ item.documentation.all.0.file.url }}"><img class="icon" src="{% static "inventory/img/datasheet.svg" %}"></a>
+                <a class="datasheet" href="{{ item.documentation.all.0.file.url }}"><img class="icon" src="{% static "inventory/img/datasheet.svg" %}" title="{% translate 'Datasheet' %}"></a>
             {% endif %}
             {% if user.is_staff %}
-                <a class="edit" href="{% url "admin:inventory_item_change" object_id=item.pk %}"><img class="icon" src="{% static "inventory/img/edit.svg" %}"></a>
+                <a class="edit" href="{% url "admin:inventory_item_change" object_id=item.pk %}"><img class="icon" src="{% static "inventory/img/edit.svg" %}" title="{% translate 'Edit' %}"></a>
             {% endif %}
-            <a class="details" href="{% url "item-detail" pk=item.pk %}"><img class="icon" src="{% static "inventory/img/detail.svg" %}"></a>
+            <a class="details" href="{% url "item-detail" pk=item.pk %}"><img class="icon" src="{% static "inventory/img/detail.svg" %}" title="{% translate 'Details' %}"></a>
         </div>
 
         {% if settings.track_amount %}
             {% if item.count <= item.low_count %}
-            <div class="stock"><div class="icon warning-icon" title="Low stock"></div>{{ item.count }}</div>
+            <div class="stock"><div class="icon warning-icon" title="{% translate 'Low stock' %}"></div>{{ item.count }}</div>
             {% else %}
             <div class="stock">{{ item.count }}</div>
             {% endif %}
@@ -39,7 +40,7 @@
     {% else %}
         <div class="cell-buttons">
             {% if user.is_staff %}
-                <a class="edit" href="{% url "admin:inventory_item_add" %}?index={{ item.index }}&container={{ item.container_id }}"><img class="icon" src="{% static "inventory/img/add.svg" %}"></a>
+                <a class="edit" href="{% url "admin:inventory_item_add" %}?index={{ item.index }}&container={{ item.container_id }}"><img class="icon" src="{% static "inventory/img/add.svg" %}" title="{% translate 'New item...' %}"></a>
             {% endif %}
         </div>
     {% endif %}

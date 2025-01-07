@@ -14,6 +14,7 @@ from typing import List
 import os
 import sys
 import asyncio
+from django.utils.translation import gettext_lazy as _
 
 if sys.platform == 'win32':
     asyncio.set_event_loop_policy(asyncio.WindowsSelectorEventLoopPolicy())
@@ -116,6 +117,10 @@ AUTH_PASSWORD_VALIDATORS = [
 
 # Internationalization
 # https://docs.djangoproject.com/en/3.0/topics/i18n/
+LANGUAGES = [
+    ("de", _("German")),
+    ("en", _("English")),
+]
 
 LANGUAGE_CODE = 'en-us'
 

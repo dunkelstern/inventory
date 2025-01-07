@@ -1,0 +1,561 @@
+# Translation for Inventory management system
+# Copyright (C) 2025 Johannes Schriewer
+# This file is distributed under the same license as the Inventory package.
+# Johannes Schriewer <hallo@dunkelstern.de>, 2025
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: 1.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2025-01-07 23:07+0100\n"
+"PO-Revision-Date: 2025-01-07 23:00+0100\n"
+"Last-Translator: Johannes Schriewer <hallo@dunkelstern.de>\n"
+"Language: German\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#: .\inventory\models\area.py:8 .\inventory\models\box.py:10
+#: .\inventory\models\distributor.py:6 .\inventory\models\documentation.py:6
+#: .\inventory\models\form_factor.py:6 .\inventory\models\item.py:8
+#: .\inventory\models\layout.py:6 .\inventory\models\manufacturer.py:6
+#: .\inventory\models\tag.py:6 .\inventory\models\workshop.py:8
+#: .\inventory\templates\inventory\distributor_detail.html:26
+#: .\inventory\templates\inventory\item_detail.html:27
+#: .\inventory\templates\inventory\item_list.html:7
+#: .\inventory\templates\inventory\manufacturer_detail.html:26
+msgid "Name"
+msgstr "Name"
+
+#: .\inventory\models\area.py:9 .\inventory\models\box.py:11
+#: .\inventory\models\distributor.py:7 .\inventory\models\form_factor.py:7
+#: .\inventory\models\item.py:9 .\inventory\models\layout.py:7
+#: .\inventory\models\manufacturer.py:7 .\inventory\models\tag.py:7
+#: .\inventory\models\workshop.py:9
+#: .\inventory\templates\inventory\distributor_detail.html:30
+#: .\inventory\templates\inventory\item_detail.html:31
+#: .\inventory\templates\inventory\item_list.html:9
+#: .\inventory\templates\inventory\manufacturer_detail.html:30
+msgid "Description"
+msgstr "Beschreibung"
+
+#: .\inventory\models\area.py:11
+msgid "Show sub area"
+msgstr "Unterbereiche anzeigen"
+
+#: .\inventory\models\area.py:13
+msgid "Allow sub-areas to be defined in this area"
+msgstr "Erlaube Unterbereiche in diesem Bereich"
+
+#: .\inventory\models\area.py:15 .\inventory\models\box.py:14
+#: .\inventory\models\distributor.py:16 .\inventory\models\documentation.py:7
+#: .\inventory\models\form_factor.py:13 .\inventory\models\item.py:76
+#: .\inventory\models\layout.py:8 .\inventory\models\manufacturer.py:13
+#: .\inventory\models\tag.py:8 .\inventory\models\workshop.py:17
+#: .\inventory\templates\inventory\distributor_detail.html:89
+#: .\inventory\templates\inventory\item_detail.html:128
+#: .\inventory\templates\inventory\manufacturer_detail.html:57
+msgid "Created at"
+msgstr "Erstellt am"
+
+#: .\inventory\models\area.py:16 .\inventory\models\box.py:15
+#: .\inventory\models\distributor.py:17 .\inventory\models\documentation.py:8
+#: .\inventory\models\form_factor.py:14 .\inventory\models\item.py:77
+#: .\inventory\models\layout.py:9 .\inventory\models\manufacturer.py:14
+#: .\inventory\models\tag.py:9 .\inventory\models\workshop.py:18
+#: .\inventory\templates\inventory\distributor_detail.html:91
+#: .\inventory\templates\inventory\item_detail.html:130
+#: .\inventory\templates\inventory\manufacturer_detail.html:59
+msgid "Changed at"
+msgstr "Geändert am"
+
+#: .\inventory\models\area.py:24
+msgid "Area"
+msgstr "Bereich"
+
+#: .\inventory\models\area.py:25
+#: .\inventory\templates\inventory\area_detail.html:25
+#: .\inventory\templates\inventory\workshop_detail.html:23
+msgid "Areas"
+msgstr "Bereiche"
+
+#: .\inventory\models\box.py:12 .\inventory\models\distributor.py:14
+#: .\inventory\models\form_factor.py:11 .\inventory\models\item.py:58
+#: .\inventory\models\manufacturer.py:11 .\inventory\models\tag.py:17
+#: .\inventory\models\workshop.py:15 .\inventory\templates\base.html:58
+#: .\inventory\templates\inventory\distributor_detail.html:77
+#: .\inventory\templates\inventory\item_detail.html:54
+#: .\inventory\templates\inventory\manufacturer_detail.html:45
+#: .\inventory\templates\inventory\tag_list.html:9
+msgid "Tags"
+msgstr "Tags"
+
+#: .\inventory\models\box.py:35
+msgid "Box"
+msgstr "Kisten"
+
+#: .\inventory\models\box.py:36
+#: .\inventory\templates\inventory\box-generic.html:7
+#: .\inventory\templates\inventory\tag_detail.html:43
+msgid "Boxes"
+msgstr "Kisten"
+
+#: .\inventory\models\container.py:9 .\inventory\models\layout.py:18
+msgid "Layout"
+msgstr "Layout"
+
+#: .\inventory\models\container.py:35 .\inventory\models\container.py:45
+#: .\inventory\models\container.py:51
+#: .\inventory\templates\inventory\item_list.html:10
+msgid "Container"
+msgstr "Behälter"
+
+#: .\inventory\models\container.py:46
+#: .\inventory\templates\inventory\area_detail.html:51
+#: .\inventory\templates\inventory\workshop_detail.html:49
+msgid "Containers"
+msgstr "Behälter"
+
+#: .\inventory\models\container.py:56
+msgid "Index of compartment in layout"
+msgstr "Index des Abteils im Layout"
+
+#: .\inventory\models\distributor.py:9 .\inventory\models\manufacturer.py:9
+#: .\inventory\templates\inventory\distributor_detail.html:40
+#: .\inventory\templates\inventory\manufacturer_detail.html:40
+msgid "Web link"
+msgstr "Web link"
+
+#: .\inventory\models\distributor.py:10
+#: .\inventory\templates\inventory\item_detail.html:121
+msgid "Search link"
+msgstr "Such-link"
+
+#: .\inventory\models\distributor.py:10
+msgid "Use {} for search placeholder"
+msgstr "Benutze {} oder {0} als Platzhalter"
+
+#: .\inventory\models\distributor.py:11
+#: .\inventory\templates\inventory\distributor_detail.html:65
+msgid "Phone"
+msgstr "Telefon"
+
+#: .\inventory\models\distributor.py:12
+#: .\inventory\templates\inventory\distributor_detail.html:71
+msgid "E-Mail"
+msgstr "E-Mail"
+
+#: .\inventory\models\distributor.py:13 .\inventory\models\form_factor.py:9
+#: .\inventory\models\manufacturer.py:10
+#: .\inventory\templates\inventory\distributor_detail.html:35
+#: .\inventory\templates\inventory\distributor_list.html:15
+#: .\inventory\templates\inventory\manufacturer_detail.html:35
+#: .\inventory\templates\inventory\manufacturer_list.html:15
+msgid "Icon"
+msgstr "Symbol"
+
+#: .\inventory\models\distributor.py:24 .\inventory\models\item.py:31
+#: .\inventory\templates\inventory\distributor_detail.html:6
+#: .\inventory\templates\inventory\distributor_detail.html:10
+#: .\inventory\templates\inventory\distributor_list.html:16
+#: .\inventory\templates\inventory\item_detail.html:96
+#: .\inventory\templates\inventory\item_list.html:15
+msgid "Distributor"
+msgstr "Händler"
+
+#: .\inventory\models\distributor.py:25 .\inventory\templates\base.html:55
+#: .\inventory\templates\inventory\distributor_list.html:5
+#: .\inventory\templates\inventory\distributor_list.html:8
+#: .\inventory\templates\inventory\tag_detail.html:63
+msgid "Distributors"
+msgstr "Händler"
+
+#: .\inventory\models\documentation.py:17
+#: .\inventory\models\documentation.py:18 .\inventory\models\item.py:52
+#: .\inventory\templates\inventory\item_detail.html:135
+msgid "Documentation"
+msgstr "Dokumentation"
+
+#: .\inventory\models\form_factor.py:10
+#: .\inventory\templates\inventory\cell.html:16
+#: .\inventory\templates\inventory\item_list.html:25
+#: .\inventory\templates\inventory\search_result_item.html:6
+msgid "Datasheet"
+msgstr "Datenblatt"
+
+#: .\inventory\models\form_factor.py:23 .\inventory\models\item.py:17
+#: .\inventory\templates\inventory\item_detail.html:68
+msgid "Form factor"
+msgstr "Formfaktor"
+
+#: .\inventory\models\form_factor.py:24
+#: .\inventory\templates\inventory\tag_detail.html:121
+msgid "Form factors"
+msgstr "Formfaktoren"
+
+#: .\inventory\models\item.py:11
+msgid "Size"
+msgstr "Größe"
+
+#: .\inventory\models\item.py:13
+msgid "Number of sub-compartments this item takes up"
+msgstr "Anzahl der Unterteilungen die dieses Teil benötigt"
+
+#: .\inventory\models\item.py:24 .\inventory\models\manufacturer.py:21
+#: .\inventory\templates\inventory\item_detail.html:85
+#: .\inventory\templates\inventory\item_list.html:12
+#: .\inventory\templates\inventory\manufacturer_detail.html:6
+#: .\inventory\templates\inventory\manufacturer_detail.html:10
+#: .\inventory\templates\inventory\manufacturer_list.html:16
+msgid "Manufacturer"
+msgstr "Hersteller"
+
+#: .\inventory\models\item.py:37
+msgid "Distributor item no."
+msgstr "Händler Bestellnummer"
+
+#: .\inventory\models\item.py:43
+#: .\inventory\templates\inventory\item_detail.html:107
+msgid "Price"
+msgstr "Preis"
+
+#: .\inventory\models\item.py:49
+msgid "Last ordered on"
+msgstr "Zuletzt bestellt am"
+
+#: .\inventory\models\item.py:63
+msgid "Count"
+msgstr "Anzahl"
+
+#: .\inventory\models\item.py:66
+msgid "Number of parts available"
+msgstr "Anzahl der verfügbaren Teile"
+
+#: .\inventory\models\item.py:69
+#: .\inventory\templates\inventory\item_detail.html:49
+msgid "Low watermark"
+msgstr "Bestellgrenze"
+
+#: .\inventory\models\item.py:72
+msgid "Low watermark on which to alert ordering more"
+msgstr "Untere Grenze ab der das Teil nachbestellt werden soll"
+
+#: .\inventory\models\item.py:75
+msgid "Custom metadata, used by templates"
+msgstr "Metadaten die in der Vorlage verwendet werden können"
+
+#: .\inventory\models\item.py:98
+msgid "Item"
+msgstr "Teil"
+
+#: .\inventory\models\item.py:99
+#: .\inventory\templates\inventory\box-generic.html:16
+#: .\inventory\templates\inventory\manufacturer_detail.html:64
+#: .\inventory\templates\inventory\tag_detail.html:113
+msgid "Items"
+msgstr "Teile"
+
+#: .\inventory\models\layout.py:10
+msgid "Data"
+msgstr "Konfiguration"
+
+#: .\inventory\models\layout.py:11
+msgid "Template name"
+msgstr "Vorlage"
+
+#: .\inventory\models\layout.py:19
+msgid "Layouts"
+msgstr "Layouts"
+
+#: .\inventory\models\manufacturer.py:22 .\inventory\templates\base.html:52
+#: .\inventory\templates\inventory\manufacturer_list.html:5
+#: .\inventory\templates\inventory\manufacturer_list.html:8
+#: .\inventory\templates\inventory\tag_detail.html:88
+msgid "Manufacturers"
+msgstr "Hersteller"
+
+#: .\inventory\models\settings.py:13
+msgid "Default container to display when calling the index page"
+msgstr "Standardbehälter der beim Aufruf der Index-Seite gezeigt werden soll"
+
+#: .\inventory\models\settings.py:17
+msgid "Show item count in overview and warn on low watermarks"
+msgstr "Aktiviere die Mengenangaben und Nachbestellgrenzen"
+
+#: .\inventory\models\settings.py:19
+msgid "Currency"
+msgstr "Währung"
+
+#: .\inventory\models\settings.py:19
+msgid "Currency name"
+msgstr "Name der Währung"
+
+#: .\inventory\models\settings.py:20
+msgid "Currency symbol"
+msgstr "Währungssymbol"
+
+#: .\inventory\models\settings.py:22
+msgid "Currency symbol at end"
+msgstr "Währungssymbol am Ende"
+
+#: .\inventory\models\settings.py:24
+msgid "Currency symbol after amount"
+msgstr "Zeige das Währungssymbol nach der Zahl an"
+
+#: .\inventory\models\settings.py:28 .\inventory\models\settings.py:31
+#: .\inventory\models\settings.py:32
+msgid "Settings"
+msgstr "Einstellungen"
+
+#: .\inventory\models\tag.py:16
+#: .\inventory\templates\inventory\tag_detail.html:5
+msgid "Tag"
+msgstr "Tag"
+
+#: .\inventory\models\workshop.py:11
+msgid "Show boxes"
+msgstr "Behälter anzeigen"
+
+#: .\inventory\models\workshop.py:13
+msgid "Allow boxes to be defined directly in this workshop"
+msgstr "Erlaube Behälter in dieser Werkstatt"
+
+#: .\inventory\models\workshop.py:26 .\inventory\templates\base.html:61
+#: .\inventory\templates\inventory\workshop_detail.html:5
+msgid "Workshop"
+msgstr "Werkstatt"
+
+#: .\inventory\models\workshop.py:27
+#: .\inventory\templates\inventory\tag_detail.html:23
+#: .\inventory\templates\inventory\workshop_list.html:5
+#: .\inventory\templates\inventory\workshop_list.html:8
+msgid "Workshops"
+msgstr "Werkstätten"
+
+#: .\inventory\templates\base.html:43 .\inventory\templates\base.html:46
+#: .\inventory\templates\base.html:47
+#: .\inventory\templates\inventory\distributor_detail.html:45
+#: .\inventory\templates\inventory\distributor_detail.html:58
+#: .\inventory\templates\inventory\search.html:5
+#: .\inventory\templates\inventory\search.html:8
+#: .\inventory\templates\inventory\search.html:13
+#: .\inventory\templates\inventory\search.html:14
+#: .\inventory\templates\inventory\search_result.html:6
+#: .\inventory\templates\inventory\search_result.html:9
+#: .\inventory\templates\inventory\search_result.html:14
+#: .\inventory\templates\inventory\search_result.html:15
+#: .\inventory\templates\inventory\tag_list.html:43
+#: .\inventory\templates\inventory\tag_list.html:44
+msgid "Search"
+msgstr "Suchen"
+
+#: .\inventory\templates\base.html:68
+msgid "Logout"
+msgstr "Ausloggen"
+
+#: .\inventory\templates\inventory\area_detail.html:16
+#: .\inventory\templates\inventory\area_detail.html:36
+#: .\inventory\templates\inventory\area_detail.html:62
+#: .\inventory\templates\inventory\box-detail.html:20
+#: .\inventory\templates\inventory\cell.html:19
+#: .\inventory\templates\inventory\distributor_detail.html:17
+#: .\inventory\templates\inventory\distributor_list.html:33
+#: .\inventory\templates\inventory\item_detail.html:18
+#: .\inventory\templates\inventory\item_list.html:28
+#: .\inventory\templates\inventory\manufacturer_detail.html:17
+#: .\inventory\templates\inventory\manufacturer_list.html:33
+#: .\inventory\templates\inventory\tag_detail.html:16
+#: .\inventory\templates\inventory\tag_detail.html:33
+#: .\inventory\templates\inventory\tag_detail.html:53
+#: .\inventory\templates\inventory\tag_detail.html:78
+#: .\inventory\templates\inventory\tag_detail.html:103
+#: .\inventory\templates\inventory\workshop_detail.html:16
+#: .\inventory\templates\inventory\workshop_detail.html:34
+#: .\inventory\templates\inventory\workshop_detail.html:59
+#: .\inventory\templates\inventory\workshop_list.html:21
+msgid "Edit"
+msgstr "Bearbeiten"
+
+#: .\inventory\templates\inventory\area_detail.html:41
+#: .\inventory\templates\inventory\workshop_detail.html:39
+msgid "No areas defined"
+msgstr "Keine Bereiche definiert"
+
+#: .\inventory\templates\inventory\area_detail.html:47
+#: .\inventory\templates\inventory\workshop_detail.html:45
+msgid "Create new area..."
+msgstr "Neuen Bereich anlegen..."
+
+#: .\inventory\templates\inventory\area_detail.html:67
+#: .\inventory\templates\inventory\workshop_detail.html:64
+msgid "No containers defined"
+msgstr "Keine Behälter definiert..."
+
+#: .\inventory\templates\inventory\area_detail.html:73
+#: .\inventory\templates\inventory\workshop_detail.html:70
+msgid "Create new container..."
+msgstr "Neuen Behälter anlegen..."
+
+#: .\inventory\templates\inventory\box-detail.html:12
+#: .\inventory\templates\inventory\distributor_detail.html:9
+#: .\inventory\templates\inventory\item_detail.html:10
+#: .\inventory\templates\inventory\manufacturer_detail.html:9
+#: .\inventory\templates\inventory\tag_detail.html:8
+#: .\inventory\templates\inventory\workshop_detail.html:8
+msgid "Back"
+msgstr "Zurück"
+
+#: .\inventory\templates\inventory\cell.html:21
+msgid "Details"
+msgstr "Details"
+
+#: .\inventory\templates\inventory\cell.html:26
+#: .\inventory\templates\inventory\item_detail.html:42
+msgid "Low stock"
+msgstr "Wenig Vorrat"
+
+#: .\inventory\templates\inventory\cell.html:43
+msgid "New item..."
+msgstr "Neues Teil..."
+
+#: .\inventory\templates\inventory\distributor_detail.html:57
+msgid "Search query"
+msgstr "Suchanfrage"
+
+#: .\inventory\templates\inventory\distributor_detail.html:83
+#: .\inventory\templates\inventory\item_detail.html:60
+#: .\inventory\templates\inventory\manufacturer_detail.html:51
+#: .\inventory\templates\inventory\tag_list.html:50
+msgid "No tags"
+msgstr "Keine Tags"
+
+#: .\inventory\templates\inventory\distributor_list.html:8
+#: .\inventory\templates\inventory\tag_list.html:9
+#: .\inventory\templates\inventory\workshop_list.html:8
+#: .\inventory\templates\registration\login.html:5
+msgid "Inventory management"
+msgstr "Inventarverwaltung"
+
+#: .\inventory\templates\inventory\distributor_list.html:43
+msgid "Create new distributor..."
+msgstr "Neuen Händler anlegen..."
+
+#: .\inventory\templates\inventory\item_detail.html:36
+#: .\inventory\templates\inventory\item_detail.html:45
+msgid "Amount"
+msgstr "Anzahl"
+
+#: .\inventory\templates\inventory\item_detail.html:46
+msgid "Update"
+msgstr "Speichern"
+
+#: .\inventory\templates\inventory\item_detail.html:108
+msgid "Sum"
+msgstr "Summe"
+
+#: .\inventory\templates\inventory\item_detail.html:114
+msgid "Last ordered"
+msgstr "Zuletzt bestellt"
+
+#: .\inventory\templates\inventory\manufacturer_list.html:8
+msgid "Inventory Management"
+msgstr "Inventarverwaltung"
+
+#: .\inventory\templates\inventory\manufacturer_list.html:42
+msgid "Create new manufacturer..."
+msgstr "Neuen Hersteller anlegen..."
+
+#: .\inventory\templates\inventory\pagination.html:6
+#: .\inventory\templates\inventory\search_result.html:33
+msgid "First page"
+msgstr "Erste Seite"
+
+#: .\inventory\templates\inventory\pagination.html:7
+#: .\inventory\templates\inventory\search_result.html:34
+msgid "Previous page"
+msgstr "Vorherige Seite"
+
+#: .\inventory\templates\inventory\pagination.html:13
+#: .\inventory\templates\inventory\search_result.html:38
+msgid "Next page"
+msgstr "Nächste Seite"
+
+#: .\inventory\templates\inventory\pagination.html:14
+#: .\inventory\templates\inventory\search_result.html:39
+msgid "Last page"
+msgstr "Letzte Seite"
+
+#: .\inventory\templates\inventory\search_result.html:18
+msgid "Search result for"
+msgstr "Suchergebnisse für"
+
+#: .\inventory\templates\inventory\search_result.html:27
+msgid "Nothing found"
+msgstr "Nichts gefunden"
+
+#: .\inventory\templates\inventory\search_result_item.html:11
+msgid "Contained in"
+msgstr "Im Behälter"
+
+#: .\inventory\templates\inventory\set_index.html:10
+msgid "Currently set as index page"
+msgstr "Momentan als Index-Seite definiert"
+
+#: .\inventory\templates\inventory\set_index.html:12
+msgid "Promote to index page"
+msgstr "Als Index-Seite definieren"
+
+#: .\inventory\templates\inventory\tag_list.html:55
+msgid "Create new tag..."
+msgstr "Neues Tag anlegen..."
+
+#: .\inventory\templates\inventory\workshop_list.html:30
+msgid "Create new workshop..."
+msgstr "Neue Werkstatt anlegen..."
+
+#: .\inventory\templates\registration\login.html:5
+msgid "Login"
+msgstr "Einloggen"
+
+#: .\inventory\templates\registration\login.html:11
+msgid "Your username and password didn't match. Please try again."
+msgstr ""
+"Benutzername und Passwort passen nicht zusammen, bitte versuche es noch "
+"einmal."
+
+#: .\inventory\templates\registration\login.html:17
+msgid ""
+"\n"
+"        Your account doesn't have access to this page. To proceed,\n"
+"        please login with an account that has access.\n"
+"        "
+msgstr ""
+"\n"
+"        Dein Zugang hat keinen Zugriff auf diese Seite.\n"
+"        Zum Fortfahren bitte mit einem Zugang einloggen der die\n"
+"        entsprechenden Rechte besitzt!\n"
+"        "
+
+#: .\inventory\templates\registration\login.html:24
+msgid ""
+"\n"
+"        Please login to see this page.\n"
+"        "
+msgstr ""
+"\n"
+"        Bitte einloggen um auf diese Seite Zugriff zu bekommen.\n"
+"        "
+
+#: .\inventory\templates\registration\login.html:49
+msgid "Lost password?"
+msgstr "Passwort vergessen?"
+
+#: .\inventory_project\settings.py:121
+msgid "German"
+msgstr "Deutsch"
+
+#: .\inventory_project\settings.py:122
+msgid "English"
+msgstr "Englisch"

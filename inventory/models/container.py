@@ -1,9 +1,16 @@
+from django.utils.translation import gettext_lazy as _
 from django.db import models
 from django.apps import apps
 
 
 class Container(models.Model):
-    layout = models.ForeignKey('inventory.Layout', on_delete=models.PROTECT, null=True, blank=True)
+    layout = models.ForeignKey(
+        'inventory.Layout',
+        verbose_name=_("Layout"),
+        on_delete=models.PROTECT,
+        null=True,
+        blank=True
+    )
 
     @property
     def subclass(self):
@@ -25,7 +32,7 @@ class Container(models.Model):
         _, obj = self.subclass
         if obj is not None:
             return obj.name
-        return 'Container'
+        return _("Container")
 
     @property
     def url(self):
@@ -34,15 +41,19 @@ class Container(models.Model):
             return obj.url
         return None
 
+    class Meta:
+        verbose_name = _("Container")
+        verbose_name_plural = _("Containers")
 
 class CanBeContained(models.Model):
     container = models.ForeignKey(
         'inventory.Container',
+        verbose_name=_("Container"),
         related_name="%(class)s_related",
         null=True,
         on_delete=models.CASCADE
     )
-    index = models.PositiveIntegerField('Index of compartment in layout')
+    index = models.PositiveIntegerField(_("Index of compartment in layout"))
 
     class Meta:
         abstract = True

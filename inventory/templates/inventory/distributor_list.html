@@ -1,18 +1,19 @@
 {% extends "base.html" %}
+{% load i18n %}
 {% load static %}
 
-{% block title %}Distributors{% endblock %}
+{% block title %}{% translate 'Distributors' %}{% endblock %}
 
 {% block header_bar %}
-    Inventory management - Distributors
+    {% translate 'Inventory management' %} - {% translate 'Distributors' %}
 {% endblock %}
 
 {% block content %}
     <table class="list">
         <thead>
             <tr>
-                <th class="icon">Logo</th>
-                <th>Distributor</th>
+                <th class="icon">{% translate 'Icon' %}</th>
+                <th>{% translate 'Distributor' %}</th>
                 <th></th>
             </tr>
         </thead>
@@ -29,7 +30,7 @@
                 </td>
                 <td>
                 {% if user.is_staff %}
-                    <a class="edit" href="{% url "admin:inventory_distributor_change" object_id=distributor.pk %}"><img class="icon" src="{% static 'inventory/img/edit.svg' %}"></a>
+                    <a class="edit" href="{% url "admin:inventory_distributor_change" object_id=distributor.pk %}"><img class="icon" src="{% static 'inventory/img/edit.svg' %}" title="{% translate 'Edit' %}"></a>
                 {% endif %}
                 </td>
             </tr>
@@ -39,7 +40,7 @@
 
 
     {% if user.is_staff %}
-        <p><a href="{% url "admin:inventory_distributor_add" %}?layout=1">Create new distributor...</a></p>
+        <p><a href="{% url "admin:inventory_distributor_add" %}?layout=1">{% translate 'Create new distributor...' %}</a></p>
     {% endif %}
 
 

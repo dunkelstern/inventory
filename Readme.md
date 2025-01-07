@@ -28,9 +28,16 @@ following might sound familiar:
    - ForgeJo: `git clone https://git.dunkelstern.de/dunkelstern/inventory.git`
 2. Change to checkout: `cd inventory`
 3. Install virtualenv and dependencies: `poetry install --no-root`
-4. Migrate the Database: `poetry run python manage.py migrate`
-5. Create an admin user: `poetry run python manage.py createsuperuser`
-6. Run the server
+4. If you want to use the system in another language than the default english set it
+   up in the `inventory_project/settings.py`:
+   ```python
+   LANGUAGE_CODE = 'en-us' # or something like 'de-de'
+   ```
+   see the settings file for defined languages.
+5. If you changed the language rebuild the translation files: `poetry run python manage.py compilemessages`
+6. Migrate the Database: `poetry run python manage.py migrate`
+7. Create an admin user: `poetry run python manage.py createsuperuser`
+8. Run the server
   - Development server (not for deployment!): `poetry run python manage.py runserver`
   - Deployment via `gunicorn` on port 8000: `poetry run gunicorn inventory_project.wsgi -b 0.0.0.0:8000`
 
@@ -50,6 +57,16 @@ go to `http://localhost:8000` to enter the inventory management system directly
 4. If you want to run this as a systemd service see the
   [the service file](inventory.service) in the root of this repository for an
   example.
+
+### Changelog
+
+#### 1.1
+
+- Part count can be configured to be available in settings
+- Currency can be configured in settings
+- Complete system is translateable (English and German are provided)
+
+![Settings](docs/settings.jpeg)
 
 ### Screenshots
 

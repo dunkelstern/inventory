@@ -1,17 +1,18 @@
+{% load i18n %}
 {% load static %}
 
 <table class="list">
     <thead>
         <tr>
-            <th>Name</th>
+            <th>{% translate 'Name' %}</th>
             <th></th>
-            <th>Description</th>
-            <th>Container</th>
+            <th>{% translate 'Description' %}</th>
+            <th>{% translate 'Container' %}</th>
             {% if show_manufacturer %}
-            <th>Manufacturer</th>
+            <th>{% translate 'Manufacturer' %}</th>
             {% endif %}
             {% if show_distributor %}
-            <th>Distributor</th>
+            <th>{% translate 'Distributor' %}</th>
             {% endif %}
         </tr>
     </thead>
@@ -21,10 +22,10 @@
             <td><a href="{% url 'item-detail' item.id %}">{{ item.name }}</a></td>
             <td class="right">
                 {% if item.documentation.all %}
-                    <a class="datasheet" href="{{ item.documentation.all.0.file.url }}"><img class="icon" src="{% static "inventory/img/datasheet.svg" %}"></a>
+                    <a class="datasheet" href="{{ item.documentation.all.0.file.url }}"><img class="icon" src="{% static "inventory/img/datasheet.svg" %}" title="{% translate 'Datasheet' %}"></a>
                 {% endif %}
                 {% if user.is_staff %}
-                    <a class="edit" href="{% url "admin:inventory_item_change" object_id=item.pk %}"><img class="icon" src="{% static "inventory/img/edit.svg" %}"></a>
+                    <a class="edit" href="{% url "admin:inventory_item_change" object_id=item.pk %}"><img class="icon" src="{% static "inventory/img/edit.svg" %}" title="{% translate 'Edit' %}"></a>
                 {% endif %}
             </td>
             <td>{{ item.description }}</td>

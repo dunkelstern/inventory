@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: 1.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-01-07 23:07+0100\n"
+"POT-Creation-Date: 2025-01-11 03:20+0100\n"
 "PO-Revision-Date: 2025-01-07 23:00+0100\n"
 "Last-Translator: Johannes Schriewer <hallo@dunkelstern.de>\n"
 "Language: German\n"
@@ -467,6 +467,62 @@ msgstr "Inventarverwaltung"
 msgid "Create new manufacturer..."
 msgstr "Neuen Hersteller anlegen..."
 
+#: .\inventory\templates\inventory\onboarding.html:5
+#: .\inventory\templates\inventory\onboarding.html:8
+#: .\inventory\templates\inventory\onboarding_success.html:5
+#: .\inventory\templates\inventory\onboarding_success.html:8
+msgid "Inventory Setup"
+msgstr "Inventarverwaltung Setup"
+
+#: .\inventory\templates\inventory\onboarding.html:12
+msgid "Welcome to the Inventory Management setup"
+msgstr "Willkommen zur Einrichtung der Inventarverwaltung"
+
+#: .\inventory\templates\inventory\onboarding.html:15
+msgid ""
+"\n"
+"        Currently no admin user is defined in the database.\n"
+"        To use the inventory management system you need at least one admin "
+"user...\n"
+"        "
+msgstr ""
+"\n"
+"        Aktuell ist kein Admin Benutzer in der Datenbank angelegt.\n"
+"        Um die Inventarverwaltung nutzen zu können muss mindestens\n"
+"        ein Administrator angelegt werden...\n"
+"        "
+
+#: .\inventory\templates\inventory\onboarding.html:22
+msgid ""
+"\n"
+"        Please verify that the following settings are correct and then fill "
+"out the\n"
+"        form at the end and click\n"
+"        "
+msgstr ""
+"        Bitte überprüfe die folgenden Einstellungen und klicke dann auf\n"
+"        "
+
+#: .\inventory\templates\inventory\onboarding.html:26
+#: .\inventory\templates\inventory\onboarding.html:38
+#: .\inventory\templates\inventory\onboarding.html:51
+msgid "Create user"
+msgstr "Benutzer anlegen"
+
+#: .\inventory\templates\inventory\onboarding.html:29
+msgid "Current settings"
+msgstr "Aktuelle Einstellungen"
+
+#: .\inventory\templates\inventory\onboarding.html:42
+msgid ""
+"\n"
+"            Please correct the errors below.\n"
+"            "
+msgstr ""
+"\n"
+"        Bitte die unten angezeigten Fehler korrigieren.\n"
+"        "
+
 #: .\inventory\templates\inventory\pagination.html:6
 #: .\inventory\templates\inventory\search_result.html:33
 msgid "First page"
@@ -552,10 +608,22 @@ msgstr ""
 msgid "Lost password?"
 msgstr "Passwort vergessen?"
 
-#: .\inventory_project\settings.py:121
+#: .\inventory\views\onboarding.py:14
+msgid "Username"
+msgstr "Benutzername"
+
+#: .\inventory\views\onboarding.py:15
+msgid "Email"
+msgstr "E-Mail"
+
+#: .\inventory\views\onboarding.py:16
+msgid "Password"
+msgstr "Passwort"
+
+#: .\inventory_project\settings.py:130
 msgid "German"
 msgstr "Deutsch"
 
-#: .\inventory_project\settings.py:122
+#: .\inventory_project\settings.py:131
 msgid "English"
 msgstr "Englisch"

@@ -7,6 +7,7 @@ from .workshop import WorkshopView, WorkshopListView
 from .index import IndexView
 from .tag import TagListView, TagView
 from .search import SearchView
+from .onboarding import OnboardingView
 
 __all__ = [
     AreaView, AreaListView,
@@ -17,5 +18,6 @@ __all__ = [
     WorkshopView, WorkshopListView,
     IndexView,
     TagView, TagListView,
-    SearchView
+    SearchView,
+    OnboardingView
 ]

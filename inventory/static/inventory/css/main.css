@@ -336,3 +336,13 @@ div.warning-icon {
     -webkit-mask: url(/static/inventory/img/warn.svg) no-repeat center;
     mask: url(/static/inventory/img/warn.svg) no-repeat center;
 }
+
+form label {
+    display: inline-block;
+    width: 100px;
+}
+
+dt {
+    font-weight: bold;
+    font-family: 'Courier New', Courier, monospace;
+}

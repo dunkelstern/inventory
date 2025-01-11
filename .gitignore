@@ -2,9 +2,12 @@
 __pycache__
 .python_version
 *.egg-info
-*.mo
+
 
 media/
-./static/
+/static/
 media.tar.gz
 *.pg
+
+override.env
+.env

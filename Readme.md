@@ -146,6 +146,8 @@ The compose stack will create two volumes:
 - Part count can be configured to be available in settings
 - Currency can be configured in settings
 - Complete system is translateable (English and German are provided)
+- Onboarding process so you do not have to create a superuser on the command line
+- Docker and Docker-Compose files
 
 ![Settings](docs/settings.jpeg)
 

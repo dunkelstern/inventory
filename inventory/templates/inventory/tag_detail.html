@@ -1,10 +1,11 @@
 {% extends "base.html" %}
 {% load static %}
+{% load i18n %}
 
-{% block title %}Tag {{ tag.name }}{% endblock %}
+{% block title %}{% translate 'Tag' %} {{ tag.name }}{% endblock %}
 
 {% block header_bar %}
-    <a href="{% url "tag-list" %}"><img class="icon" src="{% static "inventory/img/back.svg" %}"></a>
+    <a href="{% url "tag-list" %}"><img class="icon" src="{% static "inventory/img/back.svg" %}" title="{% translate 'Back' %}"></a>
     {{ tag.name }}
     <span class="small">{{ tag.description}}</span>
 {% endblock %}
@@ -12,14 +13,14 @@
 {% block header_icons %}
     {% if user.is_staff %}
         <li>
-            <a href="{% url "admin:inventory_tag_change" object_id=tag.pk %}"><img class="icon" src="{% static "inventory/img/edit.svg" %}"></a>
+            <a href="{% url "admin:inventory_tag_change" object_id=tag.pk %}"><img class="icon" src="{% static "inventory/img/edit.svg" %}" title="{% translate 'Edit' %}"></a>
         </li>
     {% endif %}
 {% endblock %}
 
 {% block content %}
     {% if tag.workshop_set.count > 0 %}
-    <h3>Workshops</h3>
+    <h3>{% translate 'Workshops' %}</h3>
     <table class="list">
         <tbody>
         {% for workshop in tag.workshop_set.all %}
@@ -29,7 +30,7 @@
                 </td>
                 <td>
                 {% if user.is_staff %}
-                    <a class="edit" href="{% url "admin:inventory_workshop_change" object_id=workshop.pk %}"><img class="icon" src="{% static 'inventory/img/edit.svg' %}"></a>
+                    <a class="edit" href="{% url "admin:inventory_workshop_change" object_id=workshop.pk %}"><img class="icon" src="{% static 'inventory/img/edit.svg' %}" title="{% translate 'Edit' %}"></a>
                 {% endif %}
                 </td>
             </tr>
@@ -39,7 +40,7 @@
     {% endif %}
 
     {% if tag.box_set.count > 0 %}
-    <h3>Boxes</h3>
+    <h3>{% translate 'Boxes' %}</h3>
     <table class="list">
         <tbody>
         {% for box in tag.box_set.all %}
@@ -49,7 +50,7 @@
                 </td>
                 <td>
                 {% if user.is_staff %}
-                    <a class="edit" href="{% url "admin:inventory_workshop_change" object_id=box.pk %}"><img class="icon" src="{% static 'inventory/img/edit.svg' %}"></a>
+                    <a class="edit" href="{% url "admin:inventory_workshop_change" object_id=box.pk %}"><img class="icon" src="{% static 'inventory/img/edit.svg' %}" title="{% translate 'Edit' %}"></a>
                 {% endif %}
                 </td>
             </tr>
@@ -59,7 +60,7 @@
     {% endif %}
 
     {% if tag.distributor_set.count > 0 %}
-    <h3>Distributors</h3>
+    <h3>{% translate 'Distributors' %}</h3>
     <table class="list">
         <tbody>
         {% for distributor in tag.distributor_set.all %}
@@ -74,7 +75,7 @@
                 </td>
                 <td>
                 {% if user.is_staff %}
-                    <a class="edit" href="{% url "admin:inventory_workshop_change" object_id=distributor.pk %}"><img class="icon" src="{% static 'inventory/img/edit.svg' %}"></a>
+                    <a class="edit" href="{% url "admin:inventory_workshop_change" object_id=distributor.pk %}"><img class="icon" src="{% static 'inventory/img/edit.svg' %}" title="{% translate 'Edit' %}"></a>
                 {% endif %}
                 </td>
             </tr>
@@ -84,7 +85,7 @@
     {% endif %}
 
     {% if tag.manufacturer_set.count > 0 %}
-    <h3>Manufacturers</h3>
+    <h3>{% translate 'Manufacturers' %}</h3>
     <table class="list">
         <tbody>
         {% for manufacturer in tag.manufacturer_set.all %}
@@ -99,7 +100,7 @@
                 </td>
                 <td>
                 {% if user.is_staff %}
-                    <a class="edit" href="{% url "admin:inventory_workshop_change" object_id=manufacturer.pk %}"><img class="icon" src="{% static 'inventory/img/edit.svg' %}"></a>
+                    <a class="edit" href="{% url "admin:inventory_workshop_change" object_id=manufacturer.pk %}"><img class="icon" src="{% static 'inventory/img/edit.svg' %}" title="{% translate 'Edit' %}"></a>
                 {% endif %}
                 </td>
             </tr>
@@ -109,7 +110,7 @@
     {% endif %}
 
     {% if items %}
-        <h3>Items</h3>
+        <h3>{% translate 'Items' %}</h3>
         {% url 'tag-detail' tag.id as this_url %}
         {% include "inventory/pagination.html" with url=this_url id="items_paginator_top" param="item" paginator=items %}
         {% include "inventory/item_list.html" with items=items show_manufacturer=1 show_distributor=1 %}
@@ -117,7 +118,7 @@
     {% endif %}
 
     {% if tag.formfactor_set.count > 0 %}
-    <h3>Form factors</h3>
+    <h3>{% translate 'Form factors' %}</h3>
     <ul class="compact-list">
         {% for formfactor in tag.formfactor_set.all %}
             <li>{{ formfactor.name }}</li>

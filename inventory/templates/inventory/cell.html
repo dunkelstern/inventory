@@ -1,5 +1,8 @@
 {% load static %}
+{% load i18n %}
 {% load admin_urls %}
+{% load currency %}
+
 <div class="cell{% if hilight == item.id %} search-hilight{% endif %}">
     {% if item.name %}
         {% if item.metadata.package %}
@@ -10,16 +13,23 @@
         </a>
         <div class="cell-buttons">
             {% if item.documentation.all %}
-                <a class="datasheet" href="{{ item.documentation.all.0.file.url }}"><img class="icon" src="{% static "inventory/img/datasheet.svg" %}"></a>
+                <a class="datasheet" href="{{ item.documentation.all.0.file.url }}"><img class="icon" src="{% static "inventory/img/datasheet.svg" %}" title="{% translate 'Datasheet' %}"></a>
             {% endif %}
             {% if user.is_staff %}
-                <a class="edit" href="{% url "admin:inventory_item_change" object_id=item.pk %}"><img class="icon" src="{% static "inventory/img/edit.svg" %}"></a>
+                <a class="edit" href="{% url "admin:inventory_item_change" object_id=item.pk %}"><img class="icon" src="{% static "inventory/img/edit.svg" %}" title="{% translate 'Edit' %}"></a>
             {% endif %}
-            <a class="details" href="{% url "item-detail" pk=item.pk %}"><img class="icon" src="{% static "inventory/img/detail.svg" %}"></a>
+            <a class="details" href="{% url "item-detail" pk=item.pk %}"><img class="icon" src="{% static "inventory/img/detail.svg" %}" title="{% translate 'Details' %}"></a>
         </div>
 
+        {% if settings.track_amount %}
+            {% if item.count <= item.low_count %}
+            <div class="stock"><div class="icon warning-icon" title="{% translate 'Low stock' %}"></div>{{ item.count }}</div>
+            {% else %}
+            <div class="stock">{{ item.count }}</div>
+            {% endif %}
+        {% endif %}
         {% if item.price %}
-        <div class="price">{{ item.price | floatformat:2 }} &euro;</div>
+        <div class="price">{{ item.price | currency:"short" }}</div>
         {% endif %}
         {% if item.form_factor %}
         <div class="form_factor">{{ item.form_factor.name }}</div>
@@ -30,7 +40,7 @@
     {% else %}
         <div class="cell-buttons">
             {% if user.is_staff %}
-                <a class="edit" href="{% url "admin:inventory_item_add" %}?index={{ item.index }}&container={{ item.container_id }}"><img class="icon" src="{% static "inventory/img/add.svg" %}"></a>
+                <a class="edit" href="{% url "admin:inventory_item_add" %}?index={{ item.index }}&container={{ item.container_id }}"><img class="icon" src="{% static "inventory/img/add.svg" %}" title="{% translate 'New item...' %}"></a>
             {% endif %}
         </div>
     {% endif %}

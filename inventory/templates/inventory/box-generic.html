@@ -1,9 +1,10 @@
 {% extends "inventory/box-detail.html" %}
+{% load i18n %}
 
 {% block content %}
 
     {% if box.box_related.exists %}
-    <h3>Boxes</h3>
+    <h3>{% translate 'Boxes' %}</h3>
     <ul>
         {% for b in box.box_related.all %}
             <li><a href="{% url 'box-detail' b.id %}" title="{{ b.description }}">{{ b.name }} ({{ b.layout.name }})</a></li>
@@ -12,7 +13,7 @@
     {% endif %}
 
     {% if box.item_related.exists %}
-    <h3>Items</h3>
+    <h3>{% translate 'Items' %}</h3>
     <ul>
         {% for item in box.item_related.all %}
             <li {% if hilight == item.id %}class="hilighted"{% endif %}><a href="{% url 'item-detail' item.id %}" title="{{ item.description }}">{{ item.name }}</a></li>

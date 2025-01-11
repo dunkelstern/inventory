@@ -10,10 +10,13 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/3.0/ref/settings/
 """
 
-from typing import List
 import os
 import sys
 import asyncio
+import socket
+from urllib.parse import urlparse
+from uuid import uuid4
+from django.utils.translation import gettext_lazy as _
 
 if sys.platform == 'win32':
     asyncio.set_event_loop_policy(asyncio.WindowsSelectorEventLoopPolicy())
@@ -22,19 +25,25 @@ if sys.platform == 'win32':
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 # Externally visible URL of the server
-SERVER_URL = "http://127.0.0.1:8000"
+SERVER_URL = os.environ.get('INVENTORY_EXTERNAL_URL', "http://127.0.0.1:8000")
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/3.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'nqo*a(^g$8#0%&+*_7#b_7ybn-znk4#=45_(qy-lq-^v675pqk'
+SECRET_KEY = os.environ.get('INVENTORY_SECRET_KEY', uuid4().hex)
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = (os.environ.get('INVENTORY_DEBUG', "FALSE") == "TRUE")
 
-ALLOWED_HOSTS: List[str] = []
-
+parsed_url = urlparse(SERVER_URL)
+ALLOWED_HOSTS: list[str] = [
+    '.localhost',
+    '127.0.0.1',
+    '[::1]',
+    parsed_url.hostname,
+    socket.gethostbyname('localhost')
+]
 
 # Application definition
 
@@ -88,9 +97,10 @@ ASGI_APPLICATION = 'inventory_project.asgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'inventory',
-        'USER': 'inventory',
-        'PASSWORD': 'inventory'
+        'HOST': os.environ.get('INVENTORY_DB_HOST', 'localhost'),
+        'NAME': os.environ.get('INVENTORY_DB_NAME', 'inventory'),
+        'USER': os.environ.get('INVENTORY_DB_USER', 'inventory'),
+        'PASSWORD': os.environ.get('INVENTORY_DB_PASSWORD', 'inventory')
     }
 }
 
@@ -116,10 +126,14 @@ AUTH_PASSWORD_VALIDATORS = [
 
 # Internationalization
 # https://docs.djangoproject.com/en/3.0/topics/i18n/
+LANGUAGES = [
+    ("de", _("German")),
+    ("en", _("English")),
+]
 
-LANGUAGE_CODE = 'en-us'
+LANGUAGE_CODE = os.environ.get('INVENTORY_LANGUAGE', 'en-us')
 
-TIME_ZONE = 'UTC'
+TIME_ZONE = os.environ.get('INVENTORY_TIMEZONE', 'UTC')
 
 USE_I18N = True
 
@@ -132,13 +146,13 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/3.0/howto/static-files/
 
 STATIC_URL = '/static/'
-STATIC_ROOT = os.path.join(BASE_DIR, 'static')
+STATIC_ROOT = os.environ.get('INVENTORY_STATIC_FILES', os.path.join(BASE_DIR, 'static'))
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
 
 MEDIA_URL = '/media/'
-MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
-SERVE_MEDIA_FILES = DEBUG
+MEDIA_ROOT = os.environ.get('INVENTORY_MEDIA_FILES', os.path.join(BASE_DIR, 'media'))
+SERVE_MEDIA_FILES = True
 
 # Default page size for paginated content
-PAGE_SIZE = 25
+PAGE_SIZE = int(os.environ.get('INVENTORY_PAGE_SIZE', "25"))

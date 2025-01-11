@@ -1,10 +1,11 @@
 {% extends "base.html" %}
 {% load static %}
+{% load i18n %}
 
-{% block title %}Workshops{% endblock %}
+{% block title %}{% translate 'Workshops' %}{% endblock %}
 
 {% block header_bar %}
-    Inventory management - Workshops
+    {% translate 'Inventory management' %} - {% translate 'Workshops' %}
 {% endblock %}
 
 {% block content %}
@@ -17,7 +18,7 @@
                 </td>
                 <td>
                 {% if user.is_staff %}
-                    <a class="edit" href="{% url "admin:inventory_workshop_change" object_id=workshop.pk %}"><img class="icon" src="{% static 'inventory/img/edit.svg' %}"></a>
+                    <a class="edit" href="{% url "admin:inventory_workshop_change" object_id=workshop.pk %}"><img class="icon" src="{% static 'inventory/img/edit.svg' %}" title="{% translate 'Edit' %}"></a>
                 {% endif %}
                 </td>
             </tr>
@@ -26,7 +27,7 @@
     </table>
 
     {% if user.is_staff %}
-        <p><a href="{% url "admin:inventory_workshop_add" %}?layout=1">Create new workshop...</a></p>
+        <p><a href="{% url "admin:inventory_workshop_add" %}?layout=1">{% translate 'Create new workshop...' %}</a></p>
     {% endif %}
 
 

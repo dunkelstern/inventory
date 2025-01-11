@@ -4,7 +4,7 @@ from django.utils.decorators import method_decorator
 from django.views.generic import ListView, DetailView
 from django.db.models import QuerySet
 
-from inventory.models import Box
+from inventory.models import Box, Settings
 
 from .utils import CanBeIndexMixin
 
@@ -54,6 +54,7 @@ class BoxView(CanBeIndexMixin, DetailView):
         context = self.get_context_data(object=self.object)
         context['layouted'], _ = self.layout(self.object.item_related.all().order_by('index'), self.object.layout.data)
         context['hilight'] = hilighted
+        context['settings'] = Settings.objects.first()
         return self.render_to_response(context)
 
 

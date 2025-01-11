@@ -1,0 +1,35 @@
+{% extends "base.html" %}
+{% load static %}
+{% load i18n %}
+
+{% block title %}{% translate 'Inventory Setup' %}{% endblock %}
+
+{% block header_bar %}
+    {% translate 'Inventory Setup' %}
+{% endblock %}
+
+{% block content %}
+    <h2>Onboarding completed!</h2>
+
+    <p>Congratulations, you have successfully setup the Inventory management system</p>
+
+    <p>You may now log in with the password you just set up.</p>
+
+    <form method="post" action="{% url 'login' %}">
+        {% csrf_token %}
+        <table>
+        <tr>
+            <td>{{ form.username.label_tag }}</td>
+            <td>{{ form.username }}</td>
+        </tr>
+        <tr>
+            <td>{{ form.password.label_tag }}</td>
+            <td>{{ form.password }}</td>
+        </tr>
+        </table>
+        
+        <input type="submit" value="login">
+        <input type="hidden" name="next" value="{{ next }}">
+    </form>
+        
+{% endblock %}

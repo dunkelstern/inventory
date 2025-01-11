@@ -1,0 +1,46 @@
+name: inventory
+
+services:
+  db:
+    image: postgres:17-alpine
+    restart: always
+    shm_size: 128mb
+    environment:
+      POSTGRES_PASSWORD: inventory
+      POSTGRES_USER: inventory
+      POSTGRES_DB: inventory
+    volumes:
+      - dbdata:/var/lib/postgresql/data
+  
+  inventory:
+    image: dunkelstern/inventory
+    build: .
+    restart: always
+    depends_on:
+      - db
+    env_file:
+      - path: ./default.env
+        required: true
+      - path: ./override.env
+        required: false
+    environment:
+      INVENTORY_DB_HOST: db
+      INVENTORY_DB_NAME: inventory
+      INVENTORY_DB_USER: inventory
+      INVENTORY_DB_PASSWORD: inventory
+    ports:
+      - name: web
+        target: 8000
+        host_ip: 127.0.0.1
+        published: "8000"
+        protocol: tcp
+        app_protocol: http
+        mode: host
+    volumes:
+      - mediafiles:/media
+    links:
+      - db
+
+volumes:
+  dbdata:
+  mediafiles:

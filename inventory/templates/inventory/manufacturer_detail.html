@@ -1,19 +1,20 @@
 {% extends "base.html" %}
 {% load static %}
+{% load i18n %}
 {% load formatstring %}
 
-{% block title %}Manufacturer: {{ manufacturer }}{% endblock %}
+{% block title %}{% translate 'Manufacturer' %}: {{ manufacturer }}{% endblock %}
 
 {% block header_bar %}
-    <a href="{% url 'manufacturer-list' %}"><img class="icon" src="{% static "inventory/img/back.svg" %}"></a>
-    Manufacturer: {{ manufacturer.name }}
+    <a href="{% url 'manufacturer-list' %}"><img class="icon" src="{% static "inventory/img/back.svg" %}" title="{% translate 'Back' %}"></a>
+    {% translate 'Manufacturer' %}: {{ manufacturer.name }}
     <span class="small">{{ manufacturer.description }}</span></h2>
 {% endblock %}
 
 {% block header_icons %}
     {% if user.is_staff %}
         <li>
-            <a href="{% url "admin:inventory_manufacturer_change" object_id=manufacturer.pk %}"><img class="icon" src="{% static "inventory/img/edit.svg" %}"></a>
+            <a href="{% url "admin:inventory_manufacturer_change" object_id=manufacturer.pk %}"><img class="icon" src="{% static "inventory/img/edit.svg" %}" title="{% translate 'Edit' %}"></a>
         </li>
     {% endif %}
 {% endblock %}
@@ -22,45 +23,45 @@
     <table class="attribute-list">
         <tbody>
             <tr>
-                <th>Name</th>
+                <th>{% translate 'Name' %}</th>
                 <td>{{ manufacturer.name }}</td>
             </tr>
             <tr>
-                <th>Description</th>
+                <th>{% translate 'Description' %}</th>
                 <td>{{ manufacturer.description }}</td>
             </tr>
         {% if manufacturer.icon %}
             <tr>
-                <th>Icon</th>
+                <th>{% translate 'Icon' %}</th>
                 <td><img src="{{ manufacturer.icon.url }}" title="{{ manufacturer.name }}" style="max-height: 20px;"></td>
             </tr>
         {% endif %}
         <tr>
-            <th>Link</th>
+            <th>{% translate 'Web link' %}</th>
             <td>{% if manufacturer.web_link %}<a href="{{ manufacturer.web_link }}" title="{{ manufacturer.name }}">{{ manufacturer.web_link }}{% else %}-{% endif %}</td>
         </tr>
         
         <tr>
-            <th>Tags</th>
+            <th>{% translate 'Tags' %}</th>
             <td>
                 <ul class="tag-list">
                     {% for tag in manufacturer.tags.all %}
                         <li><a href="{% url 'tag-detail' tag.id %}" title="{{ tag.name }}">{{ tag.name }}</a></li>
                     {% empty %}
-                        No tags
+                    {% translate 'No tags' %}
                     {% endfor %}
                 </ul>
             </td>
         </tr>
 
-            <tr><th>Created at</th><td>{{ manufacturer.created_at }}</td></tr>
+            <tr><th>{% translate 'Created at' %}</th><td>{{ manufacturer.created_at }}</td></tr>
         {% if manufacturer.created_at != manufacturer.changed_at %}
-            <tr><th>Last change</th><td>{{ manufacturer.changed_at }}</td></tr>
+            <tr><th>{% translate 'Changed at' %}</th><td>{{ manufacturer.changed_at }}</td></tr>
         {% endif %}
         </tbody>
     </table>
 
-    <h2>Items</h2>
+    <h2>{% translate 'Items' %}</h2>
 
     {% url 'manufacturer-detail' manufacturer.id as this_url %}
     {% include "inventory/pagination.html" with url=this_url id="paginator_top" param="item" paginator=items %}

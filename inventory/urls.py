@@ -34,7 +34,8 @@ from .views import (
     ManufacturerView,
     IndexView,
     TagView,
-    SearchView
+    SearchView,
+    OnboardingView
 )
 
 urlpatterns = [
@@ -54,5 +55,6 @@ urlpatterns = [
     path('tags', TagListView.as_view(), name='tag-list'),
     path('tag/<int:pk>', TagView.as_view(), name='tag-detail'),
     path('search', SearchView.as_view(), name='search'),
+    path('onboarding', OnboardingView.as_view(), name='onboarding'),
     path('', IndexView.as_view(), name='index')
 ]

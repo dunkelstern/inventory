@@ -1,0 +1,53 @@
+{% extends "base.html" %}
+{% load static %}
+{% load i18n %}
+
+{% block title %}{% translate 'Inventory Setup' %}{% endblock %}
+
+{% block header_bar %}
+    {% translate 'Inventory Setup' %}
+{% endblock %}
+
+{% block content %}
+    <h2>{% translate 'Welcome to the Inventory Management setup' %}</h2>
+
+    <p>
+        {% blocktranslate %}
+        Currently no admin user is defined in the database.
+        To use the inventory management system you need at least one admin user...
+        {% endblocktranslate %}
+    </p>
+
+    <p>
+        {% blocktranslate %}
+        Please verify that the following settings are correct and then fill out the
+        form at the end and click
+        {% endblocktranslate %}
+        <em>{% translate 'Create user' %}</em>
+    </p>
+
+    <h2>{% translate 'Current settings' %}</h2>
+
+    <dl>
+        {% for key, value in settings.items %}
+            <dt>{{ key }}</dt>
+            <dd>{{ value }}</dd>
+        {% endfor %}
+    </dl>
+
+    <h2>{% translate 'Create user' %}</h2>
+
+    {% if form.errors %}
+        <p>
+            {% blocktranslate %}
+            Please correct the errors below.
+            {% endblocktranslate %}
+        </p>
+    {% endif %}
+
+    <form action="{% url 'onboarding' %}" method="post">
+        {% csrf_token %}
+        {{ form }}
+        <input type="submit" value="{% translate 'Create user' %}">
+    </form>
+{% endblock %}

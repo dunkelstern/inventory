@@ -1,6 +1,8 @@
 {% load static %}
+{% load i18n %}
+{% get_current_language as LANGUAGE_CODE %}
 <!DOCTYPE html>
-<html>
+<html lang="{{ LANGUAGE_CODE }}">
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="initial-scale=1, maximum-scale=1">
@@ -38,32 +40,32 @@
                         }
                     }
                 </script>
-                <a href="{% url 'search' %}" onclick="showSearch(event)"><img class="icon" title="Search" src="{% static "inventory/img/search.svg" %}"></a>
+                <a href="{% url 'search' %}" onclick="showSearch(event)"><img class="icon" title="{% translate 'Search' %}" src="{% static "inventory/img/search.svg" %}"></a>
                 <div id="search-container">
                     <form action="{% url 'search' %}" method="get">
-                        <input name="q" id="search" type="text" placeholder="Search">
-                        <button type="submit">Search</button>
+                        <input name="q" id="search" type="text" placeholder="{% translate 'Search' %}">
+                        <button type="submit">{% translate 'Search' %}</button>
                     </form>
                 </div>
             </li>
             <li>
-                <a href="{% url 'manufacturer-list' %}"><img class="icon" title="Manufacturers" src="{% static "inventory/img/manufacturer.svg" %}"></a>
+                <a href="{% url 'manufacturer-list' %}"><img class="icon" title="{% translate 'Manufacturers' %}" src="{% static "inventory/img/manufacturer.svg" %}"></a>
             </li>
             <li>
-                <a href="{% url 'distributor-list' %}"><img class="icon" title="Distributors" src="{% static "inventory/img/distributor.svg" %}"></a>
+                <a href="{% url 'distributor-list' %}"><img class="icon" title="{% translate 'Distributors' %}" src="{% static "inventory/img/distributor.svg" %}"></a>
             </li>
             <li>
-                <a href="{% url 'tag-list' %}"><img class="icon" title="Tags" src="{% static "inventory/img/tags.svg" %}"></a>
+                <a href="{% url 'tag-list' %}"><img class="icon" title="{% translate 'Tags' %}" src="{% static "inventory/img/tags.svg" %}"></a>
             </li>
             <li>
-                <a href="{% url 'index' %}"><img class="icon" title="Workshops" src="{% static "inventory/img/workshop.svg" %}"></a>
+                <a href="{% url 'index' %}"><img class="icon" title="{% translate 'Workshop' %}" src="{% static "inventory/img/workshop.svg" %}"></a>
             </li>
         </ul>
 
         {% if user.is_authenticated %}
         <form method="POST" action="{% url "logout" %}">
             {% csrf_token %}
-            <button><img class="icon" src="{% static "inventory/img/logout.svg" %}"> Logout</button>
+            <button type="submit"><img class="icon" src="{% static "inventory/img/logout.svg" %}" title="{% translate 'Logout' %}"> {% translate 'Logout' %}</button>
         </form>
         {% endif %}
     </nav>

@@ -1,4 +1,5 @@
 {% load static %}
+{% load i18n %}
 
 <li>
     <form method="POST" action="{% url "index" %}">
@@ -6,9 +7,9 @@
         <input type="hidden" name="index_id" value='{{ item.id }}'>
         <button class="icon-only-button">
             {% if is_index %}
-                <img class="icon" src="{% static "inventory/img/star-filled.svg" %}">
+                <img class="icon" src="{% static "inventory/img/star-filled.svg" %}" title="{% translate 'Currently set as index page' %}">
             {% else %}
-                <img class="icon" src="{% static "inventory/img/star-outline.svg" %}">
+                <img class="icon" src="{% static "inventory/img/star-outline.svg" %}" title="{% translate 'Promote to index page' %}">
             {% endif %}
         </button>
     </form>

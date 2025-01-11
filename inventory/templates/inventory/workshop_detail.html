@@ -1,10 +1,11 @@
 {% extends "base.html" %}
 {% load static %}
+{% load i18n %}
 
-{% block title %}Workshop {{ workshop.name }}{% endblock %}
+{% block title %}{% translate 'Workshop' %} {{ workshop.name }}{% endblock %}
 
 {% block header_bar %}
-    <a href="{% url "workshop-list" %}"><img class="icon" src="{% static "inventory/img/back.svg" %}"></a>
+    <a href="{% url "workshop-list" %}"><img class="icon" src="{% static "inventory/img/back.svg" %}" title="{% translate 'Back' %}"></a>
     {{ workshop.name }}
     <span class="small">{{ workshop.description}}</span>
 {% endblock %}
@@ -12,14 +13,14 @@
 {% block header_icons %}
     {% if user.is_staff %}
         <li>
-            <a href="{% url "admin:inventory_workshop_change" object_id=workshop.pk %}"><img class="icon" src="{% static "inventory/img/edit.svg" %}"></a>
+            <a href="{% url "admin:inventory_workshop_change" object_id=workshop.pk %}"><img class="icon" src="{% static "inventory/img/edit.svg" %}" title="{% translate 'Edit' %}"></a>
         </li>
         {% include 'inventory/set_index.html' with item=workshop is_index=is_index %}
     {% endif %}
 {% endblock %}
 
 {% block content %}
-    <h3>Areas</h3>
+    <h3>{% translate 'Areas' %}</h3>
 
     <table class="list">
         <tbody>
@@ -30,22 +31,22 @@
                 </td>
                 <td>
                 {% if user.is_staff %}
-                    <a class="edit" href="{% url "admin:inventory_area_change" object_id=area.pk %}"><img class="icon" src="{% static 'inventory/img/edit.svg' %}"></a>
+                    <a class="edit" href="{% url "admin:inventory_area_change" object_id=area.pk %}"><img class="icon" src="{% static 'inventory/img/edit.svg' %}" title="{% translate 'Edit' %}"></a>
                 {% endif %}
                 </td>
             </tr>
         {% empty %}
-            <tr><td>No areas defined</td></tr>
+            <tr><td>{% translate 'No areas defined' %}</td></tr>
         {% endfor %}
         </tbody>
     </table>
 
     {% if user.is_staff %}
-        <p><a href="{% url "admin:inventory_area_add" %}?container={{ workshop.id }}&index=0">Create new area...</a></p>
+        <p><a href="{% url "admin:inventory_area_add" %}?container={{ workshop.id }}&index=0">{% translate 'Create new area...' %}</a></p>
     {% endif %}
 
     {% if workshop.show_boxes %}
-        <h3>Containers</h3>
+        <h3>{% translate 'Containers' %}</h3>
         <table class="list">
             <tbody>
             {% for box in workshop.box_related.all %}
@@ -55,18 +56,18 @@
                     </td>
                     <td>
                     {% if user.is_staff %}
-                        <a class="edit" href="{% url "admin:inventory_box_change" object_id=box.pk %}"><img class="icon" src="{% static 'inventory/img/edit.svg' %}"></a>
+                        <a class="edit" href="{% url "admin:inventory_box_change" object_id=box.pk %}"><img class="icon" src="{% static 'inventory/img/edit.svg' %}" title="{% translate 'Edit' %}"></a>
                     {% endif %}
                     </td>
                 </tr>
             {% empty %}
-                <tr><td>No containers defined</td></tr>
+                <tr><td>{% translate 'No containers defined' %}</td></tr>
             {% endfor %}
             </tbody>
         </table>
     
         {% if user.is_staff %}
-            <p><a href="{% url "admin:inventory_box_add" %}?container={{ workshop.id }}&index=0">Create new container...</a></p>
+            <p><a href="{% url "admin:inventory_box_add" %}?container={{ workshop.id }}&index=0">{% translate 'Create new container...' %}</a></p>
         {% endif %}
     {% endif %}
 {% endblock %}

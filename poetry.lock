@@ -126,22 +126,23 @@ pyflakes = ">=3.2.0,<3.3.0"
 
 [[package]]
 name = "gunicorn"
-version = "20.1.0"
+version = "23.0.0"
 description = "WSGI HTTP Server for UNIX"
 optional = false
-python-versions = ">=3.5"
+python-versions = ">=3.7"
 files = [
-    {file = "gunicorn-20.1.0-py3-none-any.whl", hash = "sha256:9dcc4547dbb1cb284accfb15ab5667a0e5d1881cc443e0677b4882a4067a807e"},
-    {file = "gunicorn-20.1.0.tar.gz", hash = "sha256:e0a968b5ba15f8a328fdfd7ab1fcb5af4470c28aaf7e55df02a99bc13138e6e8"},
+    {file = "gunicorn-23.0.0-py3-none-any.whl", hash = "sha256:ec400d38950de4dfd418cff8328b2c8faed0edb0d517d3394e457c317908ca4d"},
+    {file = "gunicorn-23.0.0.tar.gz", hash = "sha256:f014447a0101dc57e294f6c18ca6b40227a4c90e9bdb586042628030cba004ec"},
 ]
 
 [package.dependencies]
-setuptools = ">=3.0"
+packaging = "*"
 
 [package.extras]
-eventlet = ["eventlet (>=0.24.1)"]
+eventlet = ["eventlet (>=0.24.1,!=0.36.0)"]
 gevent = ["gevent (>=1.4.0)"]
 setproctitle = ["setproctitle"]
+testing = ["coverage", "eventlet", "gevent", "pytest", "pytest-cov"]
 tornado = ["tornado (>=0.2)"]
 
 [[package]]
@@ -247,6 +248,17 @@ python-versions = ">=3.5"
 files = [
     {file = "mypy_extensions-1.0.0-py3-none-any.whl", hash = "sha256:4392f6c0eb8a5668a69e23d168ffa70f0be9ccfd32b5cc2d26a34ae5b844552d"},
     {file = "mypy_extensions-1.0.0.tar.gz", hash = "sha256:75dbf8955dc00442a438fc4d0666508a9a97b6bd41aa2f0ffe9d2f2725af0782"},
+]
+
+[[package]]
+name = "packaging"
+version = "24.2"
+description = "Core utilities for Python packages"
+optional = false
+python-versions = ">=3.8"
+files = [
+    {file = "packaging-24.2-py3-none-any.whl", hash = "sha256:09abb1bccd265c01f4a3aa3f7a7db064b36514d2cba19a2f694fe6150451a759"},
+    {file = "packaging-24.2.tar.gz", hash = "sha256:c228a6dc5e932d346bc5739379109d49e8853dd8223571c7c5b55260edc0b97f"},
 ]
 
 [[package]]
@@ -522,26 +534,6 @@ files = [
 ]
 
 [[package]]
-name = "setuptools"
-version = "75.6.0"
-description = "Easily download, build, install, upgrade, and uninstall Python packages"
-optional = false
-python-versions = ">=3.9"
-files = [
-    {file = "setuptools-75.6.0-py3-none-any.whl", hash = "sha256:ce74b49e8f7110f9bf04883b730f4765b774ef3ef28f722cce7c273d253aaf7d"},
-    {file = "setuptools-75.6.0.tar.gz", hash = "sha256:8199222558df7c86216af4f84c30e9b34a61d8ba19366cc914424cdbd28252f6"},
-]
-
-[package.extras]
-check = ["pytest-checkdocs (>=2.4)", "pytest-ruff (>=0.2.1)", "ruff (>=0.7.0)"]
-core = ["importlib_metadata (>=6)", "jaraco.collections", "jaraco.functools (>=4)", "jaraco.text (>=3.7)", "more_itertools", "more_itertools (>=8.8)", "packaging", "packaging (>=24.2)", "platformdirs (>=4.2.2)", "tomli (>=2.0.1)", "wheel (>=0.43.0)"]
-cover = ["pytest-cov"]
-doc = ["furo", "jaraco.packaging (>=9.3)", "jaraco.tidelift (>=1.4)", "pygments-github-lexers (==0.0.5)", "pyproject-hooks (!=1.1)", "rst.linker (>=1.9)", "sphinx (>=3.5)", "sphinx-favicon", "sphinx-inline-tabs", "sphinx-lint", "sphinx-notfound-page (>=1,<2)", "sphinx-reredirects", "sphinxcontrib-towncrier", "towncrier (<24.7)"]
-enabler = ["pytest-enabler (>=2.2)"]
-test = ["build[virtualenv] (>=1.0.3)", "filelock (>=3.4.0)", "ini2toml[lite] (>=0.14)", "jaraco.develop (>=7.21)", "jaraco.envs (>=2.2)", "jaraco.path (>=3.2.0)", "jaraco.test (>=5.5)", "packaging (>=24.2)", "pip (>=19.1)", "pyproject-hooks (!=1.1)", "pytest (>=6,!=8.1.*)", "pytest-home (>=0.5)", "pytest-perf", "pytest-subprocess", "pytest-timeout", "pytest-xdist (>=3)", "tomli-w (>=1.0.0)", "virtualenv (>=13.0.0)", "wheel (>=0.44.0)"]
-type = ["importlib_metadata (>=7.0.2)", "jaraco.develop (>=7.21)", "mypy (>=1.12,<1.14)", "pytest-mypy"]
-
-[[package]]
 name = "sqlparse"
 version = "0.5.3"
 description = "A non-validating SQL parser."
@@ -647,4 +639,4 @@ brotli = ["brotli"]
 [metadata]
 lock-version = "2.0"
 python-versions = "^3.10"
-content-hash = "9fa0905357cc8444a092294c75ee8b373078c78723c6c345cf56a59091cf0ce7"
+content-hash = "41ac47a86e2c341e2862f4309757b703ab5b6d4939a664ec1289611a0191228b"

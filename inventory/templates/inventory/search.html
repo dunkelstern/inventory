@@ -1,15 +1,16 @@
 {% extends "base.html" %}
 {% load static %}
+{% load i18n %}
 
-{% block title %}Search{% endblock %}
+{% block title %}{% translate 'Search' %}{% endblock %}
 
 {% block header_bar %}
-    Search
+    {% translate 'Search' %}
 {% endblock %}
 
 {% block content %}
     <form method="get" action="{% url 'search' %}">
-        <input type="text" id="search" name="q">
-        <button type="submit">Search</button>
+        <input type="text" id="search" name="q" placeholder="{% translate 'Search' %}">
+        <button type="submit">{% translate 'Search' %}</button>
     </form>
 {% endblock %}

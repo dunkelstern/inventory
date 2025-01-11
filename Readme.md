@@ -9,16 +9,18 @@ what area of your workshop you have to search for to find the part you
 currently need. It has been optimized to store information for electronics
 parts and small other hardware like screws, nuts and bolts.
 
-### Prerequisites
+### Prerequisites for manual install or docker Standalone
 
 As configured by default you will need the following:
 
 - A postgres database named `inventory` with a postgres user `inventory` that
   may connect without password or by default with the password `inventory`
+
+### Installation (manual)
+
+You will need:
 - Python > 3.10
 - Poetry to install requirements and create a virtualenv
-
-### Installation
 
 This is a standard Django 5.1 application, if you know how to deploy those the
 following might sound familiar:
@@ -27,22 +29,101 @@ following might sound familiar:
    - Github `git clone https://github.com/dunkelstern/inventory.git`
    - ForgeJo: `git clone https://git.dunkelstern.de/dunkelstern/inventory.git`
 2. Change to checkout: `cd inventory`
-3. Install virtualenv and dependencies: `poetry install --no-root`
+3. Install virtualenv and dependencies:
+   ```
+   poetry install --no-root
+   ```
 4. If you want to use the system in another language than the default english set it
    up in the `inventory_project/settings.py`:
    ```python
    LANGUAGE_CODE = 'en-us' # or something like 'de-de'
    ```
    see the settings file for defined languages.
-5. If you changed the language rebuild the translation files: `poetry run python manage.py compilemessages`
-6. Migrate the Database: `poetry run python manage.py migrate`
-7. Create an admin user: `poetry run python manage.py createsuperuser`
+5. If you changed the language rebuild the translation files:
+   ```
+   poetry run python manage.py compilemessages
+   ```
+6. Migrate the Database:
+   ```
+   poetry run python manage.py migrate
+   ```
+7. Optionally create an admin user. If not done manually the application will prompt you on first run.
+   ```
+   poetry run python manage.py createsuperuser
+   ```
 8. Run the server
   - Development server (not for deployment!): `poetry run python manage.py runserver`
   - Deployment via `gunicorn` on port 8000: `poetry run gunicorn inventory_project.wsgi -b 0.0.0.0:8000`
 
 Then login on `http://localhost:8000/admin/` for the Django admin interface or
 go to `http://localhost:8000` to enter the inventory management system directly
+
+### Installation (Standalone Docker)
+
+#### Building yourself
+
+1. Checkout repository:
+   - Github `git clone https://github.com/dunkelstern/inventory.git`
+   - ForgeJo: `git clone https://git.dunkelstern.de/dunkelstern/inventory.git`
+2. Change to checkout: `cd inventory`
+3. Build Docker image: `docker build -t 'dunkelstern/inventory:latest' .`
+
+next steps below
+
+#### Pulling from docker hub
+
+1. Pull Docker image: `docker pull 'dunkelstern/inventory:latest'`
+
+next steps below
+
+#### Next steps
+
+1. Install a PostgreSQL DB somewhere and create a user and DB.
+2. Setup environment (put everything in a `.env` file):
+   ```
+   INVENTORY_DB_HOST=
+   INVENTORY_DB_NAME=
+   INVENTORY_DB_USER=
+   INVENTORY_DB_PASSWORD=
+
+   INVENTORY_SECRET_KEY=
+   INVENTORY_EXTERNAL_URL=http://localhost:8000
+   INVENTORY_DEBUG=FALSE
+
+   INVENTORY_LANGUAGE=en-us
+   INVENTORY_TIMEZONE=UTC
+
+   INVENTORY_PAGE_SIZE=25
+   ```
+3. Create a media directory for uploaded files: `mkdir -p media`
+4. Run the container:
+   ```
+   docker run \
+     --name inventory \
+     -d \
+     --restart=always \
+     --env-file=.env \
+     -p 8000:8000 \
+     --volume ./media:/media \
+     dunkelstern/inventory:latest 
+   ```
+5. The onboarding process will start on first call of the application and prompt to create an admin user.
+
+### Installation (Docker compose)
+
+1. Checkout repository:
+   - Github `git clone https://github.com/dunkelstern/inventory.git`
+   - ForgeJo: `git clone https://git.dunkelstern.de/dunkelstern/inventory.git`
+2. Change to checkout: `cd inventory`
+3. Copy `default.env` to `override.env` and check settings. Use a long random string for `INVENTORY_SECRET_KEY`!
+4. Build the stack: `docker-compose up --build -d`
+5. You can reach the application on port 8000
+6. The onboarding process will start on first call of the application and prompt to create an admin user.
+
+The compose stack will create two volumes:
+
+- `inventory_dbdata` which contains the PostgreSQL database directory
+- `inventory_mediafiles` which will contain any uploaded file
 
 ### Additional information
 

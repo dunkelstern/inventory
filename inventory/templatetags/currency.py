@@ -5,10 +5,13 @@ from django.utils.formats import number_format
 from inventory.models import Settings
 
 register = template.Library()
-s = Settings.objects.first()
+s = None
 
 @register.filter(name='currency')
 def currency(value, format):
+    global s
+    if s is None:
+        s = Settings.objects.first()
     value = float(value)
 
     if format == 'detail':

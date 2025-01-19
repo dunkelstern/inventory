@@ -45,6 +45,15 @@ ALLOWED_HOSTS: list[str] = [
     socket.gethostbyname('localhost')
 ]
 
+CSRF_TRUSTED_ORIGINS: list[str] = [
+    *[
+        f'{prot}://{host}'
+        for host in os.environ.get("INVENTORY_TRUSTED_ORIGINS", "localhost").split(',')
+        for prot in ('http', 'https')
+    ],
+    f'{SERVER_URL}}'
+]
+
 # Application definition
 
 INSTALLED_APPS = [

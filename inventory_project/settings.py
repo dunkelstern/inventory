@@ -51,7 +51,7 @@ CSRF_TRUSTED_ORIGINS: list[str] = [
         for host in os.environ.get("INVENTORY_TRUSTED_ORIGINS", "localhost").split(',')
         for prot in ('http', 'https')
     ],
-    f'{SERVER_URL}}'
+    f'{SERVER_URL}'
 ]
 
 # Application definition
